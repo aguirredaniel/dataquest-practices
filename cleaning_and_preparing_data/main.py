@@ -9,14 +9,25 @@ def _open_data_set(file):
         return list(read_file)
 
 
-# 1. Clean the Gender column.
-# - Assign the value from the Gender column, at index 5, to a variable.
-# - Make the changes to the value of that variable.
-# - Use the str.title() method to make the capitalization uniform.
-# - Use an if statement to check if the value is an empty string. If the value is an empty string, give it the value "Gender Unknown/Other".
-# - Assign the modified variable back to list index 5 of the row.
-# 2. Clean the Nationality column of the data set (found at index 2) by repeating the same technique you used for the Gender column.
-# - For missing values in the Nationality column, use the string "Nationality Unknown".
+def _clean_and_convert(date: str):
+    """
+    Clean a year date value, removing removing parenthesis => '(', ')'.
+    Return the date value as int.
+    Example date param: '(1992)'
+    """
+    if not date:
+        return date
+
+    date = date.replace('(', '')
+    date = date.replace(')', '')
+
+    return int(date)
+
+
+# Use a for loop to iterate over each row in the moma list of lists. In each iteration:
+# Assign the BeginDate and EndDate values (at indexes 3 and 4) to variables.
+# Use the clean_and_convert() function to clean and convert each value.
+# Assign the converted values back to indexes 3 and 4 so the cleaned values are used in the moma list of lists.
 def main():
     moma = _open_data_set('artworks.csv')
     # Removing header row
@@ -47,6 +58,13 @@ def main():
             gender = 'Gender Unknown/Other'
 
         row[5] = gender
+
+        # Cleaning BeginDate and EndDate columns
+        begin_date = row[3]
+        row[3] = _clean_and_convert(begin_date)
+
+        end_date = row[4]
+        row[4] = _clean_and_convert(end_date)
 
 
 if __name__ == "__main__":
