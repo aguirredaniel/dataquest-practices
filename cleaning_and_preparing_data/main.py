@@ -9,14 +9,14 @@ def _open_data_set(file):
         return list(read_file)
 
 
-# Use a for loop to loop over the moma list of lists. In each iteration of the loop:
-#
-# Clean the Nationality column of the data set by:
-# - Assigning the nationality for each row (found at list index 2 of the row) to a variable.
-# - Using the str.replace() method to remove the open parentheses (() character.
-# - Using the str.replace() method to remove the close parentheses ()) character.
-# - Assigning the cleaned value back to list index 2 of the row.
-# Clean the Gender column of the data set (found at index 5 of the row) by repeating the same technique you used for the Nationality column.
+# 1. Clean the Gender column.
+# - Assign the value from the Gender column, at index 5, to a variable.
+# - Make the changes to the value of that variable.
+# - Use the str.title() method to make the capitalization uniform.
+# - Use an if statement to check if the value is an empty string. If the value is an empty string, give it the value "Gender Unknown/Other".
+# - Assign the modified variable back to list index 5 of the row.
+# 2. Clean the Nationality column of the data set (found at index 2) by repeating the same technique you used for the Gender column.
+# - For missing values in the Nationality column, use the string "Nationality Unknown".
 def main():
     moma = _open_data_set('artworks.csv')
     # Removing header row
@@ -25,18 +25,28 @@ def main():
     for row in moma:
         # Cleaning the Nationality column, removing parenthesis => '(', ')'
         nationality = row[2]
-        nationality = nationality.replace('(', '')
-        nationality = nationality.replace(')', '')
+        if nationality:
+            nationality = nationality.replace('(', '')
+            nationality = nationality.replace(')', '')
+            # Capitalization uniform
+            nationality = nationality.title()
+        else:
+            nationality = 'Nationality Unknown'
+
         row[2] = nationality
 
         # Cleaning the Gender column, same of Nationality column
         gender = row[5]
-        gender = gender.replace('(', '')
-        gender = gender.replace(')', '')
-        row[5] = gender
+        if gender:
+            gender = gender.replace('(', '')
+            gender = gender.replace(')', '')
+            # Exists 'Female', 'female', 'Male', 'male' values.
+            # We'll use title built-in function to capitalization uniform.
+            gender = gender.title()
+        else:
+            gender = 'Gender Unknown/Other'
 
-    for i in range(10):
-        print('Title: ', moma[i][0], ' Nationality: ', moma[1][2], ' Gender: ', moma[1][5])
+        row[5] = gender
 
 
 if __name__ == "__main__":
