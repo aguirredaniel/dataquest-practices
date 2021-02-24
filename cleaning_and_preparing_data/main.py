@@ -9,14 +9,14 @@ def _open_data_set(file):
         return list(read_file)
 
 
-# Use the open() function to open the artworks.csv file. Assign the result to opened_file.
-# Use the reader() function to parse the data from opened_file. Assign the result to read_file.
-# Use list() to convert read_file into a list of lists. Assign the result to moma.
-# Use list slicing to remove the column names (the first row) from the moma list of lists.
+# We have created a variable, age1, containing the string "I am thirty-one years old".
+#
+# Use the str.replace() method to create a new string, age2:
+# The new string should have the value "I am thirty-two years old".
 def main():
-    moma = _open_data_set('artworks.csv')
-    moma = moma[1:]
-    print(moma[:10])
+    age1 = "I am thirty-one years old"
+    age2 = age1.replace('one', 'two')
+    print(age2)
 
 
 if __name__ == "__main__":
