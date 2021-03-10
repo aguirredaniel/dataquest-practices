@@ -1,7 +1,24 @@
 def _open_data_set(file):
-    """
-    Open file and return a list of list (dataset).
-    file it needs to be a csv file
+    """  Open a csv file and return a list of list (dataset).
+
+    Args:
+        file: A string name of file to be open.
+
+    Returns:
+        A list of list that represent a dataset.
+        For any row in file opened represent one dimension of list,
+        the other dimension is represent for values in a row.
+
+        For example:
+        For file with this content
+        a,b,c,d
+        e,f,g,h
+        i,j,k,l
+
+        returns
+        [['a','b','c','d']
+         ['e','f','g','h']
+         ['i','j','k','l']]
     """
     from csv import reader
     with open(file) as opened_file:
@@ -10,10 +27,14 @@ def _open_data_set(file):
 
 
 def _clean_and_convert(date: str):
-    """
-    Clean a year date value, removing parenthesis => '(', ')'.
-    Return the date value as int.
-    Example date param: '(1992)'
+    """ Cleaning and convert a string that represent a year date value.
+
+    Args:
+        date: A string represent a year date value. Expected format for argument: '(1992)'
+
+    Returns:
+        A int as year date.
+        For '(1992)' string argument  returns 1992 int value.
     """
     if not date:
         return date
@@ -25,8 +46,14 @@ def _clean_and_convert(date: str):
 
 
 def strip_characters(string, bad_characters):
-    """
-    Iterates over a list of "bad" characters, and removing all occurrences in a string.
+    """ Iterates over a list of "bad" characters, and removing all occurrences in a string.
+
+    Args:
+        string: A string for cleaning.
+        bad_characters: A list of strings to removing occurrences in string param.
+
+    Returns:
+        A string with no bad characters.
     """
     cleaned_string = string
     for bad_character in bad_characters:
@@ -36,11 +63,25 @@ def strip_characters(string, bad_characters):
 
 
 def process_date(string) -> int:
-    """
-    Process string value, if string is single date cast to int and return,
-    if string contains a range of dates returns average of dates, cast to int and return,
-    :param string: example of expected arguments '1992' or '1990-1994'
-    :return int
+    """Convert a string that represent a year date or time period to int value.
+
+    Args:
+        string: A string that represent a year date or time period.
+        The format of string expected are: 'yyyy' or 'yyyy - yyyy'
+
+    Returns:
+        If string argument contains return int value of average of the time period.
+        Else return int value of year date.
+
+        For example:
+        '1992-1995'
+        returns
+        1993
+
+        for:
+        '1992'
+        returns
+        1992
     """
     if '-' in string:
         split_string = string.split('-')
