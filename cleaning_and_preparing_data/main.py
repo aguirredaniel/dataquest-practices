@@ -103,18 +103,14 @@ class MoMAColumns(IntEnum):
     DATE = 6
 
 
-# 1. Create an empty list, ages, to store the artist age data.
-# 2. Use a loop to iterate over the rows in moma.
-# 3. In each iteration, assign the artwork year (at index 6) to date and artist birth year (at index 3) to birth.
-#  - If the birth date is an int, calculate the age of the artist at the time of creating the artwork,
-#    and assign it to the variable age.
-#  - If birth isn't an int type, assign 0 to the variable age.
-#  - Append age to the ages list.
-# 4. Create an empty list final_ages, to store the final age data.
-# 5. Use a loop to iterate over each age in ages. In each iteration:
-#  - If the age is greater than 20, assign the age to the variable final_age.
-#  - If the age is not greater than 20, assign "Unknown" to the variable final_age.
-#  - Append final_age to the final_ages list.
+# 1. Create an empty list, decades, to store the artist decade data.
+# 2. Iterate over the values in final_ages, and in each iteration:
+#  - If age is "Unknown", assign it to the variable decade
+#  - If age isn't "Unknown":
+#   - Convert the integer value to a string, assigning it to the variable decade.
+#   - Use list slicing to remove the final character of decade.
+#   - Use the + operator to add the substring "0s" to the end of the string decade.
+#  - Append decade to the decades list.
 def main():
     moma = _open_data_set('artworks_clean.csv')
     # Removing the row header
@@ -128,7 +124,7 @@ def main():
         if date:
             date = row[6] = int(date)
 
-        # Calculating the age of artist when they made their works arts
+        # Calculating the age of artist when they made their artwork
         # If birth_date has no value, then age is assign to 0
         age = date - int(birth_date) if birth_date else 0
         ages.append(age)
@@ -137,6 +133,19 @@ def main():
     for age in ages:
         final_age = age if age > 20 else 'Unknown'
         final_ages.append(final_age)
+
+    # Calculating the decade in which the artist created each work.
+    decades = []
+    for age in final_ages:
+        if age == 'Unknown':
+            decade = age
+        else:
+            # Removing the las digit of age we can calculate the decade,
+            # it would be necessary to add 0s to comply with the format specified in practice
+            decade = str(age)
+            decade = decade[:-1]
+            decade += '0s'
+        decades.append(decade)
 
 
 if __name__ == "__main__":
