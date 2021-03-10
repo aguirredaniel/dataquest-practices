@@ -1,3 +1,6 @@
+from enum import IntEnum
+
+
 def _open_data_set(file):
     """  Open a csv file and return a list of list (dataset).
 
@@ -93,20 +96,47 @@ def process_date(string) -> int:
     return int(string)
 
 
-# 1. Assign the value from index 6 (Date) to a variable called date.
-# 2. Use an if statement to check if date is not equal to "".
-# 3. If date isn't equal to "", convert it to an integer type using the int() function.
-# 4. Finally, assign the value back to index 6 in the row.
+class MoMAColumns(IntEnum):
+    """ An Enum that helps make the code expressive when the MoMa dataset columns are mapped.
+    """
+    BIRTH_DATE = 3
+    DATE = 6
+
+
+# 1. Create an empty list, ages, to store the artist age data.
+# 2. Use a loop to iterate over the rows in moma.
+# 3. In each iteration, assign the artwork year (at index 6) to date and artist birth year (at index 3) to birth.
+#  - If the birth date is an int, calculate the age of the artist at the time of creating the artwork,
+#    and assign it to the variable age.
+#  - If birth isn't an int type, assign 0 to the variable age.
+#  - Append age to the ages list.
+# 4. Create an empty list final_ages, to store the final age data.
+# 5. Use a loop to iterate over each age in ages. In each iteration:
+#  - If the age is greater than 20, assign the age to the variable final_age.
+#  - If the age is not greater than 20, assign "Unknown" to the variable final_age.
+#  - Append final_age to the final_ages list.
 def main():
     moma = _open_data_set('artworks_clean.csv')
     # Removing the row header
     moma = moma[1:]
 
+    ages = []
     for row in moma:
+        birth_date = row[MoMAColumns.BIRTH_DATE]
         # Converting date row values to integer type
-        date = row[6]
+        date = row[MoMAColumns.DATE]
         if date:
-            row[6] = int(date)
+            date = row[6] = int(date)
+
+        # Calculating the age of artist when they made their works arts
+        # If birth_date has no value, then age is assign to 0
+        age = date - int(birth_date) if birth_date else 0
+        ages.append(age)
+
+    final_ages = []
+    for age in ages:
+        final_age = age if age > 20 else 'Unknown'
+        final_ages.append(final_age)
 
 
 if __name__ == "__main__":
