@@ -99,68 +99,28 @@ def process_date(string) -> int:
 class MoMAColumns(IntEnum):
     """ An Enum that helps make the code expressive when the MoMa dataset columns are mapped.
     """
+    ARTIST_NAME = 1
     BIRTH_DATE = 3
     DATE = 6
 
 
+# 1. Create an empty dictionary, artist_freq.
+# 2. Iterate through each item in the moma list of lists. In each iteration:
+#  - Assign the artist's name (column index 1) to the variable artist.
+#  - If artist is not a key in artist_freq, add it as a key with a value of 1.
+#  - If artist is a key in artist_freq, add one to the existing value for that key.
 def main():
     moma = _open_data_set('artworks_clean.csv')
     # Removing the row header
     moma = moma[1:]
 
-    ages = []
+    artist_freq = {}
     for row in moma:
-        birth_date = row[MoMAColumns.BIRTH_DATE]
-        # Converting date row values to integer type
-        date = row[MoMAColumns.DATE]
-        if date:
-            date = row[6] = int(date)
+        artist_name = row[MoMAColumns.ARTIST_NAME]
 
-        # Calculating the age of artist when they made their artwork
-        # If birth_date has no value, then age is assign to 0
-        age = date - int(birth_date) if birth_date else 0
-        ages.append(age)
-
-    final_ages = []
-    for age in ages:
-        final_age = age if age > 20 else 'Unknown'
-        final_ages.append(final_age)
-
-    # Calculating the decade in which the artist created each work.
-    decades = []
-    for age in final_ages:
-        if age == 'Unknown':
-            decade = age
-        else:
-            # Removing the las digit of age we can calculate the decade,
-            # it would be necessary to add 0s to comply with the format specified in practice
-            decade = str(age)
-            decade = decade[:-1]
-            decade += '0s'
-        decades.append(decade)
-
-    # Calculating decade frequency table.
-    decade_frequency = {}
-    for decade in decades:
-        decade_freq = decade_frequency.get(decade, 0)
-        decade_frequency[decade] = decade_freq + 1
-
-
-# 1. Create a template string to insert the artist and birth_year variables into a
-#    string, using the format provided above. You may use your choice of the three
-#    techniques you learned for specifying which variables goes where.
-# 2. Use str.format() to insert the two variables into your template string, assigning the result to a variable.
-# 3. Use the print() function to call that variable.
-
-def string_format_practice():
-    artist = "Pablo Picasso"
-    birth_year = 1881
-
-    template = "{}'s birth year is {}"
-    result = template.format(artist, birth_year)
-
-    print(result)
+        freq = artist_freq.get(artist_name, 0)
+        artist_freq[artist_name] = freq + 1
 
 
 if __name__ == "__main__":
-    string_format_practice()
+    main()
