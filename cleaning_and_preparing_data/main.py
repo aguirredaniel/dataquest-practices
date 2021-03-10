@@ -103,14 +103,6 @@ class MoMAColumns(IntEnum):
     DATE = 6
 
 
-# 1. Create an empty list, decades, to store the artist decade data.
-# 2. Iterate over the values in final_ages, and in each iteration:
-#  - If age is "Unknown", assign it to the variable decade
-#  - If age isn't "Unknown":
-#   - Convert the integer value to a string, assigning it to the variable decade.
-#   - Use list slicing to remove the final character of decade.
-#   - Use the + operator to add the substring "0s" to the end of the string decade.
-#  - Append decade to the decades list.
 def main():
     moma = _open_data_set('artworks_clean.csv')
     # Removing the row header
@@ -147,6 +139,28 @@ def main():
             decade += '0s'
         decades.append(decade)
 
+    # Calculating decade frequency table.
+    decade_frequency = {}
+    for decade in decades:
+        decade_freq = decade_frequency.get(decade, 0)
+        decade_frequency[decade] = decade_freq + 1
+
+
+# 1. Create a template string to insert the artist and birth_year variables into a
+#    string, using the format provided above. You may use your choice of the three
+#    techniques you learned for specifying which variables goes where.
+# 2. Use str.format() to insert the two variables into your template string, assigning the result to a variable.
+# 3. Use the print() function to call that variable.
+
+def string_format_practice():
+    artist = "Pablo Picasso"
+    birth_year = 1881
+
+    template = "{}'s birth year is {}"
+    result = template.format(artist, birth_year)
+
+    print(result)
+
 
 if __name__ == "__main__":
-    main()
+    string_format_practice()
