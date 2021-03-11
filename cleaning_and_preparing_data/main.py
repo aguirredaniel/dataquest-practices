@@ -96,6 +96,26 @@ def process_date(string) -> int:
     return int(string)
 
 
+def artist_summary(artis_name, freq_table):
+    """ Print summary about of artist artworks.
+
+    The format is next:
+    There are {artworks} by {artis_name} in the data set
+
+    Args:
+        artis_name: An string with name of artist
+        freq_table: An dict represent frequency table of artworks by the artist
+    Returns:
+        None
+    """
+
+    template = "There are {artworks} artworks by {artis_name} in the data set"
+    artworks = freq_table.get(artis_name, 0)
+
+    result = template.format(artis_name=artis_name, artworks=artworks)
+    print(result)
+
+
 class MoMAColumns(IntEnum):
     """ An Enum that helps make the code expressive when the MoMa dataset columns are mapped.
     """
@@ -104,22 +124,28 @@ class MoMAColumns(IntEnum):
     DATE = 6
 
 
-# 1. Create an empty dictionary, artist_freq.
-# 2. Iterate through each item in the moma list of lists. In each iteration:
-#  - Assign the artist's name (column index 1) to the variable artist.
-#  - If artist is not a key in artist_freq, add it as a key with a value of 1.
-#  - If artist is a key in artist_freq, add one to the existing value for that key.
+# 1. Create a function artist_summary() which accepts a single argument, the name of an artist.
+# 2. The function should print a summary of the artist using the steps below:
+#  - Retrieve the number of artworks from the artist_freq dictionary, and assign it to a variable.
+#  - Create a template string that uses braces ({}) to insert the name and variables into the string,
+#    using the format from the diagram above.
+#  - Use str.format() method to insert the artist's name and number of artworks into the string template.
+#  - Use the print() function to display the final string.
+# 3. Use your function to display a summary for the Artist "Henri Matisse".
 def main():
     moma = _open_data_set('artworks_clean.csv')
     # Removing the row header
     moma = moma[1:]
 
+    # Creating artist artwork frequency table
     artist_freq = {}
     for row in moma:
         artist_name = row[MoMAColumns.ARTIST_NAME]
 
         freq = artist_freq.get(artist_name, 0)
         artist_freq[artist_name] = freq + 1
+
+    artist_summary('Henri Matisse', artist_freq)
 
 
 if __name__ == "__main__":
