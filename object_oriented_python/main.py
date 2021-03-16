@@ -8,6 +8,11 @@ class MyList:
     def __init__(self, initial_data):
         self.data = initial_data
 
+        # Calculate the initial length
+        self.length = 0
+        for item in self.data:
+            self.length += 1
+
     def append(self, new_item):
         """ Add an element to the end of the list
 
@@ -20,25 +25,25 @@ class MyList:
             The values in the list are:
             [..., 17]
         """
-        list_item = [new_item]
-        self.data += list_item
+        self.data += [new_item]
+        # Update the length
+        self.length += 1
 
 
-# 1. Inside the MyList class, define a new append() method with two arguments:
-#  - self: The self-references to the instance.
-#  - new_item: The new item that we want to add to the list.
-# 2. Implement the append() method so that it appends the provided new_item to the list stored in self.data.
-# 3. Outside of the class, create an instance of MyList providing the list [1, 2, 3, 4, 5].
+# 1. The MyList class from the previous screen is provided. We've added code in the __init__()
+#    method that initializes the list length.
+# 2. Inside the append() method, add one line of code that updates the length attribute of the list.
+# 3. Outside of the class, create an instance of MyList providing the list [1, 1, 2, 3, 5].
 #    Assign it to a variable named my_list.
-# 4. Print the value of my_list.data.
-# 5. Use the append() method to append value 6 to my_list.
-# 6. Print the value of my_list.data. Observe that it now contains the 6 that we added.
+# 4. Print the length attribute of my_list.
+# 5. Use the append() method to append value 8 to my_list.
+# 6. Print the length attribute of my_list. Observe that it was updated when a new value was added.
 def main():
-    my_list = MyList([1, 2, 3, 4, 5])
-    print(my_list.data)
+    my_list = MyList([1, 1, 2, 3, 5])
+    print(my_list.length)
 
-    my_list.append(6)
-    print(my_list.data)
+    my_list.append(8)
+    print(my_list.length)
 
 
 if __name__ == "__main__":
