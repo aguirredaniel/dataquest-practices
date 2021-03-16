@@ -124,14 +124,6 @@ class MoMAColumns(IntEnum):
     DATE = 6
 
 
-# 1. Create a function artist_summary() which accepts a single argument, the name of an artist.
-# 2. The function should print a summary of the artist using the steps below:
-#  - Retrieve the number of artworks from the artist_freq dictionary, and assign it to a variable.
-#  - Create a template string that uses braces ({}) to insert the name and variables into the string,
-#    using the format from the diagram above.
-#  - Use str.format() method to insert the artist's name and number of artworks into the string template.
-#  - Use the print() function to display the final string.
-# 3. Use your function to display a summary for the Artist "Henri Matisse".
 def main():
     moma = _open_data_set('artworks_clean.csv')
     # Removing the row header
@@ -148,5 +140,27 @@ def main():
     artist_summary('Henri Matisse', artist_freq)
 
 
+# 1. Create a template string that will insert the country name and population as shown in the example above.
+#  - The country population should have a precision of two and use a comma separator.
+# 2. Use a for loop to iterate over the pop_millions list of lists and in each iteration:
+#  - Assign the country name and population to two variables.
+#  - Use str.format() to insert the two variables into your template string.
+#  - Use the print() function to display the result of your str.format() call.
+def formatting_numbers_practice():
+    pop_millions = [
+        ["China", 1379.302771],
+        ["India", 1281.935991],
+        ["USA", 326.625791],
+        ["Indonesia", 260.580739],
+        ["Brazil", 207.353391],
+    ]
+
+    template = 'The population of {} is {:,.2f} million'
+
+    for population in pop_millions:
+        pop_presentable = template.format(*population)
+        print(pop_presentable)
+
+
 if __name__ == "__main__":
-    main()
+    formatting_numbers_practice()
