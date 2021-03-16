@@ -1,17 +1,11 @@
-# In the code editor, we have defined one variable of each of the three types we've worked with so far.
-# Follow each of the instructions below, in order.
-#
-# 1. Use the print() function to display the type of the list l.
-# 2. Use the print() function to display the type of the string s.
-# 3. Use the print() function to display the type of the dictionary d.
-def main():
-    l = [1, 2, 3]
-    s = "string"
-    d = {"a": 1, "b": 2}
+# 1. Define a class named MyClass.
+# 2. Inside the class definition, add a pass statement to avoid a SyntaxError.
+class MyClass:
+    pass
 
-    print(type(l))
-    print(type(s))
-    print(type(d))
+
+def main():
+    pass
 
 
 if __name__ == "__main__":
