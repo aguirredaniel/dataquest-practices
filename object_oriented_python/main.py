@@ -1,13 +1,15 @@
 class MyClass:
-    pass
+    def first_method(self):
+        return 'This is my first method'
 
-# 1. Below the class definition, use the MyClass() constructor to create an instance of MyClass.
-#    Assign it to a variable named my_instance.
-# 2. Use the print() and type() built-in functions to print the type of my_instance.
 
+# 1. Remove the pass statement.
+# 2. Inside the class, define a method called first_method().
+# 3. Inside the method, return the string "This is my first method".
+# 4. Outside of the class, create an instance of MyClass and assign it to a variable name my_instance.
 def main():
     my_instance = MyClass()
-    print(type(my_instance))
+
 
 if __name__ == "__main__":
     main()
