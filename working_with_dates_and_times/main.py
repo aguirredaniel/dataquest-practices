@@ -35,14 +35,23 @@ class POTUSRows(IntEnum):
     """ An Enum that helps make the code expressive when the POTUS dataset columns are mapped.
       """
     APPT_START_DATE = 2
+    END_DATE = 3
 
 
+# 1. Instantiate an empty dictionary for our frequency table, appt_lengths.
+# 2. Loop over each row in potus, and:
+#  - Assign the values for appt_start_date (index 2) and appt_end_date (index 3) to variables.
+#  - Subtract appt_start_date from appt_end_date to calculate the length of the appointment, length.
+#  - If length is not a key in appt_lengths, add it as a key with a value of 1.
+#  -    If length is a key in appt_lengths, add 1 to the existing value of that key.
+# 3. Calculate the minimum key in appt_lengths and assign the result to min_length.
+# 4. Calculate the maximum key in appt_lengths and assign the result to max_length.
 def main():
     potus = _open_data_set('potus_visitors_2015.csv')
     # Removing row header
     potus = potus[1:]
 
-    # strftime code for appt_start_date row values
+    # strftime code for appt_start_date and end_date rows values
     date_format = '%m/%d/%y %H:%M'
 
     visitors_per_month = {}
@@ -51,6 +60,8 @@ def main():
     month_format = '%B, %Y'
 
     appt_times = []
+
+    appt_lengths = {}
 
     for row in potus:
         # Converting the appt_start_date to datetime
@@ -65,22 +76,21 @@ def main():
         # Getting time for appt_start_date
         appt_times.append(appt_start_date.time())
 
+        # Converting the end_date to datetime
+        appt_end_date = row[POTUSRows.END_DATE]
+        appt_end_date = row[POTUSRows.END_DATE] = dt.datetime.strptime(appt_end_date, "%m/%d/%y %H:%M")
+
+        # Creating  visitors_per_month frequency table
+        appt_length = appt_end_date - appt_start_date
+        length_count = appt_lengths.get(appt_length, 0)
+        appt_lengths[appt_length] = length_count + 1
+
     min_time = min(appt_times)
     max_time = max(appt_times)
 
+    min_length = min(appt_lengths)
+    max_length = max(appt_lengths)
 
-# 1. Calculate the time between dt_2 and dt_1 and assign the result to answer_1.
-# 2. Add 56 days to dt_3 and assign the result to answer_2.
-# 3. Subtract 3600 seconds from dt_4 and assign the result to answer_3.
-def calculations_with_dates_and_times():
-    dt_1 = dt.datetime(1981, 1, 31)
-    dt_2 = dt.datetime(1984, 6, 28)
-    dt_3 = dt.datetime(2016, 5, 24)
-    dt_4 = dt.datetime(2001, 1, 1, 8, 24, 13)
-
-    answer_1 = dt_2 - dt_1
-    answer_2 = dt_3 + dt.timedelta(days=56)
-    answer_3 = dt_4 - dt.timedelta(seconds=3600)
 
 if __name__ == "__main__":
     main()
