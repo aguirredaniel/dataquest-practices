@@ -1,3 +1,6 @@
+import datetime as dt
+
+
 def _open_data_set(file):
     """  Open a csv file and return a list of list (dataset).
 
@@ -26,15 +29,14 @@ def _open_data_set(file):
         return list(read_file)
 
 
-# 1. Use the open() function to open the CSV file potus_visitors_2015.csv
-# 2. Use the reader() function to read the opened file.
-# 3. Use the list() function to convert the read file into a list of lists format.
-#  - Assign the list of lists to the variable name potus.
-#  - Remove the first row of the data set, which contains the column names
+# 1. Import the datetime class using the alias dt.
+# 2. Instantiate a datetime object representing midnight on June 16, 1911.
+#    Assign the object to the variable name ibm_founded.
+# 3. Instantiate a datetime object representing 8:17 p.m. on July 20, 1969.
+#    Assign the object to the variable name man_on_moon.
 def main():
-    potus = _open_data_set('potus_visitors_2015.csv')
-    potus = potus[1:]
-
+    ibm_founded = dt.datetime(1911, 6, 16)
+    man_on_moon = dt.datetime(1969, 7, 20, 20, 17)
 
 if __name__ == "__main__":
     main()
