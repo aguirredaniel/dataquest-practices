@@ -37,14 +37,14 @@ class POTUSRows(IntEnum):
     APPT_START_DATE = 2
 
 
-# 1. Create a string date_format that specifies the format of the appt_start_date column:
-#  - The format of the app_start_date column is {month}/{day}/{two digit year} {hour 24hr time}:{minute}.
-#  - Substitute each of the values inside braces with the appropriate strftime code from the table above.
-# 2. Iterate over each row in the potus list of lists:
-#  - Assign the appt_start_date column, found at index 2 of each row, to a variable.
-#  - Use the datetime.strptime() constructor to convert the variable from a string to a datetime object,
-#    using the date_format string you created earlier.
-#  - Assign the datetime object back to index 2 of the row.
+# 1. Initialize an empty dictionary, visitors_per_month.
+# 2. Iterate over the rows in the potus list of lists. In each iteration:
+#  - Assign the datetime object from the appt_start_date column (index 2) to a variable.
+#  - Call the datetime.strftime() method on the appt_start_date object to create a string in the format "January, 1901".
+#    - The format code for the name of the month is %B
+#    - The format code for a four-digit year is %Y.
+#  - If the string is not a key in visitors_per_month, add it as a key with a value of 1.
+#  - Otherwise, add 1 to the existing value for that key.
 def main():
     potus = _open_data_set('potus_visitors_2015.csv')
     # Removing row header
@@ -53,10 +53,17 @@ def main():
     # strftime code for appt_start_date row values
     date_format = '%m/%d/%y %H:%M'
 
+    visitors_per_month = {}
+    # strftime code to use as key for frequency table of visitors per month
+    # example: 'October, 1992'
+    month_format = '%B, %Y'
     for row in potus:
         appt_start_date = row[POTUSRows.APPT_START_DATE]
-        row[POTUSRows.APPT_START_DATE] = dt.datetime.strptime(appt_start_date, date_format)
+        appt_start_date = dt.datetime.strptime(appt_start_date, date_format)
 
+        month = appt_start_date.strftime(month_format)
+        visitors = visitors_per_month.get(month, 0)
+        visitors_per_month[month] = visitors + 1
 
 if __name__ == "__main__":
     main()
