@@ -37,9 +37,6 @@ class POTUSRows(IntEnum):
     APPT_START_DATE = 2
 
 
-
-# 1. Assign the earliest appointment time from the appt_times list to the variable min_time.
-# 2. Assign the latest appointment time from the appt_times list to the variable max_time.
 def main():
     potus = _open_data_set('potus_visitors_2015.csv')
     # Removing row header
@@ -70,6 +67,20 @@ def main():
 
     min_time = min(appt_times)
     max_time = max(appt_times)
+
+
+# 1. Calculate the time between dt_2 and dt_1 and assign the result to answer_1.
+# 2. Add 56 days to dt_3 and assign the result to answer_2.
+# 3. Subtract 3600 seconds from dt_4 and assign the result to answer_3.
+def calculations_with_dates_and_times():
+    dt_1 = dt.datetime(1981, 1, 31)
+    dt_2 = dt.datetime(1984, 6, 28)
+    dt_3 = dt.datetime(2016, 5, 24)
+    dt_4 = dt.datetime(2001, 1, 1, 8, 24, 13)
+
+    answer_1 = dt_2 - dt_1
+    answer_2 = dt_3 + dt.timedelta(days=56)
+    answer_3 = dt_4 - dt.timedelta(seconds=3600)
 
 if __name__ == "__main__":
     main()
