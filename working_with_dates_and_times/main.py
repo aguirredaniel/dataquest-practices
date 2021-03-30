@@ -37,14 +37,11 @@ class POTUSRows(IntEnum):
     APPT_START_DATE = 2
 
 
-# 1. Initialize an empty dictionary, visitors_per_month.
-# 2. Iterate over the rows in the potus list of lists. In each iteration:
-#  - Assign the datetime object from the appt_start_date column (index 2) to a variable.
-#  - Call the datetime.strftime() method on the appt_start_date object to create a string in the format "January, 1901".
-#    - The format code for the name of the month is %B
-#    - The format code for a four-digit year is %Y.
-#  - If the string is not a key in visitors_per_month, add it as a key with a value of 1.
-#  - Otherwise, add 1 to the existing value for that key.
+# 1. Instantiate an empty appt_times list.
+# 2. Iterate over each row in the potus list of lists. For each iteration:
+#  - Assign the datetime object stored at index value 2 to a variable.
+#  - Create a time object from the datetime object.
+#  - Append the time object to the appt_times list.
 def main():
     potus = _open_data_set('potus_visitors_2015.csv')
     # Removing row header
@@ -57,13 +54,22 @@ def main():
     # strftime code to use as key for frequency table of visitors per month
     # example: 'October, 1992'
     month_format = '%B, %Y'
-    for row in potus:
-        appt_start_date = row[POTUSRows.APPT_START_DATE]
-        appt_start_date = dt.datetime.strptime(appt_start_date, date_format)
 
+    appt_times = []
+
+    for row in potus:
+        # Converting the appt_start_date to datetime
+        appt_start_date = row[POTUSRows.APPT_START_DATE]
+        appt_start_date = row[POTUSRows.APPT_START_DATE] = dt.datetime.strptime(appt_start_date, date_format)
+
+        # Creating  visitors_per_month frequency table
         month = appt_start_date.strftime(month_format)
         visitors = visitors_per_month.get(month, 0)
         visitors_per_month[month] = visitors + 1
+
+        # Getting time for appt_start_date
+        appt_times.append(appt_start_date.time())
+
 
 if __name__ == "__main__":
     main()
