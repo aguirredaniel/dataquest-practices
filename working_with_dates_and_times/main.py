@@ -37,11 +37,9 @@ class POTUSRows(IntEnum):
     APPT_START_DATE = 2
 
 
-# 1. Instantiate an empty appt_times list.
-# 2. Iterate over each row in the potus list of lists. For each iteration:
-#  - Assign the datetime object stored at index value 2 to a variable.
-#  - Create a time object from the datetime object.
-#  - Append the time object to the appt_times list.
+
+# 1. Assign the earliest appointment time from the appt_times list to the variable min_time.
+# 2. Assign the latest appointment time from the appt_times list to the variable max_time.
 def main():
     potus = _open_data_set('potus_visitors_2015.csv')
     # Removing row header
@@ -70,6 +68,8 @@ def main():
         # Getting time for appt_start_date
         appt_times.append(appt_start_date.time())
 
+    min_time = min(appt_times)
+    max_time = max(appt_times)
 
 if __name__ == "__main__":
     main()
