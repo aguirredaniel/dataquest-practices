@@ -35,15 +35,17 @@ def _process_file_as_np_array(file_name) -> np.array:
         return np.array(converted_taxi_list)
 
 
-# 1. Use vector addition to add fare_amount and fees_amount. Assign the result to fare_and_fees.
-# 2. After you run your code, use the variable inspector below the code box to inspect the variables.
+# 1. Use vector division to divide trip_distance_miles by trip_length_hours. Assign the result to trip_mph.
+# 2. After you run your code, use the variable inspector below the code box to inspect the contents of the
+#    new trip_mph variable.
 def main():
     taxi = _process_file_as_np_array('nyc_taxis.csv')
-    fare_amount = taxi[:, 9]
-    fees_amount = taxi[:, 10]
-    fare_and_fees = fare_amount + fees_amount
+    trip_distance_miles = taxi[:, 7]
+    trip_length_seconds = taxi[:, 8]
+    trip_length_hours = trip_length_seconds / 3600
+    trip_mph = trip_distance_miles / trip_length_hours
 
-    print(fare_amount, fees_amount, fare_and_fees, sep='\n')
+    print(trip_distance_miles, trip_length_seconds, trip_length_hours, trip_mph, sep='\n')
 
 
 if __name__ == "__main__":
