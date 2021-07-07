@@ -6,7 +6,7 @@ def _process_file_as_np_array(file_name) -> np.array:
     """  Read a csv file and return as ndarray (dataset).
 
     Args:
-        file_name: A string name of file to be readed.
+        file_name: A string name of file to be read.
 
     Returns:
         A ndarray that represent a dataset.
