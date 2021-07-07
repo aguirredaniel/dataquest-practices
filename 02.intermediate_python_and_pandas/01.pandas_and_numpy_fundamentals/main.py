@@ -35,17 +35,16 @@ def _process_file_as_np_array(file_name) -> np.array:
         return np.array(converted_taxi_list)
 
 
-# 1. Select every row for the columns at indices 1, 4, and 7. Assign them to columns_1_4_7.
-# 2. Select the columns at indices 5 to 8 inclusive for the row at index 99. Assign them to row_99_columns_5_to_8.
-# 33. Select the rows at indices 100 to 200 inclusive for the column at index 14. Assign them to rows_100_to_200_column_14.
-
+# 1. Use vector addition to add fare_amount and fees_amount. Assign the result to fare_and_fees.
+# 2. After you run your code, use the variable inspector below the code box to inspect the variables.
 def main():
     taxi = _process_file_as_np_array('nyc_taxis.csv')
-    columns_1_4_7 = taxi[:, [1, 4, 7]]  # 2D ndarray
-    row_99_columns_5_to_8 = taxi[99, 5:9]  # 1D ndarray
-    rows_100_to_200_column_14 = taxi[100:201, 14]  # 1D ndarray
+    fare_amount = taxi[:, 9]
+    fees_amount = taxi[:, 10]
+    fare_and_fees = fare_amount + fees_amount
 
-    print(columns_1_4_7, row_99_columns_5_to_8, rows_100_to_200_column_14, sep='\n')
+    print(fare_amount, fees_amount, fare_and_fees, sep='\n')
+
 
 if __name__ == "__main__":
     main()
