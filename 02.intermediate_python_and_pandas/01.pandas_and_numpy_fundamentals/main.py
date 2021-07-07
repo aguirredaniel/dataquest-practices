@@ -35,15 +35,17 @@ def _process_file_as_np_array(file_name) -> np.array:
         return np.array(converted_taxi_list)
 
 
-# 1. Select the row at index 0. Assign it to row_0.
-# 2. Select every column for the rows at indices 391 to 500 inclusive. Assign them to rows_391_to_500.
-# 3. Select the item at row index 21 and column index 5. Assign it to row_21_column_5.
+# 1. Select every row for the columns at indices 1, 4, and 7. Assign them to columns_1_4_7.
+# 2. Select the columns at indices 5 to 8 inclusive for the row at index 99. Assign them to row_99_columns_5_to_8.
+# 33. Select the rows at indices 100 to 200 inclusive for the column at index 14. Assign them to rows_100_to_200_column_14.
+
 def main():
     taxi = _process_file_as_np_array('nyc_taxis.csv')
-    row_0 = taxi[0]
-    rows_391_to_500 = taxi[391:501]
-    row_21_column_5 = taxi[21, 5]
+    columns_1_4_7 = taxi[:, [1, 4, 7]]  # 2D ndarray
+    row_99_columns_5_to_8 = taxi[99, 5:9]  # 1D ndarray
+    rows_100_to_200_column_14 = taxi[100:201, 14]  # 1D ndarray
 
+    print(columns_1_4_7, row_99_columns_5_to_8, rows_100_to_200_column_14, sep='\n')
 
 if __name__ == "__main__":
     main()
