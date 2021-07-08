@@ -35,17 +35,21 @@ def _process_file_as_np_array(file_name) -> np.array:
         return np.array(converted_taxi_list)
 
 
-# 1. Use vector division to divide trip_distance_miles by trip_length_hours. Assign the result to trip_mph.
-# 2. After you run your code, use the variable inspector below the code box to inspect the contents of the
-#    new trip_mph variable.
+# Check if the sum of each row in fare_components equals the value in the total_amount column.
+
+# 1. Use the ndarray.sum() method to calculate the sum of each row in fare_components. Assign the result to fare_sums.
+# 2. Extract the 14th column in taxi_first_five. Assign to fare_totals.
+# 3. Print fare_totals and fare_sums. Use the variable inspector to verify that the results match.
+
 def main():
     taxi = _process_file_as_np_array('nyc_taxis.csv')
-    trip_distance_miles = taxi[:, 7]
-    trip_length_seconds = taxi[:, 8]
-    trip_length_hours = trip_length_seconds / 3600
-    trip_mph = trip_distance_miles / trip_length_hours
+    taxi_first_five = taxi[:5]
+    fare_components = taxi_first_five[:, 9:13]
 
-    print(trip_distance_miles, trip_length_seconds, trip_length_hours, trip_mph, sep='\n')
+    fare_sums = fare_components.sum(axis=1)
+    fare_totals = taxi_first_five[:, 13]
+
+    print(fare_sums, fare_totals, sep='\n')
 
 
 if __name__ == "__main__":
