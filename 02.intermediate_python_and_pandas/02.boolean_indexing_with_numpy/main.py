@@ -1,16 +1,18 @@
 import numpy as np
 
 
-# 1. Create a boolean array, tip_bool, that determines which rows have values for the tip_amount column of more than 50.
-# 2. Use the tip_bool array to select all rows from taxi with values tip amounts of more than 50, and the columns from
-#    indexes 5 to 13 inclusive. Assign the resulting array to top_tips.
+# 1. The value at column index 5 (pickup_location) of row index 1066 is incorrect. Use assignment to change this value
+#    to 1 in the taxi_modified ndarray.
+# 2. The first column (index 0) contains year values as four digit numbers in the format YYYY (2016, since all trips in
+#    our data set are from 2016). Use assignment to change these values to the YY format (16) in the taxi_modified ndarray.
+# 3. The values at column index 7 (trip_distance) of rows index 550 and 551 are incorrect. Use assignment to change
+#    these values in the taxi_modified ndarray to the mean value for that column.
 def main():
     taxi = np.genfromtxt('../nyc_taxis.csv', delimiter=',', skip_header=1)
-    tip_amount = taxi[:, 12]
-    tip_bool = tip_amount > 50
-    top_tips = taxi[tip_bool, 5:14]
-
-    print(top_tips)
+    taxi_modified = taxi.copy()
+    taxi_modified[1066, 5] = 1
+    taxi_modified[:, 0] = 16
+    taxi_modified[[550, 551], 7] = taxi_modified[:, 7].mean()
 
 
 if __name__ == "__main__":
