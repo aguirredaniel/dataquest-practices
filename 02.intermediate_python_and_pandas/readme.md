@@ -1,5 +1,5 @@
 #Dataset
-For dataset **nyc_taxis.csv** you can find information for all columns in the [data dictionary](https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page).
+For dataset **nyc_taxis.csv** you can find information for all columns in the [data dictionary](https://s3.amazonaws.com/dq-content/290/nyc_taxi_data_dictionary.md).
 
 #Virtual environment
     $ virtualenv -p /usr/bin/python3 venv
