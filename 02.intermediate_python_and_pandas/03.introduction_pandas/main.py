@@ -1,21 +1,19 @@
 import pandas as pd
 
 
-# 1. Create a new variable toyota, with:
-#     - Just the row with index Toyota Motor.
-#     - All columns.
-# 2. Create a new variable, drink_companies, with:
-#     - Rows with indicies Anheuser-Busch InBev, Coca-Cola, and Heineken Holding, in that order.
-#     - All columns.
-# 3 . Create a new variable, middle_companies with:
-#      - All rows with indicies from Tata Motors to Nationwide, inclusive.
-#      - All columns from rank to country, inclusive.
+# 1. Create a new variable big_movers, with:
+#      - Rows with indices Aviva, HP, JD.com, and BHP Billiton, in that order.
+#      - The rank and previous_rank columns, in that order.
+# 2. Create a new variable, bottom_companies with:
+#     - All rows with indices from National Grid to AutoNation, inclusive.
+#     - The rank, sector, and country columns.
+
 def main():
     f500 = pd.read_csv('../f500.csv', index_col=0)
-    toyota = f500.loc['Toyota Motor']
-    drink_companies = f500.loc[['Anheuser-Busch InBev', 'Coca-Cola', 'Heineken Holding']]
-    middle_companies = f500.loc['Tata Motors':'Nationwide', 'rank':'country']
-    print(toyota, drink_companies, middle_companies, sep='\n')
+    big_movers = f500.loc[['Aviva', 'HP', 'JD.com', 'BHP Billiton'], ['rank', 'previous_rank']]
+    bottom_companies = f500.loc['National Grid': 'AutoNation', ['rank', 'sector', 'country']]
+
+    print(big_movers, bottom_companies, sep='\n')
 
 
 if __name__ == "__main__":
