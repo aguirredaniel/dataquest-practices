@@ -1,13 +1,12 @@
 import pandas as pd
 
 
-# 1. Use the DataFrame.max() method to find the maximum value for only the numeric columns from f500
-#    (you may need to check the documentation). Assign the result to the variable max_f500.
+# 1. The company "Dow Chemical" has named a new CEO. Update the value where the row label is Dow Chemical and for the
+#    ceo column to Jim Fitterling in the f500 dataframe.
 def main():
     f500 = pd.read_csv('../f500.csv')
-    max_f500 = f500.max(numeric_only=True)
+    f500.loc['Dow Chemical', 'ceo'] = 'Jim Fitterling'
 
-    print(max_f500, sep='\n')
 
 
 if __name__ == "__main__":
