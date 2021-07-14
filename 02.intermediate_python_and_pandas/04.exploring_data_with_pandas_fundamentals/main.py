@@ -2,16 +2,15 @@ import numpy as np
 import pandas as pd
 
 
-# 1. Add a new column named rank_change to the f500 dataframe by subtracting the values in the rank column from the
-#    values in the previous_rank column.
-# 2. Use the Series.describe() method to return a series of descriptive statistics for the rank_change column. Assign
-#    the result to rank_change_desc
+# 1. Create a series, industry_usa, containing counts of the two most common values in the industry column for companies
+#    headquartered in the USA.
+# 2. Create a series, sector_china, containing counts of the three most common values in the sector column for companies
+#    headquartered in the China.
 def main():
     f500 = pd.read_csv('../f500.csv')
-    f500['rank_change'] = f500['rank'] - f500['previous_rank']
-    rank_change_desc = f500['rank_change'].describe()
-
-    print(rank_change_desc)
+    industry_usa = f500.loc[f500['country'] == 'USA', 'industry'].value_counts().head(2)
+    sector_china = f500.loc[f500['country'] == 'China', 'sector'].value_counts().head(3)
+    print(industry_usa, sector_china)
 
 
 if __name__ == "__main__":
