@@ -2,16 +2,16 @@ import numpy as np
 import pandas as pd
 
 
-# 1. Select all rows for companies whose country value is either Brazil or Venezuela. Assign the result to
-#    brazil_venezuela.
-# 2. Select the first five companies in the Technology sector for which the country is not the USA from the f500
-#    dataframe. Assign the result to tech_outside_usa.
+# 1. Find the company headquartered in Japan with the largest number of employees.
+#    - Select only the rows that have a country name equal to Japan.
+#    - Use DataFrame.sort_values() to sort those rows by the employees column in descending order.
+#    - Use DataFrame.iloc[] to select the first row from the sorted dataframe.
+#    - Extract the company name from the index label company from the first row. Assign the result to
+#      top_japanese_employer.
 def main():
     f500 = pd.read_csv('../f500.csv')
-    brazil_venezuela = f500[(f500['country'] == 'Brazil') | (f500['country'] == 'Venezuela')]
-    tech_outside_usa = f500[(f500['sector'] == 'Technology') & (f500['country'] != 'USA')].head()
-
-    print(brazil_venezuela['country'], tech_outside_usa[['sector', 'country']])
+    top_japanese_employer = f500[(f500['country'] == 'Japan')].sort_values('employees', ascending=False)['company'].iloc[0]
+    print(top_japanese_employer)
 
 
 if __name__ == "__main__":
