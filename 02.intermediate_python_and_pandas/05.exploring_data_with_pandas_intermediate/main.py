@@ -2,14 +2,18 @@ import numpy as np
 import pandas as pd
 
 
-# 1. Assign the first five rows of the null_previous_rank dataframe to the variable top5_null_prev_rank by choosing
-#    the correct method out of either loc[] or iloc[].
+# 1. Use the Series.notnull() method to select all rows from f500 that have a non-null value for the previous_rank
+#    column. Assign the result to previously_ranked
+# 2. From the previously_ranked dataframe, subtract the rank column from the previous_rank column. Assign the result
+#    to rank_change.
+# 3. Assign the values in the rank_change to a new column in the f500 dataframe, "rank_change".
 def main():
     f500 = pd.read_csv('../f500.csv')
-    null_previous_rank = f500[f500["previous_rank"].isnull()]
-    top5_null_prev_rank = null_previous_rank.iloc[:5]
+    previously_ranked = f500[f500["previous_rank"].notnull()]
+    rank_change = previously_ranked['previous_rank'] - previously_ranked['rank']
+    f500['rank_change'] = rank_change
 
-    print(top5_null_prev_rank)
+    print(f500[['company', 'previous_rank', 'rank', 'rank_change']])
 
 
 if __name__ == "__main__":
