@@ -2,18 +2,22 @@ import numpy as np
 import pandas as pd
 
 
-# 1. Use the Series.notnull() method to select all rows from f500 that have a non-null value for the previous_rank
-#    column. Assign the result to previously_ranked
-# 2. From the previously_ranked dataframe, subtract the rank column from the previous_rank column. Assign the result
-#    to rank_change.
-# 3. Assign the values in the rank_change to a new column in the f500 dataframe, "rank_change".
+# 1. Select all companies with revenues over 100 billion and negative profits from the f500 dataframe. The result
+#    should include all columns.
+#    - Create a boolean array that selects the companies with revenues greater than 100 billion. Assign the result to
+#      large_revenue.
+#    - Create a boolean array that selects the companies with profits less than 0. Assign the result to
+#      negative_profits.
+#    - Combine large_revenue and negative_profits. Assign the result to combined.
+#    - Use combined to filter f500. Assign the result to big_rev_neg_profit
 def main():
     f500 = pd.read_csv('../f500.csv')
-    previously_ranked = f500[f500["previous_rank"].notnull()]
-    rank_change = previously_ranked['previous_rank'] - previously_ranked['rank']
-    f500['rank_change'] = rank_change
+    large_revenue = f500['revenues'] > 100000
+    negative_profits = f500['profits'] < 0
+    combined = large_revenue & negative_profits
+    big_rev_neg_profit = f500[combined]
 
-    print(f500[['company', 'previous_rank', 'rank', 'rank_change']])
+    print(big_rev_neg_profit[['company', 'revenues', 'profits']])
 
 
 if __name__ == "__main__":
