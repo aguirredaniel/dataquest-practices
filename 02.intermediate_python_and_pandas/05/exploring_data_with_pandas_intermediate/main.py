@@ -2,14 +2,15 @@ import numpy as np
 import pandas as pd
 
 
-# 1. Select just the fifth row of the f500 dataframe. Assign the result to fifth_row.
-# 2. Select the value in first row of the company column. Assign the result to company_value.
+# 1. Select the first three rows of the f500 dataframe. Assign the result to first_three_rows.
+# 2. Select the first and seventh rows and the first five columns of the f500 dataframe. Assign the result to
+#    first_seventh_row_slice.
 def main():
     f500 = pd.read_csv('../f500.csv')
-    fifth_row = f500.iloc[4]
-    company_value = f500.iloc[0, 0]
+    first_three_rows = f500.iloc[:3]
+    first_seventh_row_slice = f500.iloc[[0, 6], :5]
 
-    print(fifth_row, company_value, sep='\n')
+    print(first_three_rows, first_seventh_row_slice, sep='\n')
 
 
 if __name__ == 'main':
