@@ -49,8 +49,9 @@ def clean_column_name(column):
     return clean_column
 
 
-# 1. Use the Series.str.replace() method to remove the substring GB from the ram column.
-# 2. Use the Series.unique() method to assign the unique values in the ram column to unique_ram.
+# 1. Use the Series.astype() method to change the ram column to an integer dtype.
+# 2. Use the DataFrame.dtypes attribute to get a list of the column names and types from the laptops dataframe.
+#    Assign the result to dtypes.
 def main():
     laptops = pd.read_csv('../laptops.csv', encoding='Latin-1')
 
@@ -63,8 +64,14 @@ def main():
 
     # substring GB from the ram colum
     laptops['ram'] = laptops['ram'].str.replace('GB', '')
-    unique_ram = laptops['ram'].unique()
-    print(unique_ram)
+
+    # change the ram column to an integer dtype
+    laptops['ram'] = laptops['ram'].astype(int)
+
+    # unique_ram = laptops['ram'].unique()
+    dtypes = laptops.dtypes
+
+    print(dtypes)
 
 
 if __name__ == '__main__':
