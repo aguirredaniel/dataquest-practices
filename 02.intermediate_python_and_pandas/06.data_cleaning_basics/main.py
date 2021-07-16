@@ -49,10 +49,8 @@ def clean_column_name(column):
     return clean_column
 
 
-# 1. Use the Series.unique() method to identify the unique values in the ram column of the laptops dataframe. Assign the
-#    result to unique_ram.
-# 2. After running your code, use the variable inspector to view the unique values in the ram column and identify any
-#    patterns.
+# 1. Use the Series.str.replace() method to remove the substring GB from the ram column.
+# 2. Use the Series.unique() method to assign the unique values in the ram column to unique_ram.
 def main():
     laptops = pd.read_csv('../laptops.csv', encoding='Latin-1')
 
@@ -63,6 +61,8 @@ def main():
         new_columns.append(clean_column)
     laptops.columns = new_columns
 
+    # substring GB from the ram colum
+    laptops['ram'] = laptops['ram'].str.replace('GB', '')
     unique_ram = laptops['ram'].unique()
     print(unique_ram)
 
