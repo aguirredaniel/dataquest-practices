@@ -49,10 +49,10 @@ def clean_column_name(column):
     return clean_column
 
 
-# 1. Use a boolean array to identify rows that have the value No OS for the os column. Then, use assignment to assign
-#    the value Version Unknown to the os_version column for those rows.
-# Use the syntax below to create value_counts_after variable:
-# value_counts_after = laptops.loc[laptops["os_version"].isnull(), "os"].value_counts()
+# 1. Convert the values in the weight column to numeric values.
+# 2. Rename the weight column to weight_kg.
+# 3. Use the DataFrame.to_csv() method to save the laptops dataframe to a CSV file laptops_cleaned.csv without index
+#    labels.
 def main():
     laptops = pd.read_csv('../laptops.csv', encoding='Latin-1')
 
@@ -96,7 +96,23 @@ def main():
     laptops.loc[laptops['os'] == 'No OS', 'os_version'] = 'Version Unknown'
     value_counts_after = laptops.loc[laptops['os_version'].isnull(), 'os'].value_counts()
 
-    print(value_counts_after)
+    # explore data
+    print(laptops['weight'].unique())
+
+    # find patters
+    # pattern is [12.82kg, 4.0kgs]
+
+    # remove non-digits
+    laptops['weight'] = laptops['weight'].str.replace('kg', '').str.replace('s', '')
+
+    # convert values
+    laptops['weight'] = laptops['weight'].astype(float)
+
+    # rename column
+    laptops.rename({'weight': 'weight_kg'}, axis=1, inplace=True)
+
+    # save a clean version of df
+    laptops.to_csv('laptops_cleaned.csv', index=False)
 
 
 if __name__ == '__main__':
