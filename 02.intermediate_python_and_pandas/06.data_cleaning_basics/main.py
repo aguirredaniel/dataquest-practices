@@ -73,9 +73,19 @@ def main():
 
     # extract the manufacturer name from the cpu column and assign it to a new column.
     laptops['cpu_manufacturer'] = laptops['cpu'].str.split().str[0]
-    cpu_manufacturer_counts = laptops['cpu_manufacturer'].value_counts()
 
-    print(cpu_manufacturer_counts)
+    # correct the values in the os column.
+    mapping_dict = {
+        'Android': 'Android',
+        'Chrome OS': 'Chrome OS',
+        'Linux': 'Linux',
+        'Mac OS': 'macOS',
+        'No OS': 'No OS',
+        'Windows': 'Windows',
+        'macOS': 'macOS'
+    }
+
+    laptops['os'] = laptops['os'].map(mapping_dict)
 
 
 if __name__ == '__main__':
