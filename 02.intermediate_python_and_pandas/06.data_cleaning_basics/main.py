@@ -49,10 +49,9 @@ def clean_column_name(column):
     return clean_column
 
 
-# 1. Because the GB characters contained useful information about the units (gigabytes) of the laptop's ram, use the
-#    DataFrame.rename() method to rename the column from ram to ram_gb.
-# 2. Use the Series.describe() method to return a series of descriptive statistics for the ram_gb column. Assign the
-#    result to ram_gb_desc.
+# 1. Extract the manufacturer name from the cpu column. Assign it to a new column cpu_manufacturer.
+# 2. Use the Series.value_counts() method to find the counts of each manufacturer in cpu_manufacturer. Assign the result
+#    to cpu_manufacturer_counts.
 def main():
     laptops = pd.read_csv('../laptops.csv', encoding='Latin-1')
 
@@ -71,9 +70,12 @@ def main():
 
     # rename the column from ram to ram_gb
     laptops.rename({'ram': 'ram_gb'}, axis=1, inplace=True)
-    ram_gb_desc = laptops['ram_gb'].describe()
 
-    print(ram_gb_desc)
+    # extract the manufacturer name from the cpu column and assign it to a new column.
+    laptops['cpu_manufacturer'] = laptops['cpu'].str.split().str[0]
+    cpu_manufacturer_counts = laptops['cpu_manufacturer'].value_counts()
+
+    print(cpu_manufacturer_counts)
 
 
 if __name__ == '__main__':
