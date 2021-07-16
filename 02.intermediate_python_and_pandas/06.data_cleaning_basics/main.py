@@ -49,9 +49,10 @@ def clean_column_name(column):
     return clean_column
 
 
-# 1. Use the Series.astype() method to change the ram column to an integer dtype.
-# 2. Use the DataFrame.dtypes attribute to get a list of the column names and types from the laptops dataframe.
-#    Assign the result to dtypes.
+# 1. Because the GB characters contained useful information about the units (gigabytes) of the laptop's ram, use the
+#    DataFrame.rename() method to rename the column from ram to ram_gb.
+# 2. Use the Series.describe() method to return a series of descriptive statistics for the ram_gb column. Assign the
+#    result to ram_gb_desc.
 def main():
     laptops = pd.read_csv('../laptops.csv', encoding='Latin-1')
 
@@ -68,10 +69,11 @@ def main():
     # change the ram column to an integer dtype
     laptops['ram'] = laptops['ram'].astype(int)
 
-    # unique_ram = laptops['ram'].unique()
-    dtypes = laptops.dtypes
+    # rename the column from ram to ram_gb
+    laptops.rename({'ram': 'ram_gb'}, axis=1, inplace=True)
+    ram_gb_desc = laptops['ram_gb'].describe()
 
-    print(dtypes)
+    print(ram_gb_desc)
 
 
 if __name__ == '__main__':
