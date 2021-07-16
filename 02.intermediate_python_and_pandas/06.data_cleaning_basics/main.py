@@ -49,10 +49,10 @@ def clean_column_name(column):
     return clean_column
 
 
-# 1. Use DataFrame.dropna() to remove any rows from the laptops dataframe that have null values. Assign the result to
-#    laptops_no_null_rows.
-# 2. Use DataFrame.dropna() to remove any columns from the laptops dataframe that have null values. Assign the result to
-#    laptops_no_null_cols.
+# 1. Use a boolean array to identify rows that have the value No OS for the os column. Then, use assignment to assign
+#    the value Version Unknown to the os_version column for those rows.
+# Use the syntax below to create value_counts_after variable:
+# value_counts_after = laptops.loc[laptops["os_version"].isnull(), "os"].value_counts()
 def main():
     laptops = pd.read_csv('../laptops.csv', encoding='Latin-1')
 
@@ -89,8 +89,14 @@ def main():
     laptops['os'] = laptops['os'].map(mapping_dict)
 
     # remove rows and columns that have null values.
-    laptops_no_null_rows = laptops.dropna()
-    laptops_no_null_cols = laptops.dropna(axis=1)
+    # laptops.dropna()
+    # laptops.dropna(axis=1)
+
+    # fill os_version for No OS
+    laptops.loc[laptops['os'] == 'No OS', 'os_version'] = 'Version Unknown'
+    value_counts_after = laptops.loc[laptops['os_version'].isnull(), 'os'].value_counts()
+
+    print(value_counts_after)
 
 
 if __name__ == '__main__':
