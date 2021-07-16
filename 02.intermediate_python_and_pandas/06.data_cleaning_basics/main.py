@@ -49,9 +49,10 @@ def clean_column_name(column):
     return clean_column
 
 
-# 1. Extract the manufacturer name from the cpu column. Assign it to a new column cpu_manufacturer.
-# 2. Use the Series.value_counts() method to find the counts of each manufacturer in cpu_manufacturer. Assign the result
-#    to cpu_manufacturer_counts.
+# 1. Use DataFrame.dropna() to remove any rows from the laptops dataframe that have null values. Assign the result to
+#    laptops_no_null_rows.
+# 2. Use DataFrame.dropna() to remove any columns from the laptops dataframe that have null values. Assign the result to
+#    laptops_no_null_cols.
 def main():
     laptops = pd.read_csv('../laptops.csv', encoding='Latin-1')
 
@@ -86,6 +87,10 @@ def main():
     }
 
     laptops['os'] = laptops['os'].map(mapping_dict)
+
+    # remove rows and columns that have null values.
+    laptops_no_null_rows = laptops.dropna()
+    laptops_no_null_cols = laptops.dropna(axis=1)
 
 
 if __name__ == '__main__':
