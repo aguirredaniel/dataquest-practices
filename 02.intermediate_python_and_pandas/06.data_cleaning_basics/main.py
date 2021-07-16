@@ -1,16 +1,6 @@
 import pandas as pd
 
 
-# 1. Define a function, which accepts a string argument, and:
-#    - Removes any whitespace from the start and end of the string.
-#    - Replaces the substring Operating System with the abbreviation os.
-#    - Replaces all spaces with underscores.
-#    - Removes parentheses from the string.
-#    - Makes the entire string lowercase.
-#    - Returns the modified string.
-# 2. Use a loop to apply the function to each item in the DataFrame.columns attribute for the laptops dataframe. Assign
-#    the result back to the DataFrame.columns attribute.
-
 def clean_column_name(column):
     """
     Return a clean name for a column.
@@ -59,15 +49,22 @@ def clean_column_name(column):
     return clean_column
 
 
+# 1. Use the Series.unique() method to identify the unique values in the ram column of the laptops dataframe. Assign the
+#    result to unique_ram.
+# 2. After running your code, use the variable inspector to view the unique values in the ram column and identify any
+#    patterns.
 def main():
     laptops = pd.read_csv('../laptops.csv', encoding='Latin-1')
+
+    # re-asign columns name
     new_columns = []
     for c in laptops.columns:
         clean_column = clean_column_name(c)
         new_columns.append(clean_column)
     laptops.columns = new_columns
 
-    print(laptops.info())
+    unique_ram = laptops['ram'].unique()
+    print(unique_ram)
 
 
 if __name__ == '__main__':
