@@ -1,23 +1,22 @@
 import matplotlib.pyplot as plt
+import pandas as pd
 
 
-# - Plot a line graph using plt.plot().
-#   - month_number gives the x-coordinates
-#   - new_deaths gives the y_coordinates
-# - Using plt.title(), add the title 'New Reported Deaths By Month (Globally)'. For answer-checking purposes, make sure
-#   the title you add is exactly the same (the answer-checking is case sensitive).
-# - Using plt.xlabel(), add the x-label 'Month Number'.
-# - Using plt.ylabel(), add the y-label 'Number Of Deaths'.
-# - Display the plot using plt.show().
+# - Import the pandas module as pd.
+# - Read in the WHO_time_series.csv file using the pd.read_csv() function. Assign the resulting DataFrame to a
+#   variable named who_time_series.
+# - Transform the Date_reported column to a datetime data type using pd.to_datetime(). Assign the DataFrame with the
+#   modified column back to the who_time_series variable.
+# - Print the first and the last five rows and examine the data points. Be sure to specify print().
+# - Print information about the dataset using the DataFrame.info() method. How many rows and columns does the dataset
+#   have? Do you see any missing values?
 def main():
-    month_number = [1, 2, 3, 4, 5, 6, 7]
-    new_deaths = [213, 2729, 37718, 184064, 143119, 136073, 165003]
+    who_time_series = pd.read_csv('WHO_time_series.csv')
+    who_time_series['Date_reported'] = pd.to_datetime(who_time_series['Date_reported'], format='%Y-%m-%d')
 
-    plt.plot(month_number, new_deaths)
-    plt.title('New Reported Deaths By Month (Globally)')
-    plt.xlabel('Month Number')
-    plt.ylabel('Number Of Deaths')
-    plt.show()
+    print(who_time_series.head())
+    print(who_time_series.tail())
+    print(who_time_series.info())
 
 
 if __name__ == '__main__':
