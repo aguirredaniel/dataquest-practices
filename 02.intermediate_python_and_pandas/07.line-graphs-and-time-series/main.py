@@ -1,15 +1,15 @@
-# - What is the unit length of the x-axis? Assign your answer to x_unit_length.
-# - What is the unit length of the y-axis? Assign your answer to y_unit_length.
-# - What is x-coordinate of point A? Assign your answer to x_coordinate_A.
-# - What is the y-coordinate of point B? Assign your answer to y_coordinate_B.
-# - What are the x- and y-coordinates of point C? Assign your answer as a Python list to C_coordinates — the
-#   x-coordinate must come first in your list.
+# - The greatest number of new deaths was reported in April. If you think this is true, assign the Boolean True to
+#   sentence_1 — otherwise assign False.
+# - The lowest number of new deaths was reported in June. Assign True or False to sentence_2.
+# - The April-June portion shows a mild decrease in the number of deaths compared to the peak at the beginning of April.
+#   Assign True or False to sentence_3.
+# - The number of new reported deaths in May is lower than the number reported in July, but it is higher than the number
+#   reported in June. Assign True or False to sentence_4.
 def main():
-    x_unit_length = 10
-    y_unit_length = 1000
-    x_coordinate_A = 70
-    y_coordinate_B = 5000
-    C_coordinates = [50, 9000]
+    sentence_1 = True
+    sentence_2 = False
+    sentence_3 = True
+    sentence_4 = True
 
 
 if __name__ == '__main__':
