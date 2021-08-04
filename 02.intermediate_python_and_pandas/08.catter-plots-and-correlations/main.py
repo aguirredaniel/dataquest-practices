@@ -2,26 +2,22 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-# - Generate a bar plot to display the weather patterns in 2012.
-#   - Use the unique_values list for x-coordinates, and the weather_2012 list as bar heights.
-#   - Use plt.xticks() to customize the x-ticks: the only tick labels displayed should be 1, 2, 3, and 4.
-#   - Use 'Weather Patterns: 2012' as a title.
-#   - Use 'Frequency' as an y-label.
-#   - Use 'Unique Values' as an x-label.
-#   - Close the bar plot using plt.show().
+# - Generate a grouped frequency table for the registered column.
+#   - The table must have 10 intervals.
+#   - The intervals must be sorted in ascending order.
+#   - Assign the table to the registered_freq variable.
+# - Generate a grouped frequency table for the casual column.
+#   - The table must have 10 intervals.
+#   - The intervals must be sorted in an ascending order.
+#   - Assign the table to the casual_freq variable.
 def main():
     bike_sharing = pd.read_csv('../day.csv')
     bike_sharing['dteday'] = pd.to_datetime(bike_sharing['dteday'])
 
-    unique_values = [1, 2, 3, 4]
-    weather_2012 = [237, 123, 6, 0]
+    registered_freq = bike_sharing['registered'].value_counts(bins=10).sort_index()
+    casual_freq = bike_sharing['casual'].value_counts(bins=10).sort_index()
 
-    plt.bar(unique_values, weather_2012)
-    plt.xticks(ticks=[1, 2, 3, 4])
-    plt.title('Weather Patterns: 2012')
-    plt.ylabel('Frequency')
-    plt.xlabel('Unique Values')
-    plt.show()
+    print(registered_freq, casual_freq, sep='\n')
 
 
 if __name__ == '__main__':
