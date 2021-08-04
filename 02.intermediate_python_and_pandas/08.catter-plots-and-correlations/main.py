@@ -2,26 +2,25 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-# - Generate a scatter plot with the workingday column on the x-axis and the casual column on the y-axis. Add
-#   'Working Day Vs. Casual' as a title.
-# - Generate a scatter plot with the workingday column on the x-axis and the registered column on the y-axis. Add
-#   'Working Day Vs. Registered' as a title. You'll first need to close the previous scatter plot using plt.show()
-# - Do you notice an opposing pattern between the two scatter plots? The scatter plots might look a bit odd at first,
-#   but recall workingday only has two unique values, so you'll see two narrow vertical strips on the plots.
+# - Generate a bar plot to display the weather patterns in 2012.
+#   - Use the unique_values list for x-coordinates, and the weather_2012 list as bar heights.
+#   - Use plt.xticks() to customize the x-ticks: the only tick labels displayed should be 1, 2, 3, and 4.
+#   - Use 'Weather Patterns: 2012' as a title.
+#   - Use 'Frequency' as an y-label.
+#   - Use 'Unique Values' as an x-label.
+#   - Close the bar plot using plt.show().
 def main():
     bike_sharing = pd.read_csv('../day.csv')
     bike_sharing['dteday'] = pd.to_datetime(bike_sharing['dteday'])
 
-    working_day = bike_sharing['workingday']
-    casual = bike_sharing['casual']
+    unique_values = [1, 2, 3, 4]
+    weather_2012 = [237, 123, 6, 0]
 
-    plt.scatter(working_day, casual)
-    plt.title('Working Day Vs. Casual')
-    plt.show()
-
-    registered = bike_sharing['registered']
-    plt.scatter(working_day, registered)
-    plt.title('Working Day Vs. Registered')
+    plt.bar(unique_values, weather_2012)
+    plt.xticks(ticks=[1, 2, 3, 4])
+    plt.title('Weather Patterns: 2012')
+    plt.ylabel('Frequency')
+    plt.xlabel('Unique Values')
     plt.show()
 
 
