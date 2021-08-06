@@ -2,12 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-# - Generate all the five line plots on a single graph. Use a for loop over the days list, and for each day, do the
-#   following:
-#   - Plot a line plot using plt.plot(): Hour (Coded) must be on the x-axis and Slowness in traffic (%) on the y-axis.
-# - Add a legend to the graph.
-#   - Outside the for loop, use plt.legend().
-#   - Inside the for loop, use the label parameter inside plt.plot() — the label should be the day name.
+# - Inside the code editor, we've already added three plots on the grid chart. Add the other three plots.
 def main():
     traffic = pd.read_csv('../traffic_sao_paulo.csv', sep=';')
     #  Cleaning and converting 'Slowness in traffic (%)' column to  float dtype.
@@ -22,10 +17,9 @@ def main():
         each_day_traffic = traffic[i:i + 27]
         traffic_per_day[day] = each_day_traffic
 
-    for day in days:
-        df = traffic_per_day[day]
-        plt.plot(df['Hour (Coded)'], df['Slowness in traffic (%)'], label=day)
-    plt.legend()
+    plt.figure()
+    for i in range(6):
+        plt.subplot(3, 2, i + 1)
     plt.show()
 
 
