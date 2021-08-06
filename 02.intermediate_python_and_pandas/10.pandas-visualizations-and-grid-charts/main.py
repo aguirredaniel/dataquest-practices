@@ -29,6 +29,14 @@ def main():
         plt.plot(df['Hour (Coded)'], df['Slowness in traffic (%)'])
         plt.title(day)
         plt.ylim([0, 25])
+
+    plt.subplot(3, 2, 6)
+    for day in days:
+        df = traffic_per_day[day]
+        plt.plot(df['Hour (Coded)'], df['Slowness in traffic (%)'], label=day)
+    plt.legend()
+    plt.ylim([0, 25])
+
     plt.show()
 
 
