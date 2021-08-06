@@ -2,22 +2,24 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-# - Generate a scatter plot with Slowness in traffic (%) on the x-axis and Point of flooding on the y-axis. Close and
-#   display the plot using plt.show().
-# - Generate a scatter plot with Slowness in traffic (%) on the x-axis and Semaphore off on the y-axis.
+# - Isolate all the rows where traffic slowness is 20% or more. Assign the new DataFrame to a variable named
+#   slowness_20_or_more.
+# - Drop the Slowness in traffic (%) and Hour (Coded) columns from slowness_20_or_more.
+# - Calculate the event frequencies using the DataFrame.sum() method on slowness_20_or_more. Assign the resulting Series
+#   to incident_frequencies.
+# - Use incident_frequencies to plot a horizontal bar plot — use a Pandas method.
+# - Examine the plot — what are some high-frequency incidents when traffic slowness is 20% or more?
 def main():
     traffic = pd.read_csv('../traffic_sao_paulo.csv', sep=';')
     #  Cleaning and converting 'Slowness in traffic (%)' column to  float dtype.
     traffic['Slowness in traffic (%)'] = traffic['Slowness in traffic (%)'].str.replace(',', '.').astype(float)
 
-    # Isolating the incident columns by dropping the columns 'Hour (Coded)' and 'Slowness in traffic (%)'
-    incidents = traffic.drop(['Hour (Coded)', 'Slowness in traffic (%)'], axis=1)
+    slowness_20_or_more = traffic[traffic['Slowness in traffic (%)'] >= 20]
+    slowness_20_or_more = slowness_20_or_more.drop(['Hour (Coded)', 'Slowness in traffic (%)'], axis=1)
+    incident_frequencies = slowness_20_or_more.sum()
+    print(incident_frequencies)
 
-    traffic.plot.scatter(x='Slowness in traffic (%)', y='Lack of electricity')
-    plt.show()
-    traffic.plot.scatter(x='Slowness in traffic (%)', y='Point of flooding')
-    plt.show()
-    traffic.plot.scatter(x='Slowness in traffic (%)', y='Semaphore off')
+    incident_frequencies.plot.barh()
     plt.show()
 
 
