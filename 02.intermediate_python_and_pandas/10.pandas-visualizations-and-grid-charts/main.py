@@ -2,11 +2,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-# - Generate a horizontal bar plot for the incidents.sum() table. Run your code without submitting the answer.
-# - Based on the resulting bar plot, evaluate the truth value of the following sentences:
-#   - Broken trucks are the most frequent cause of slow traffic. Assign the Boolean True or False to sentence_1.
-#   - Lack of electricity and flooding are less frequent than broken trucks. Assign True or False to sentence_2.
-#   - The most frequent incident type is broken trucks. Assign True or False to sentence_3.
+# - Generate a scatter plot with Slowness in traffic (%) on the x-axis and Point of flooding on the y-axis. Close and
+#   display the plot using plt.show().
+# - Generate a scatter plot with Slowness in traffic (%) on the x-axis and Semaphore off on the y-axis.
 def main():
     traffic = pd.read_csv('../traffic_sao_paulo.csv', sep=';')
     #  Cleaning and converting 'Slowness in traffic (%)' column to  float dtype.
@@ -15,12 +13,12 @@ def main():
     # Isolating the incident columns by dropping the columns 'Hour (Coded)' and 'Slowness in traffic (%)'
     incidents = traffic.drop(['Hour (Coded)', 'Slowness in traffic (%)'], axis=1)
 
-    incidents.sum().plot.barh()
+    traffic.plot.scatter(x='Slowness in traffic (%)', y='Lack of electricity')
     plt.show()
-
-    sentence_1 = False
-    sentence_2 = True
-    sentence_3 = True
+    traffic.plot.scatter(x='Slowness in traffic (%)', y='Point of flooding')
+    plt.show()
+    traffic.plot.scatter(x='Slowness in traffic (%)', y='Semaphore off')
+    plt.show()
 
 
 if __name__ == '__main__':
