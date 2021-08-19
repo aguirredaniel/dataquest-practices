@@ -2,17 +2,15 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-# - Iterate over a list containing the four Axes objects. For each Axes object, do the following:
-# - Generate a line plot with the Month column on the x-axis and the New_deaths columns on the y-axis.
-# - Remove the x- and y-tick labels.
-# - Remove all ticks using the Axes.tick_params() method.
-# - Remove all the spines using the Axes.spines[location].set_visible() method.
+# - Highlight the June–October period on the third plot. Use color='#af0b1e' and linewidth=2.5.
+# - Highlight the October–December period on the fourth plot. Use color='#af0b1e' and linewidth=2.5.
 def main():
     death_toll = pd.read_csv('../covid_avg_deaths.csv')
     fig, (ax1, ax2, ax3, ax4) = plt.subplots(nrows=4, ncols=1, figsize=(6, 8))
-
-    for ax in [ax1, ax2, ax3, ax4]:
-        ax.plot(death_toll['Month'], death_toll['New_deaths'])
+    axes = [ax1, ax2, ax3, ax4]
+    for ax in axes:
+        ax.plot(death_toll['Month'], death_toll['New_deaths'],
+                color='#af0b1e', alpha=0.1)
 
         # Maximizing data-ink ratio
         ax.set_xticklabels([])
@@ -23,6 +21,13 @@ def main():
         for location in ['left', 'bottom', 'right', 'top']:
             ax.spines[location].set_visible(False)
         # =========================
+
+    # Highlight periods
+    for ax, periods in zip(axes, [(0, 3), (2, 6), (5, 10), (9, 12)]):
+        start, finish = periods
+        ax.plot(death_toll['Month'][start: finish], death_toll['New_deaths'][start:finish],
+                color='#af0b1e', linewidth=3.5)
+
     plt.show()
 
 
