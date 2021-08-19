@@ -2,22 +2,16 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-# - Add the label Mar - Jun to the second Axes object. The label must have the following properties:
-#   - The x-coordinate is 3.7.
-#   - The y-coordinate is 800.
-#   - The color is #af0b1e.
+# - Add the title The virus kills 851 people each day to the first Axes object (data source: World Health Organization).
+#   The text must have the following properties:
+#   - The x-coordinate is 0.5.
+#   - The y-coordinate is 3500.
+#   - The font size is 14.
 #   - It is bolded.
-# - Add the label Jun - Oct to the third Axes object. The label must have the following properties:
-#   - The x-coordinate is 7.1.
-#   - The y-coordinate is 500.
-#   - The color is #af0b1e.
-#   - It is bolded.
-# - Add the label Oct - Dec to the fourth Axes object. The label must have the following properties:
-#   - The x-coordinate is 10.5.
-#   - The y-coordinate is 600.
-#   - The color is #af0b1e.
-#   - It is bolded.
-#   - It is rotated to 45 degrees.
+# - Add the subtitle Average number of daily deaths per month in the US. The text must have the following properties:
+#   - The x-coordinate is 0.5.
+#   - The y-coordinate is 3150.
+#   - The font size is 12.
 def main():
     death_toll = pd.read_csv('../covid_avg_deaths.csv')
     fig, axes = plt.subplots(nrows=4, ncols=1, figsize=(6, 8))
@@ -27,8 +21,13 @@ def main():
                              (7.1, 500, 'Jun - Oct', 0),
                              (10.5, 600, 'Oct - Dec', 45)]
 
-    # [y-axis] Showing  magnitude and the range of the quantities trends.
     ax1 = axes[0]
+
+    # [y-axis] Showing  title and sub-title.
+    ax1.text(0.5, 3500, 'The virus kills 851 people each day', size=14, weight='bold')
+    ax1.text(0.5, 3150, 'Average number of daily deaths per month in the US', size=12)
+
+    # [y-axis] Showing  magnitude and the range of the quantities trends.
     ax1.text(0.5, -80, '0', alpha=0.5)
     ax1.text(3.5, 2000, '1,844', alpha=0.5)
     ax1.text(11.5, 2400, '2,247', alpha=0.5)
