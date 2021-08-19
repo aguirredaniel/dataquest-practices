@@ -41,6 +41,10 @@ def main():
         ax.plot(death_toll['Month'][start: finish], death_toll['New_deaths'][start:finish],
                 color='#af0b1e', linewidth=2.5)
 
+        # Adding Progress bars
+        ax.axhline(y=1600, xmin=0.5, xmax=0.8,
+                   linewidth=6, color='#af0b1e', alpha=0.1)
+
         # [x-axis] Showing months periods labels
         x, y, label, rotation = period_label_params
         ax.text(x, y, label, color='#af0b1e',
