@@ -3,17 +3,16 @@ import matplotlib.pyplot as plt
 
 
 # Evaluate the truth value of the following sentences.
-#
-# - Proximity is typically stronger than enclosure. Assign True or False to sentence_1.
-# - Similarity can be stronger than proximity in some cases, and vice-versa. Assign True or False to sentence_2.
-# - Similarity and enclosure are of equal strength. Assign True or False to sentence_3.
-# - People perceive visuals in a random way, without any principles governing their perception. Assign True or False to
-#   sentence_4.
+# - In some cases, enclosure can also act as a pre-attentive attribute. Assign True or False to sentence_1.
+# - Pre-attentive attributes can also explain why we perceive two distinct visual objects as part of the same group. \
+#   Assign True or False to sentence_2.
+# - We can apply pre-attentive attributes to text by using various visual effects (bolding, underlining, italicizing,
+#   coloring, increasing font size, etc.) . Assign True or False to sentence_3.
+
 def main():
-    sentence_1 = False
-    sentence_2 = True
-    sentence_3 = False
-    sentence_4 = False
+    sentence_1 = True
+    sentence_2 = False
+    sentence_3 = True
 
 
 if __name__ == '__main__':
