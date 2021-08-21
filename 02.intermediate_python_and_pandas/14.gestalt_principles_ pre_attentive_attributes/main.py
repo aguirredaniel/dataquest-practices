@@ -4,16 +4,13 @@ import matplotlib.pyplot as plt
 
 # Evaluate the truth value of the following sentences.
 #
-# - Enclosure makes the COVID-19 period distinct. If you think this is true, assign the Boolean True to sentence_1;
-#   otherwise, assign False.
-# - Similarity of color on the bars visually separates them into two groups: negative values (yellow) and positive
-#   values (blue). Assign True or False to sentence_2.
-# - By making bar borders thicker, enclosure draws attention upon the April 2020 and June 2020 values. Assign True or
-#   False to sentence_3.
+# - The principle of connection shows that the y-axis is the same for both bar plots. If you think this is true,
+#   assign the Boolean True to sentence_1; otherwise, assign False.
+# - Two curved arrows link two snippets of text to two nearby bars — this is an application of the principle of
+#    proximity. Assign True or False to sentence_2.
 def main():
     sentence_1 = True
-    sentence_2 = True
-    sentence_3 = True
+    sentence_2 = False
 
 
 if __name__ == '__main__':
