@@ -2,13 +2,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-# - Add the title Wine Quality Most Strongly Correlated With Alcohol Level. The title should have the following
-#   properties:
-#   - Its coordinates are -0.7 (x) and 13.5 (y).
-#   - The size is 17.
-#   - It's bolded.
-# - Add the subtitle Correlation values between wine quality and wine properties (alcohol, pH, etc.). Its coordinates
-#  are -0.7 (x) and 12.7 (y). Leave the font size on default.
+# - Create a pandas Series for the red wine data set to specify the color order.
+#   - The correlation values are already saved in red_corr.
+#   - Zero and positive correlation values should have the color code '#33A1C9'.
+#   - Negative correlation values should have the color code '#ffae42'.
+# - Use the Series you've just created to change the colors of the bars in the red wine bar plot.
 def main():
     red_wine = pd.read_csv('winequality-red.csv', sep=';')
     red_corr = red_wine.corr()['quality'][:-1]
@@ -18,10 +16,17 @@ def main():
 
     plt.style.use('fivethirtyeight')
     fig, ax = plt.subplots(figsize=(9, 5))
+
+    white_positive = white_corr >= 0
+    color_map_white = white_positive.map({True: '#33A1C9', False: '#ffae42'})
+
+    red_positive = red_corr >= 0
+    color_map_red = red_positive.map({True: '#33A1C9', False: '#ffae42'})
+
     ax.barh(white_wine.columns[:-1], white_corr, left=2,
-            height=0.5)
+            height=0.5, color=color_map_white)
     ax.barh(red_wine.columns[:-1], red_corr, left=-0.1,
-            height=0.5)
+            height=0.5, color=color_map_red)
 
     ax.grid(False)
     ax.set_xticklabels([])
@@ -70,8 +75,8 @@ def main():
             fontsize=15, fontweight='bold')
     ax.text(-0.7, 12.7,
             'Correlation values between wine quality and wine properties (alcohol, pH, etc.)')
+
     plt.show()
 
-
 if __name__ == '__main__':
-    main()
+        main()
