@@ -14,9 +14,8 @@ import pandas as pd
 def main():
     happiness2015 = pd.read_csv('World_Happiness_2015.csv')
     grouped = happiness2015.groupby('Region')
-    north_america = happiness2015.iloc[[4, 14]]
-    na_group = grouped.get_group('North America')
-    equal = north_america == na_group
+    means = grouped.mean()
+    print(means)
 
 
 if __name__ == '__main__':
