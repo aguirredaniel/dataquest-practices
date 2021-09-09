@@ -1,16 +1,23 @@
 import pandas as pd
 
 
-# - Use the pd.read_csv() function to read the World_Happiness_2015.csv file into a DataFrame called happiness2015.
-# - Store the first five rows of the DataFrame in a variable called first_5.
-# - Use the DataFrame.info() method to print information about the DataFrame.
-# - After you run your code, use the variable inspector to look at the variable first_5 and the output to become
-#   familiar with the data.
+# - Create an empty dictionary named mean_happiness to store the results of this exercise.
+# - Use the Series.unique() method to create an array of unique values for the Region column.
+# - Use a for loop to iterate over the unique region values from the Region column.
+# - Assign the rows belonging to the current region to a variable named region_group.
+# - Use the Series.mean() method to calculate the mean happiness score for region_group.
+# - Assign the mean value to the mean_happiness dictionary, using the region name as the key and the mean happiness
+#   score as the value.
 
 def main():
     happiness2015 = pd.read_csv('World_Happiness_2015.csv')
-    first_5 = happiness2015.head()
-    print(happiness2015.info(), first_5, sep='\n')
+
+    mean_happiness = {}
+    regions = happiness2015['Region'].unique()
+    for region in regions:
+        region_group = happiness2015[happiness2015['Region'] == region]
+        mean_happiness[region] = region_group['Happiness Score'].mean()
+    print(mean_happiness)
 
 
 if __name__ == '__main__':
