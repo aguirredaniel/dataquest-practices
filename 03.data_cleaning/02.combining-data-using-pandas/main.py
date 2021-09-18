@@ -18,13 +18,13 @@ def main():
     happiness2016['Year'] = 2016
     happiness2017['Year'] = 2017
 
-    head_2015 = happiness2015[['Country', 'Happiness Score', 'Year']].head(3)
+    head_2015 = happiness2015[['Year', 'Country', 'Happiness Score', 'Standard Error']].head(4)
     head_2016 = happiness2016[['Country', 'Happiness Score', 'Year']].head(3)
 
     concat_axis0 = pd.concat([head_2015, head_2016])
     concat_axis1 = pd.concat([head_2015, head_2016], axis=1)
-    question1 = 6
-    question2 = 3
+    rows = 7
+    columns = 4
 
 
 if __name__ == '__main__':
