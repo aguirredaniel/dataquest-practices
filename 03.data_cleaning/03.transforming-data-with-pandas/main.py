@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 
 def label(factor):
@@ -65,12 +66,11 @@ class Percentages:
         return div * 100
 
 
-# - Use the melt function to reshape happiness2015. The columns listed in main_cols should stay the same. The columns
-#   listed in factors should be transformed into rows. Assign the result to a variable called melt.
-# - Convert the value column to a percentage.
-#   - Divide the value column by the Happiness Score column and multiply the result by 100.
-#   - Use the round() function to round the result to 2 decimal places.
-#   - Assign the result to a new column called Percentage.
+# - Use the df.pivot_table() method to create a pivot table from the melt dataframe. Set the variable column as the
+#   index and the value column as the values. Assign the result to pv_melt.
+# - Use the df.plot() method to create a pie chart of the results. Set the kind parameter to 'pie', the y parameter to
+#   'value', and the legend parameter to False, so we can better see the results.
+# - If we disregard Dystopia Residual, which two factors, on average, contribute the most to the happiness score?
 def main():
     happiness2015 = pd.read_csv('World_Happiness_2015.csv')
     mapping = {'Economy (GDP per Capita)': 'Economy', 'Health (Life Expectancy)': 'Health',
@@ -83,9 +83,10 @@ def main():
     factors = ['Economy', 'Family', 'Health', 'Freedom', 'Trust', 'Generosity', 'Dystopia Residual']
 
     melt = pd.melt(happiness2015, id_vars=main_cols, value_vars=factors)
+    pv_melt = melt.pivot_table(index='variable', values='value')
+    pv_melt.plot(kind='pie', y='value', legend=False)
 
-    percentage = (melt['value'] / melt['Happiness Score']) * 100
-    melt['Percentage'] = round(percentage, 2)
+    plt.show()
 
 
 if __name__ == '__main__':
