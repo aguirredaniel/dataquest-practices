@@ -48,13 +48,29 @@ def v_counts(col: pd.Series) -> pd.Series:
     return result
 
 
-# - Create a function that calculates the percentage of 'High' and 'Low' values in each column.
-#   - Create a function named v_counts that accepts one parameter called col.
-#   - Use the Series.value_counts() method to calculate the value counts for col. Assign the result to num.
-#   - Use the Series.size attribute to calculate the number of rows in the column. Assign the result to den.
-# - Divide num by den and return the result.
-# - Use the df.apply() method to apply the v_counts function to all of the columns in factors_impact. Assign the result
-#   to v_counts_pct.
+class Percentages:
+    def __init__(self, df):
+        self._df = df
+
+    def __call__(self, col: pd.Series) -> pd.Series:
+        """
+            Converts a factor column to percentages of 'Happiness Score' column.
+        Args:
+            col:
+
+        Returns:
+            A pd.Series with the percentages of 'Happiness Score' column represent a Factor column.
+        """
+        div = col / self._df['Happiness Score']
+        return div * 100
+
+
+# - Create a function that converts each of the six factor columns and the Dystopia Residual column to percentages.
+#   - Create a function named percentages that accepts one parameter called col.
+#   - Divide col by the Happiness Score column. Assign the result to div.
+#   - Multiply div by 100 and return the result.
+# - Use the df.apply() method to apply the percentages function to all of the columns in factors. Assign the result to
+#   factor_percentages.
 def main():
     happiness2015 = pd.read_csv('World_Happiness_2015.csv')
     mapping = {'Economy (GDP per Capita)': 'Economy', 'Health (Life Expectancy)': 'Health',
@@ -67,7 +83,12 @@ def main():
 
     v_counts_pct = factors_impact.apply(v_counts)
 
-    print(v_counts_pct)
+    percentages = Percentages(happiness2015)
+
+    factors = ['Economy', 'Family', 'Health', 'Freedom', 'Trust', 'Generosity', 'Dystopia Residual']
+    factor_percentages = happiness2015[factors].apply(percentages)
+
+    print(factor_percentages)
 
 
 if __name__ == '__main__':
