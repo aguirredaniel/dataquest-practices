@@ -65,12 +65,12 @@ class Percentages:
         return div * 100
 
 
-# - Create a function that converts each of the six factor columns and the Dystopia Residual column to percentages.
-#   - Create a function named percentages that accepts one parameter called col.
-#   - Divide col by the Happiness Score column. Assign the result to div.
-#   - Multiply div by 100 and return the result.
-# - Use the df.apply() method to apply the percentages function to all of the columns in factors. Assign the result to
-#   factor_percentages.
+# - Use the melt function to reshape happiness2015. The columns listed in main_cols should stay the same. The columns
+#   listed in factors should be transformed into rows. Assign the result to a variable called melt.
+# - Convert the value column to a percentage.
+#   - Divide the value column by the Happiness Score column and multiply the result by 100.
+#   - Use the round() function to round the result to 2 decimal places.
+#   - Assign the result to a new column called Percentage.
 def main():
     happiness2015 = pd.read_csv('World_Happiness_2015.csv')
     mapping = {'Economy (GDP per Capita)': 'Economy', 'Health (Life Expectancy)': 'Health',
@@ -78,17 +78,14 @@ def main():
 
     #  DataFrame with factor columns renamed.
     happiness2015 = happiness2015.rename(mapping, axis=1)
-    factors = ['Economy', 'Family', 'Health', 'Freedom', 'Trust', 'Generosity']
-    factors_impact = happiness2015[factors].applymap(label, )
 
-    v_counts_pct = factors_impact.apply(v_counts)
-
-    percentages = Percentages(happiness2015)
-
+    main_cols = ['Country', 'Region', 'Happiness Rank', 'Happiness Score']
     factors = ['Economy', 'Family', 'Health', 'Freedom', 'Trust', 'Generosity', 'Dystopia Residual']
-    factor_percentages = happiness2015[factors].apply(percentages)
 
-    print(factor_percentages)
+    melt = pd.melt(happiness2015, id_vars=main_cols, value_vars=factors)
+
+    percentage = (melt['value'] / melt['Happiness Score']) * 100
+    melt['Percentage'] = round(percentage, 2)
 
 
 if __name__ == '__main__':
