@@ -1,10 +1,12 @@
 import pandas as pd
 
 
-def label(factor):
+def label(factor, x):
     """
     Indicate whether the factor has a high impact on the happiness score or a low impact
     Args:
+        x:
+            Value to make comparation with factor value.
         factor:
 
     Returns:
@@ -17,18 +19,16 @@ def label(factor):
         >>> label(0.90563)
         'Low'
     """
-    if factor > 1:
+    if factor > x:
         return 'High'
     else:
         return 'Low'
 
 
-# - Use the Series.map() method to apply the label function to the Economy column in happiness2015. Assign the result to
-#   economy_impact_map.
-# - Use the Series.apply() method to apply the label function to the Economy column. Assign the result to
-#   economy_impact_apply.
-# - Use the following code to check if the methods produce the same result:
-#   economy_impact_map.equals(economy_impact_apply). Assign the result to a variable named equal.
+# - Update label to take in another argument named x. If the element is greater than x, return 'High'. Otherwise, return
+#   'Low'.
+# - Then, use the apply method to apply label to the Economy column and set the x argument to 0.8. Save the result back
+#   to economy_impact_apply.
 def main():
     happiness2015 = pd.read_csv('World_Happiness_2015.csv')
     mapping = {'Economy (GDP per Capita)': 'Economy', 'Health (Life Expectancy)': 'Health',
@@ -37,12 +37,8 @@ def main():
     #  DataFrame with factor columns renamed.
     happiness2015 = happiness2015.rename(mapping, axis=1)
 
-    economy_impact_map = happiness2015['Economy'].map(label)
-    economy_impact_apply = happiness2015['Economy'].apply(label)
-
-    equal = economy_impact_map.equals(economy_impact_apply)
-
-    print(equal)
+    economy_impact_apply = happiness2015['Economy'].apply(label, x=0.8)
+    print(economy_impact_apply)
 
 
 if __name__ == '__main__':
