@@ -1,12 +1,10 @@
 import pandas as pd
 
 
-def label(factor, x):
+def label(factor):
     """
     Indicate whether the factor has a high impact on the happiness score or a low impact
     Args:
-        x:
-            Value to make comparation with factor value.
         factor:
 
     Returns:
@@ -19,16 +17,44 @@ def label(factor, x):
         >>> label(0.90563)
         'Low'
     """
-    if factor > x:
+    if factor > 1:
         return 'High'
     else:
         return 'Low'
 
 
-# - Update label to take in another argument named x. If the element is greater than x, return 'High'. Otherwise, return
-#   'Low'.
-# - Then, use the apply method to apply label to the Economy column and set the x argument to 0.8. Save the result back
-#   to economy_impact_apply.
+def v_counts(col: pd.Series) -> pd.Series:
+    """
+    Calculates the percentage of 'High' and 'Low' values in factor series.
+    Args:
+        col:
+        pd.Series for a Factor column with values 'High' and 'Low' impact.
+    Returns:
+        Returns a pd.Series with percentage of 'High' and 'Low' values.
+    Examples:
+        >>> series = pd.Series(['High', 'Low', 'Low'])
+        >>> series
+            0    High
+            1    Low
+            2    Low
+        >>> v_counts(series)
+            Low     0.666667
+            High    0.333333
+    """
+    num = col.value_counts()
+    den = col.size
+    result = num / den
+
+    return result
+
+
+# - Create a function that calculates the percentage of 'High' and 'Low' values in each column.
+#   - Create a function named v_counts that accepts one parameter called col.
+#   - Use the Series.value_counts() method to calculate the value counts for col. Assign the result to num.
+#   - Use the Series.size attribute to calculate the number of rows in the column. Assign the result to den.
+# - Divide num by den and return the result.
+# - Use the df.apply() method to apply the v_counts function to all of the columns in factors_impact. Assign the result
+#   to v_counts_pct.
 def main():
     happiness2015 = pd.read_csv('World_Happiness_2015.csv')
     mapping = {'Economy (GDP per Capita)': 'Economy', 'Health (Life Expectancy)': 'Health',
@@ -36,9 +62,12 @@ def main():
 
     #  DataFrame with factor columns renamed.
     happiness2015 = happiness2015.rename(mapping, axis=1)
+    factors = ['Economy', 'Family', 'Health', 'Freedom', 'Trust', 'Generosity']
+    factors_impact = happiness2015[factors].applymap(label, )
 
-    economy_impact_apply = happiness2015['Economy'].apply(label, x=0.8)
-    print(economy_impact_apply)
+    v_counts_pct = factors_impact.apply(v_counts)
+
+    print(v_counts_pct)
 
 
 if __name__ == '__main__':
