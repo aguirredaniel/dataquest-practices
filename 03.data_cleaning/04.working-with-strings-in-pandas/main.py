@@ -19,14 +19,9 @@ def extract_last_word(element):
     return element_str.split()[-1]
 
 
-# - Write a function called extract_last_word with the following criteria:
-# - The function should accept one parameter called element.
-# - Use the string.split() method to split the object into a list. First convert element to a string as follows:
-#   str(element).
-# - Return the last word of the list.
-# - Use the Series.apply() method to apply the function to the CurrencyUnit column. Save the result to
-#   merged['Currency Apply'].
-# - Use the Series.head() method to print the first five rows in merged['Currency Apply'].
+# - Use the Series.str.split() method to split the CurrencyUnit column into a list of words and then use the
+#   Series.str.get() method to select just the last word. Assign the result to merged['Currency Vectorized'].
+# - Use the Series.head() method to print the first five rows in merged['Currency Vectorized'].
 def main():
     happiness2015 = pd.read_csv('World_Happiness_2015.csv')
     world_dev = pd.read_csv('World_dev.csv')
@@ -35,8 +30,8 @@ def main():
     col_renaming = {'SourceOfMostRecentIncomeAndExpenditureData': 'IESurvey'}
     merged.rename(col_renaming, axis=1, inplace=True)
 
-    merged['Currency Apply'] = merged['CurrencyUnit'].apply(extract_last_word)
-    print(merged['Currency Apply'].head())
+    merged['Currency Vectorized'] = merged['CurrencyUnit'].str.split().str.get(-1)
+    print(merged['Currency Vectorized'].head())
 
 
 if __name__ == '__main__':
