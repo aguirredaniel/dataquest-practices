@@ -19,11 +19,9 @@ def extract_last_word(element):
     return element_str.split()[-1]
 
 
-# - Use the Series.str.len() method to return the length of each element in the CurrencyUnit column. Assign the result
-#   to lengths.
-# - Use the Series.value_counts() method to return the count of unique values in lengths. Set the dropna parameter to
-#   False so NaNs are counted, too. Assign the result to value_counts.
-#   - If value_counts contains NaNs, it means the Series.str.len() method excluded them and didn't treat them as strings.
+# - Use the Series.str.contains() method to search for pattern in the SpecialNotes column. Assign the result to
+#   national_accounts.
+# - Use the Series.head() method to print the first five rows in national_accounts.
 def main():
     happiness2015 = pd.read_csv('World_Happiness_2015.csv')
     world_dev = pd.read_csv('World_dev.csv')
@@ -32,9 +30,9 @@ def main():
     col_renaming = {'SourceOfMostRecentIncomeAndExpenditureData': 'IESurvey'}
     merged.rename(col_renaming, axis=1, inplace=True)
 
-    lengths = merged['CurrencyUnit'].str.len()
-    value_counts = lengths.value_counts(dropna=False)
-    print(lengths, value_counts, sep='\n')
+    pattern = r"[Nn]ational accounts"
+    national_accounts = merged['SpecialNotes'].str.contains(pattern)
+    print(national_accounts.head())
 
 
 if __name__ == '__main__':
