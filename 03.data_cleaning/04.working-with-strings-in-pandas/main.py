@@ -1,15 +1,32 @@
 import pandas as pd
 
 
-# - Use the pd.merge() function to combine happiness2015 and world_dev. Save the resulting dataframe to merged. As a
-#   reminder, you can use the following syntax to combine the dataframes: pd.merge(left=df1, right=df2, how='left',
-#   left_on='left_df_Column_Name', right_on='right_df_Column_Name').
-#   - Set the left_on parameter to the Country column from happiness2015 and the right_on parameter to the ShortName
-#   column from world_dev.
-# - Use the DataFrame.rename() method to rename the SourceOfMostRecentIncomeAndExpenditureData column in merged to
-#   IESurvey (because we don't want to keep typing that long name!).
-#   - We've already saved the mapping to a dictionary named col_renaming.
-#   - Make sure to set the axis parameter to 1.
+def extract_last_word(element):
+    """
+        Slit a string value by empty space and returns the last word.
+    Args:
+        element:
+         A strinig value.
+    Returns:
+        The last word in string value.
+
+    Examples:
+        >>> extract_last_word('Canadian dollar')
+        'dollar'
+    """
+    element_str = str(element)
+
+    return element_str.split()[-1]
+
+
+# - Write a function called extract_last_word with the following criteria:
+# - The function should accept one parameter called element.
+# - Use the string.split() method to split the object into a list. First convert element to a string as follows:
+#   str(element).
+# - Return the last word of the list.
+# - Use the Series.apply() method to apply the function to the CurrencyUnit column. Save the result to
+#   merged['Currency Apply'].
+# - Use the Series.head() method to print the first five rows in merged['Currency Apply'].
 def main():
     happiness2015 = pd.read_csv('World_Happiness_2015.csv')
     world_dev = pd.read_csv('World_dev.csv')
@@ -18,6 +35,9 @@ def main():
     col_renaming = {'SourceOfMostRecentIncomeAndExpenditureData': 'IESurvey'}
     merged.rename(col_renaming, axis=1, inplace=True)
 
+    merged['Currency Apply'] = merged['CurrencyUnit'].apply(extract_last_word)
+    print(merged['Currency Apply'].head())
+
 
 if __name__ == '__main__':
-    pass
+    main()
