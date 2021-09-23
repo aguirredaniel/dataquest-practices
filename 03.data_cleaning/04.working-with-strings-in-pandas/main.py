@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 
 def extract_last_word(element):
@@ -19,11 +20,13 @@ def extract_last_word(element):
     return element_str.split()[-1]
 
 
-# - Use the Series.str.extractall() method to extract pattern from the IESurvey column. Assign the result to years.
-# - Use vectorized slicing to extract the first two numbers from the First_Year column in years (For example, extract
-#   "20" from "2000"). Assign the result to first_two_year.
-# - Add first_two_year to the Second_Year column in years, so that Second_Year contains the full year (ex: "2000").
-#   Assign the result to years['Second_Year'].
+# - Use some of the string methods above to clean the IncomeGroup column.
+#   - Make sure to remove the whitespace at the end of the strings.
+# - Use the df.pivot_table() method to return the mean of each income group in the IncomeGroup column. Set the index
+#   parameter equal to the IncomeGroup column and the values parameter equal to the Happiness Score column. Assign the
+#   result to pv_incomes.
+# - Use the df.plot() method to plot the results. Set the kind parameter equal to bar, the rot parameter equal to 30,
+#   and the ylim parameter equal to (0,10).
 def main():
     happiness2015 = pd.read_csv('World_Happiness_2015.csv')
     world_dev = pd.read_csv('World_dev.csv')
@@ -33,12 +36,11 @@ def main():
     merged.rename(col_renaming, axis=1, inplace=True)
 
     merged = merged.set_index('Country')
-    pattern = r"(?P<First_Year>[1-2][0-9]{3})/?(?P<Second_Year>[0-9]{2})?"
-    years = merged['IESurvey'].str.extractall(pattern)
-    first_two_year = years['First_Year'].str[:2]
-    years['Second_Year'] = first_two_year.str.cat(years['Second_Year'])
-
-    print(years.sort_values('Second_Year').head())
+    pattern = r'income:?\s?'
+    merged['IncomeGroup'] = merged['IncomeGroup'].str.replace(pattern, '').str.upper().str.strip()
+    pv_incomes = pd.pivot_table(merged, index='IncomeGroup', values='Happiness Score')
+    pv_incomes.plot(kind='bar', rot=30, ylim=(0, 10))
+    plt.show()
 
 
 if __name__ == '__main__':
