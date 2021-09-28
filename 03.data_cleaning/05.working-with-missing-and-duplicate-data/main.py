@@ -3,10 +3,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-# - Use the df.dropna() method to drop all columns in combined with 159 or less non null values.
-#   - Set the thresh argument equal to 159 and the axis parameter equal to 1.
-# - Use the df.isnull() and df.sum() methods to calculate the number of missing values for each column. Assign the
-#   result to missing.
 def main():
     happiness2015 = pd.read_csv('wh_2015.csv')
     happiness2016 = pd.read_csv('wh_2016.csv')
@@ -34,7 +30,9 @@ def main():
     combined = pd.merge(combined, regions, on='COUNTRY', how='left')
     combined = combined.drop('REGION_x', axis=1)
 
-    combined.rename({'REGION_x': 'REGION'}, inplace=True)
+    combined.rename(columns={'REGION_y': 'REGION'}, inplace=True)
+
+    print(combined.columns)
 
     combined['COUNTRY'] = combined['COUNTRY'].str.upper()
     combined = combined.drop_duplicates(['COUNTRY', 'YEAR'])
@@ -43,10 +41,18 @@ def main():
                        'WHISKER LOW']
     combined = combined.drop(columns_to_drop, axis=1)
 
-    combined = combined.dropna(thresh=159,  axis=1)
+    combined = combined.dropna(thresh=159, axis=1)
 
-    missing = combined.isnull().sum()
-    print(missing)
+    # From the visualization above, we can also identify that only three regions contain missing values:
+    #   Sub-Saharan Africa
+    #   Middle East and Northern Africa
+    #   Latin America and Carribbean
+    # Only about 4 percent of the values in each column are missing.
+    # Dropping rows with missing values won't cause us to lose information in other columns.
+
+    sorted_values = combined.set_index('REGION').sort_values(['REGION', 'HAPPINESS SCORE'])
+    sns.heatmap(sorted_values.isnull(), cbar=False)
+    plt.show()
 
 
 if __name__ == '__main__':
