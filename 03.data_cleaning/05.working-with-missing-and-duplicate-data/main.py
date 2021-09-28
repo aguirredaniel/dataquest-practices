@@ -3,18 +3,11 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-# - Use the pd.merge() function to assign the REGION in the regions dataframe to the corresponding country in combined.
-#   - Set the left parameter equal to combined.
-#   - Set the right parameter equal to regions.
-#   - Set the on parameter equal to 'COUNTRY'.
-#   - Set the how parameter equal to 'left' to make sure we don't drop any rows from combined.
-# - Assign the result back to combined.
-#   - Use the DataFrame.drop() method to drop the original region column with missing values, now named REGION_x.
-#   - Pass 'REGION_x' into the df.drop() method.
-#   - Set the axis parameter equal to 1.
-#   - Assign the result back to combined.
-# - Use the DataFrame.isnull() and DataFrame.sum() methods to check for missing values. Assign the result to a variable
-#   named missing.
+# - Standardize the capitalization so that all the values in the COUNTRY column in combined are uppercase.
+#   - As an example, 'India' should be changed to 'INDIA'.
+# - Use the df.duplicated() method to identify any rows that have the same value in the COUNTRY and YEAR columns. Assign
+#   your result to dups.
+# - Use dups to index combined. Print the results.
 def main():
     happiness2015 = pd.read_csv('wh_2015.csv')
     happiness2016 = pd.read_csv('wh_2016.csv')
@@ -42,9 +35,12 @@ def main():
     combined = pd.merge(combined, regions, on='COUNTRY', how='left')
     combined = combined.drop('REGION_x', axis=1)
 
-    missing = combined.isnull().sum()
+    combined.rename({'REGION_x': 'REGION'}, inplace=True)
 
-    print(missing)
+    combined['COUNTRY'] = combined['COUNTRY'].str.upper()
+    dups = combined.duplicated(['COUNTRY', 'YEAR'])
+
+    print(combined[dups])
 
 
 if __name__ == '__main__':
