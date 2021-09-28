@@ -3,13 +3,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-# - Use the Series.mean() method to calculate the mean of the HAPPINESS SCORE column. Assign the result to
-#   happiness_mean. Print happiness_mean.
-# - Use the Series.fillna() method to replace all the missing values in the HAPPINESS SCORE column with happiness_mean.
-#   Assign the result to a new column named HAPPINESS SCORE UPDATED.
-# - Print the mean of HAPPINESS SCORE UPDATED.
-# - Based on the results of this exercise, try to answer the question below:
-#   - Did replacing missing values with the mean of a series cause the mean to change?
+# - Use the DataFrame.dropna() method to drop any remaining rows with missing values. Assign the result back to combined
+# - Use the df.isnull() and df.sum() methods to confirm there are no missing values left in combined. Assign the result
+#   to missing.
 def main():
     happiness2015 = pd.read_csv('wh_2015.csv')
     happiness2016 = pd.read_csv('wh_2016.csv')
@@ -59,7 +55,11 @@ def main():
 
     happiness_mean = combined['HAPPINESS SCORE'].mean()
     combined['HAPPINESS SCORE UPDATED'] = combined['HAPPINESS SCORE'].fillna(happiness_mean)
-    print(happiness_mean, combined['HAPPINESS SCORE UPDATED'].mean(), sep='\n')
+
+    combined = combined.dropna()
+    missing = combined.isnull().sum()
+
+    print(missing)
 
 
 if __name__ == '__main__':
