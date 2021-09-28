@@ -3,6 +3,13 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
+# - Use the Series.mean() method to calculate the mean of the HAPPINESS SCORE column. Assign the result to
+#   happiness_mean. Print happiness_mean.
+# - Use the Series.fillna() method to replace all the missing values in the HAPPINESS SCORE column with happiness_mean.
+#   Assign the result to a new column named HAPPINESS SCORE UPDATED.
+# - Print the mean of HAPPINESS SCORE UPDATED.
+# - Based on the results of this exercise, try to answer the question below:
+#   - Did replacing missing values with the mean of a series cause the mean to change?
 def main():
     happiness2015 = pd.read_csv('wh_2015.csv')
     happiness2016 = pd.read_csv('wh_2016.csv')
@@ -32,8 +39,6 @@ def main():
 
     combined.rename(columns={'REGION_y': 'REGION'}, inplace=True)
 
-    print(combined.columns)
-
     combined['COUNTRY'] = combined['COUNTRY'].str.upper()
     combined = combined.drop_duplicates(['COUNTRY', 'YEAR'])
 
@@ -49,10 +54,12 @@ def main():
     #   Latin America and Carribbean
     # Only about 4 percent of the values in each column are missing.
     # Dropping rows with missing values won't cause us to lose information in other columns.
-
     sorted_values = combined.set_index('REGION').sort_values(['REGION', 'HAPPINESS SCORE'])
     sns.heatmap(sorted_values.isnull(), cbar=False)
-    plt.show()
+
+    happiness_mean = combined['HAPPINESS SCORE'].mean()
+    combined['HAPPINESS SCORE UPDATED'] = combined['HAPPINESS SCORE'].fillna(happiness_mean)
+    print(happiness_mean, combined['HAPPINESS SCORE UPDATED'].mean(), sep='\n')
 
 
 if __name__ == '__main__':
