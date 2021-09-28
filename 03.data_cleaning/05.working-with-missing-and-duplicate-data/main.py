@@ -3,10 +3,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-# - Use the df.drop() method to drop the columns in columns_to_drop.
-#   - Pass columns_to_drop into the df.drop() method.
-#   - Set the axis parameter equal to 1.
-#   - Assign the result back to combined.
+# - Use the df.dropna() method to drop all columns in combined with 159 or less non null values.
+#   - Set the thresh argument equal to 159 and the axis parameter equal to 1.
 # - Use the df.isnull() and df.sum() methods to calculate the number of missing values for each column. Assign the
 #   result to missing.
 def main():
@@ -45,8 +43,9 @@ def main():
                        'WHISKER LOW']
     combined = combined.drop(columns_to_drop, axis=1)
 
-    missing = combined.isnull().sum()
+    combined = combined.dropna(thresh=159,  axis=1)
 
+    missing = combined.isnull().sum()
     print(missing)
 
 
