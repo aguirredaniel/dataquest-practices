@@ -3,9 +3,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-# - Use the df.drop_duplicates() method to drop rows with more than one country for each year. Assign the result back to
-#   combined.
-#   - Pass a list containing the COUNTRY and YEAR columns into the drop_duplicates() method.
+# - Use the df.drop() method to drop the columns in columns_to_drop.
+#   - Pass columns_to_drop into the df.drop() method.
+#   - Set the axis parameter equal to 1.
+#   - Assign the result back to combined.
+# - Use the df.isnull() and df.sum() methods to calculate the number of missing values for each column. Assign the
+#   result to missing.
 def main():
     happiness2015 = pd.read_csv('wh_2015.csv')
     happiness2016 = pd.read_csv('wh_2016.csv')
@@ -37,6 +40,14 @@ def main():
 
     combined['COUNTRY'] = combined['COUNTRY'].str.upper()
     combined = combined.drop_duplicates(['COUNTRY', 'YEAR'])
+
+    columns_to_drop = ['LOWER CONFIDENCE INTERVAL', 'STANDARD ERROR', 'UPPER CONFIDENCE INTERVAL', 'WHISKER HIGH',
+                       'WHISKER LOW']
+    combined = combined.drop(columns_to_drop, axis=1)
+
+    missing = combined.isnull().sum()
+
+    print(missing)
 
 
 if __name__ == '__main__':
