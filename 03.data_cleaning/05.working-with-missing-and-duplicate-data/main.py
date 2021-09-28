@@ -3,12 +3,18 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-# - Confirm that the REGION column is missing from the 2017 data. Recall that there are 164 rows for the year 2017.
-#   - Select just the rows in combined in which the YEAR column equals 2017. Then, select just the REGION column. Assign
-#     the result to regions_2017.
-#   - Use the Series.isnull() and Series.sum() to calculate the total number of missing values in regions_2017, the
-#     REGION column for 2017. Assign the result to missing.
-# - Use the variable inspector to view the results of missing. Are all 164 region values missing for the year 2017?
+# - Use the pd.merge() function to assign the REGION in the regions dataframe to the corresponding country in combined.
+#   - Set the left parameter equal to combined.
+#   - Set the right parameter equal to regions.
+#   - Set the on parameter equal to 'COUNTRY'.
+#   - Set the how parameter equal to 'left' to make sure we don't drop any rows from combined.
+# - Assign the result back to combined.
+#   - Use the DataFrame.drop() method to drop the original region column with missing values, now named REGION_x.
+#   - Pass 'REGION_x' into the df.drop() method.
+#   - Set the axis parameter equal to 1.
+#   - Assign the result back to combined.
+# - Use the DataFrame.isnull() and DataFrame.sum() methods to check for missing values. Assign the result to a variable
+#   named missing.
 def main():
     happiness2015 = pd.read_csv('wh_2015.csv')
     happiness2016 = pd.read_csv('wh_2016.csv')
@@ -27,12 +33,18 @@ def main():
 
     combined = pd.concat([happiness2015, happiness2016, happiness2017], ignore_index=True)
 
-    combined_updated = combined.set_index('YEAR')
-    sns.heatmap(combined_updated.isnull(), cbar=False)
-    plt.show()
+    regions = pd.merge(happiness2015, happiness2016, on='COUNTRY')
+    regions['REGION'] = regions.apply(
+        lambda row: row['REGION_y'] if not pd.isna(row['REGION_y']) else row['REGION_x'],
+        axis=1)
+    regions = regions[['COUNTRY', 'REGION']]
 
-    regions_2017 = combined[combined['YEAR'] == 2017]['REGION']
-    missing = regions_2017.isnull().sum()
+    combined = pd.merge(combined, regions, on='COUNTRY', how='left')
+    combined = combined.drop('REGION_x', axis=1)
+
+    missing = combined.isnull().sum()
+
+    print(missing)
 
 
 if __name__ == '__main__':
