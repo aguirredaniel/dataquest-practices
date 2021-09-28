@@ -3,11 +3,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-# - Standardize the capitalization so that all the values in the COUNTRY column in combined are uppercase.
-#   - As an example, 'India' should be changed to 'INDIA'.
-# - Use the df.duplicated() method to identify any rows that have the same value in the COUNTRY and YEAR columns. Assign
-#   your result to dups.
-# - Use dups to index combined. Print the results.
+# - Use the df.drop_duplicates() method to drop rows with more than one country for each year. Assign the result back to
+#   combined.
+#   - Pass a list containing the COUNTRY and YEAR columns into the drop_duplicates() method.
 def main():
     happiness2015 = pd.read_csv('wh_2015.csv')
     happiness2016 = pd.read_csv('wh_2016.csv')
@@ -38,9 +36,7 @@ def main():
     combined.rename({'REGION_x': 'REGION'}, inplace=True)
 
     combined['COUNTRY'] = combined['COUNTRY'].str.upper()
-    dups = combined.duplicated(['COUNTRY', 'YEAR'])
-
-    print(combined[dups])
+    combined = combined.drop_duplicates(['COUNTRY', 'YEAR'])
 
 
 if __name__ == '__main__':
