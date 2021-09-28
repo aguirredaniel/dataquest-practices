@@ -1,16 +1,14 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 
-# - Update the columns names for happiness2015 and happiness2016 to match the formatting of the column names in
-#   happiness2017. Use the following criteria to rename the columns:
-#   - All letters should be uppercase.
-#   - There should be only one space between words.
-#   - There should be no parentheses in column names
-#   - For example, the Health (Life Expectancy) columns should both be renamed to HEALTH LIFE EXPECTANCY.
-# - Use the pd.concat() function to combine happiness2015, happiness2016, and happiness2017. Set the
-#   ignore_index argument equal to True to reset the index in the resulting dataframe. Assign the result to combined.
-# - Use the DataFrame.isnull() and DataFrame.sum() methods to check for missing values. Assign the result to a variable
-#   named missing.
+# - Confirm that the REGION column is missing from the 2017 data. Recall that there are 164 rows for the year 2017.
+#   - Select just the rows in combined in which the YEAR column equals 2017. Then, select just the REGION column. Assign
+#     the result to regions_2017.
+#   - Use the Series.isnull() and Series.sum() to calculate the total number of missing values in regions_2017, the
+#     REGION column for 2017. Assign the result to missing.
+# - Use the variable inspector to view the results of missing. Are all 164 region values missing for the year 2017?
 def main():
     happiness2015 = pd.read_csv('wh_2015.csv')
     happiness2016 = pd.read_csv('wh_2016.csv')
@@ -28,8 +26,13 @@ def main():
     happiness2017.columns = happiness2017.columns.str.replace('.', ' ').str.replace('\s+', ' ').str.strip().str.upper()
 
     combined = pd.concat([happiness2015, happiness2016, happiness2017], ignore_index=True)
-    missing = combined.isnull().sum()
-    print(missing)
+
+    combined_updated = combined.set_index('YEAR')
+    sns.heatmap(combined_updated.isnull(), cbar=False)
+    plt.show()
+
+    regions_2017 = combined[combined['YEAR'] == 2017]['REGION']
+    missing = regions_2017.isnull().sum()
 
 
 if __name__ == '__main__':
