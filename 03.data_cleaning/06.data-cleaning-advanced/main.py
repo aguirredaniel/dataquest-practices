@@ -9,10 +9,10 @@ def main():
     hn = pd.read_csv('hacker_news.csv')
     titles = hn["title"]
 
-    pattern = '[Pp]ython'
-    python_mentions = titles.str.contains(pattern).sum()
+    pattern = '[Rr]uby'
+    ruby_titles = titles[titles.str.contains(pattern)]
 
-    print(python_mentions)
+    print(ruby_titles)
 
 
 if __name__ == '__main__':
