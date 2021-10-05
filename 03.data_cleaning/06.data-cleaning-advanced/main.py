@@ -2,24 +2,16 @@ import pandas as pd
 import re
 
 
-# - Write a regular expression, assigning it as a string to the variable pattern. The regular expression should match,
-#   in order:
-#   - A single open bracket character.
-#   - One or more word characters.
-#   - A single close bracket character.
-#  - Use the regular expression to select only items from titles that match. Assign the result to the variable
-#    tag_titles.
-# - Count how many matching titles there are. Assign the result to tag_count.
+# - Use Series.str.extract() and Series.value_counts() with the modified regex pattern to produce a frequency table of
+#  all the tags in the titles series. Assign the frequency table to tag_freq.
 def main():
     hn = pd.read_csv('hacker_news.csv')
     titles = hn["title"]
 
-    pattern = r'\[\w+\]'
-    tag_bool = titles.str.contains(pattern)
-    tag_count = tag_bool.sum()
-    tag_titles = titles[tag_bool]
+    pattern = r'\[(\w+)\]'
+    tag_freq = titles.str.extract(pattern, expand=False).value_counts()
 
-    print(tag_count, tag_titles, sep='\n')
+    print(tag_freq)
 
 
 if __name__ == '__main__':
