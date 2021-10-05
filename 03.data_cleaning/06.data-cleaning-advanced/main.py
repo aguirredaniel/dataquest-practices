@@ -2,17 +2,21 @@ import pandas as pd
 import re
 
 
-# - Assign the title column from the hn dataframe to the variable titles.
-# - Use Series.str.contains() and Series.sum() with the provided regex pattern to count how many Hacker News titles
-#   contain Python or python. Assign the result to python_mentions.
+# - Use a regular expression and Series.str.contains() to create a boolean mask that matches items from titles
+#   containing email or e-mail. Assign the result to email_bool.
+# - Use email_bool to count the number of titles that matched the regular expression. Assign the result to email_count.
+# - Use email_bool to select only the items from titles that matched the regular expression. Assign the result to
+#   email_titles.
 def main():
     hn = pd.read_csv('hacker_news.csv')
     titles = hn["title"]
 
-    pattern = '[Rr]uby'
-    ruby_titles = titles[titles.str.contains(pattern)]
+    pattern = 'e-?mail'
+    email_bool = titles.str.contains(pattern)
+    email_count = email_bool.sum()
+    email_titles = titles[email_bool]
 
-    print(ruby_titles)
+    print(email_count, email_titles, sep='\n')
 
 
 if __name__ == '__main__':
