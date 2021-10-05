@@ -2,21 +2,24 @@ import pandas as pd
 import re
 
 
-# - Use a regular expression and Series.str.contains() to create a boolean mask that matches items from titles
-#   containing email or e-mail. Assign the result to email_bool.
-# - Use email_bool to count the number of titles that matched the regular expression. Assign the result to email_count.
-# - Use email_bool to select only the items from titles that matched the regular expression. Assign the result to
-#   email_titles.
+# - Write a regular expression, assigning it as a string to the variable pattern. The regular expression should match,
+#   in order:
+#   - A single open bracket character.
+#   - One or more word characters.
+#   - A single close bracket character.
+#  - Use the regular expression to select only items from titles that match. Assign the result to the variable
+#    tag_titles.
+# - Count how many matching titles there are. Assign the result to tag_count.
 def main():
     hn = pd.read_csv('hacker_news.csv')
     titles = hn["title"]
 
-    pattern = 'e-?mail'
-    email_bool = titles.str.contains(pattern)
-    email_count = email_bool.sum()
-    email_titles = titles[email_bool]
+    pattern = r'\[\w+\]'
+    tag_bool = titles.str.contains(pattern)
+    tag_count = tag_bool.sum()
+    tag_titles = titles[tag_bool]
 
-    print(email_count, email_titles, sep='\n')
+    print(tag_count, tag_titles, sep='\n')
 
 
 if __name__ == '__main__':
