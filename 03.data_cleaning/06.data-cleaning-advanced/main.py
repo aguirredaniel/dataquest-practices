@@ -12,18 +12,18 @@ def first_10_matches(titles: pd.Series, pattern: str):
     return first_10
 
 
-# - Write a regular expression that will match titles containing Java.
-#   - You might like to use the first_10_matches() function or a site like RegExr to build your regular expression.
-#   - The regex should match whether or not the first character is capitalized.
-#   - The regex should match only where 'Java' is preceded and followed by a word boundary.
-# - Select every row from titles that match the regular expression. Assign the result to java_titles.
+# - Count the number of times that a tag (e.g. [pdf] or [video]) occurs at the start of a title in titles. Assign the
+#   result to beginning_count.
+# - Count the number of times that a tag (e.g. [pdf] or [video]) occurs at the end of a title in titles. Assign the
+#   result to ending_count.
 def main():
     hn = pd.read_csv('hacker_news.csv')
     titles = hn["title"]
 
-    pattern = r'\b[Jj]ava\b'
-    java_titles = titles[titles.str.contains(pattern)]
-    print(java_titles)
+    beginning_count = titles.str.contains(r'^\[\w+\]').sum()
+    ending_count = titles.str.contains(r'\[\w+\]$').sum()
+
+    print(beginning_count, ending_count, sep='\n')
 
 
 if __name__ == '__main__':
