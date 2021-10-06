@@ -20,10 +20,17 @@ def main():
     hn = pd.read_csv('hacker_news.csv')
     titles = hn["title"]
 
-    beginning_count = titles.str.contains(r'^\[\w+\]').sum()
-    ending_count = titles.str.contains(r'\[\w+\]$').sum()
+    email_tests = pd.Series(['email', 'Email', 'e Mail', 'e mail', 'E-mail',
+                             'e-mail', 'eMail', 'E-Mail', 'EMAIL', 'emails', 'Emails',
+                             'E-Mails'])
 
-    print(beginning_count, ending_count, sep='\n')
+    pattern = r'\be-?\s?mails?\b'
+
+    email_mentions = email_tests.str.contains(pattern, flags=re.IGNORECASE).sum()
+    assert (email_mentions == email_tests.size)
+
+    email_mentions = titles.str.contains(pattern, flags=re.IGNORECASE).sum()
+    print(email_mentions)
 
 
 if __name__ == '__main__':
