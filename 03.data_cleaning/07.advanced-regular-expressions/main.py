@@ -13,17 +13,20 @@ def first_10_matches(titles: pd.Series, pattern: str):
     return first_10
 
 
-# - Uncomment the line of code. Add a negative set to the end of the regular expression that excludes:
-#   - The period character .
-#   - The plus character +.
-# - Use the first_10_matches() function to return the matches for the regular expression you built, assigning the result to first_ten.
+# - Write a regular expression and assign it to pattern. The regular expression should:
+#   - Match instances of C or c where they are not preceded or followed by another word character.
+#   - From the match above:
+#     - Exclude instances where it is followed by a . or + character, without removing instances where the match occurs
+#       at the end of the sentence.
+#     - Exclude instances where the word 'Series' immediately precedes the match.
+# - Count how many stories in titles match the regular expression. Assign the result to c_mentions.
 def main():
     hn = pd.read_csv('hacker_news.csv')
     titles = hn["title"]
 
-    pattern = r"\b[Cc]\b[^\.\+]"
-    first_ten = first_10_matches(titles, pattern)
-    print(first_ten)
+    pattern = r"(?<!Series\s)\b[Cc]\b(?![\+\.])"
+    c_mentions = titles.str.contains(pattern).sum()
+    print(c_mentions)
 
 
 if __name__ == '__main__':
