@@ -13,27 +13,20 @@ def first_10_matches(titles: pd.Series, pattern: str):
     return first_10
 
 
-# -Create a new column called flavor in the hn_sql dataframe, containing extracted mentions of SQL flavors, defined as:
-#   - Any time 'SQL' is preceded by one or more word characters.
-#   - Ignoring all case variation.
-# - Use the Series.str.lower() method to clean the values in the flavor column by converting them to lowercase. Assign
-#   the values back to the column in hn_sql.
-# - Use the DataFrame.pivot_table() method to create a pivot table, sql_pivot.
-#   - The index of the pivot table should be the flavor column.
-#   - The values of the pivot table should be the mean of the num_comments column, aggregated by SQL flavor.
+# - Write a regular expression pattern which will match Python or python, followed by a space, followed by one or more
+#   digit characters or periods.
+#   - The regular expression should contain a capture group for the digit and period characters (the Python versions)
+# - Extract the Python versions from titles using the regular expression pattern.
+# - Use Series.value_counts() and the dict() function to create a dictionary frequency table of the extracted Python
+#   versions. Assign the result to py_versions_freq.
 def main():
     hn = pd.read_csv('hacker_news.csv')
     titles = hn["title"]
 
-    pattern = r"\w+SQL"
-    hn_sql = hn[titles.str.contains(pattern, flags=re.I)].copy()
-    pattern = r"(\w+SQL)"
-    hn_sql['flavor'] = hn_sql['title'].str.extract(pattern, flags=re.I)
-    hn_sql['flavor'] = hn_sql['flavor'].str.lower()
-
-    sql_pivot = hn_sql.pivot_table(index='flavor', values='num_comments', aggfunc=np.mean)
-
-    print(sql_pivot)
+    pattern = r"[Pp]ython ([\d\.]+)"
+    py_versions = titles.str.extract(pattern, expand=False)
+    py_versions_freq = dict(py_versions.value_counts())
+    print(py_versions_freq)
 
 
 if __name__ == '__main__':
