@@ -13,20 +13,17 @@ def first_10_matches(titles: pd.Series, pattern: str):
     return first_10
 
 
-# - Write a regular expression pattern which will match Python or python, followed by a space, followed by one or more
-#   digit characters or periods.
-#   - The regular expression should contain a capture group for the digit and period characters (the Python versions)
-# - Extract the Python versions from titles using the regular expression pattern.
-# - Use Series.value_counts() and the dict() function to create a dictionary frequency table of the extracted Python
-#   versions. Assign the result to py_versions_freq.
+# - Uncomment the line of code. Add a negative set to the end of the regular expression that excludes:
+#   - The period character .
+#   - The plus character +.
+# - Use the first_10_matches() function to return the matches for the regular expression you built, assigning the result to first_ten.
 def main():
     hn = pd.read_csv('hacker_news.csv')
     titles = hn["title"]
 
-    pattern = r"[Pp]ython ([\d\.]+)"
-    py_versions = titles.str.extract(pattern, expand=False)
-    py_versions_freq = dict(py_versions.value_counts())
-    print(py_versions_freq)
+    pattern = r"\b[Cc]\b[^\.\+]"
+    first_ten = first_10_matches(titles, pattern)
+    print(first_ten)
 
 
 if __name__ == '__main__':
