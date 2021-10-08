@@ -13,23 +13,40 @@ def first_10_matches(titles: pd.Series, pattern: str):
     return first_10
 
 
-# - Use a regular expression to replace each of the matches in email_variations with "email" and assign the result to
-#   email_uniform.
-#   - You may need to iterate several times when writing your regular expression in order to match every item.
-# - Use a regular expression to replace all mentions of email in titles with "email". Assign the result to titles_clean.
-#   - Note that passing the cases in email_variations does not guarantee passing all the cases in the titles column.
+# - Write a regular expression to extract the domains from test_urls and assign the result to test_urls_clean. We
+#   suggest the following technique:
+#    - Using a series of characters that will match the protocol.
+#   - Inside a capture group, using a set that will match the character classes used in the domain.
+#   - Because all of the URLs either end with the domain, or continue with page path which starts with / (a character
+#     not found in any domains), we don't need to cater for this part of the URL in our regular expression.
+# - Use a regular expression to extract the domains from the url column of the hn dataframe. Assign the result to
+#   domains.
+#   - Note that passing the cases in test_urls does not guarantee passing all the cases in the url column.
+# - Use Series.value_counts() to build a frequency table of the domains in domains, limiting the frequency table to just
+#   to the top 5. Assign the result to top_domains.
 def main():
     hn = pd.read_csv('hacker_news.csv')
-    titles = hn["title"]
+    test_urls = pd.Series([
+        'https://www.amazon.com/Technology-Ventures-Enterprise-Thomas-Byers/dp/0073523429',
+        'http://www.interactivedynamicvideo.com/',
+        'http://www.nytimes.com/2007/11/07/movies/07stein.html?_r=0',
+        'http://evonomics.com/advertising-cannot-maintain-internet-heres-solution/',
+        'HTTPS://github.com/keppel/pinn',
+        'Http://phys.org/news/2015-09-scale-solar-youve.html',
+        'https://iot.seeed.cc',
+        'http://www.bfilipek.com/2016/04/custom-deleters-for-c-smart-pointers.html',
+        'http://beta.crowdfireapp.com/?beta=agnipath',
+        'https://www.valid.ly?param',
+        'http://css-cursor.techstream.org'
+    ])
 
-    email_variations = pd.Series(['email', 'Email', 'e Mail',
-                                  'e mail', 'E-mail', 'e-mail',
-                                  'eMail', 'E-Mail', 'EMAIL'])
+    pattern = 'https?:\/{2}([w{3}\.]?[\w\.-]+)'
+    test_urls_clean = test_urls.str.extract(pattern, expand=False, flags=re.I)
+    domains = hn['url'].str.extract(pattern, expand=False, flags=re.I)
 
-    pattern = r'\be-?\s?mail'
-    email_uniform = email_variations.str.replace(pattern, 'email', flags=re.IGNORECASE)
+    top_domains = domains.value_counts().head()
 
-    titles_clean = titles.str.replace(pattern, 'email', flags=re.IGNORECASE)
+    print(test_urls_clean, top_domains, sep='\n')
 
 
 if __name__ == '__main__':
