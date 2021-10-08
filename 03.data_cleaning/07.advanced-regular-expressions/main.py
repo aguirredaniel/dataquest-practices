@@ -13,20 +13,18 @@ def first_10_matches(titles: pd.Series, pattern: str):
     return first_10
 
 
-# - Write a regular expression and assign it to pattern. The regular expression should:
-#   - Match instances of C or c where they are not preceded or followed by another word character.
-#   - From the match above:
-#     - Exclude instances where it is followed by a . or + character, without removing instances where the match occurs
-#       at the end of the sentence.
-#     - Exclude instances where the word 'Series' immediately precedes the match.
-# - Count how many stories in titles match the regular expression. Assign the result to c_mentions.
+# - Write a regular expression to match cases of repeated words:
+#   - We'll define a word as a series of one or more word characters preceded and followed by a boundary anchor.
+#   - We'll define repeated words as the same word repeated twice, separated by a single whitespace character.
+# - Select only the items in titles that match the regular expression. Assign the result to repeated_words.
 def main():
     hn = pd.read_csv('hacker_news.csv')
     titles = hn["title"]
 
-    pattern = r"(?<!Series\s)\b[Cc]\b(?![\+\.])"
-    c_mentions = titles.str.contains(pattern).sum()
-    print(c_mentions)
+    pattern = r'\b(\w+)\s\1\b'
+    repeated_word = titles[titles.str.contains(pattern)]
+
+    print(repeated_word)
 
 
 if __name__ == '__main__':
