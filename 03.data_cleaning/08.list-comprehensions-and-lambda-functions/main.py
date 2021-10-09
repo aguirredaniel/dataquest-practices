@@ -10,13 +10,13 @@ def del_key(dict_, key):
     return modified_dict
 
 
-# - Create a list comprehension representation of the loop from the previous screen:
-#   - Call the del_key() function to remove the createdAtI value from each dictionary in the hn list.
-#   - Assign the results to a new list, hn_clean.
+# - Use a list comprehension to extract the url value from each dictionary in hn_clean. Assign the result to urls
 def main():
     with open('hn_2014.json') as file:
         hn = json.load(file)
         hn_clean = [del_key(story, 'createdAtI') for story in hn]
+
+        urls = [story['url'] for story in hn_clean]
 
 
 if __name__ == '__main__':
