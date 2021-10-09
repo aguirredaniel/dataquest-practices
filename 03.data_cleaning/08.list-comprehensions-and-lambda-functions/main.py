@@ -10,19 +10,30 @@ def del_key(dict_, key):
     return modified_dict
 
 
-# - Use list comprehension to create a new list, thousand_points:
-#   - The list should contain values from hn_clean where the points key has a value greater than 1000.
-# - Count the number of values in thousand_points and assign the result to num_thousand_points.
+def get_num_comments(hn_2014) -> int:
+    """
+    Return Num Comments of  Story in hn_2014.json.
+    Args:
+        hn_2014:
+            hn_2014.json file in python json format (a.k.a dict).
+
+    Returns:
+        Num Comments for Story
+    """
+    return hn_2014['numComments']
+
+
+# - Create a "key function" that accepts a single dictionary and returns the value from the numComments key.
+# - Use the max() function with the "key function" you just created to find the value from the hn_clean list with the
+#   most comments:
+#   - Assign the result to the variable most_comments.
 def main():
     with open('hn_2014.json') as file:
         hn = json.load(file)
         hn_clean = [del_key(story, 'createdAtI') for story in hn]
 
-        urls = [story['url'] for story in hn_clean]
-
-        thousand_points = [story for story in hn_clean if story['points'] > 1000]
-        num_thousand_points = len(thousand_points)
-        print(num_thousand_points)
+        most_comments = max(hn_clean, key=get_num_comments)
+        print(most_comments['title'], most_comments['numComments'], sep=' : ')
 
 
 if __name__ == '__main__':
