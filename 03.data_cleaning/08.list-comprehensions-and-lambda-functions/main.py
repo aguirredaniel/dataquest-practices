@@ -1,8 +1,8 @@
 import json
 
 
-# - Import the json module.
-# - Use json.loads() to convert world_cup_str to a Python object. Assign the result to world_cup_obj
+# - Use the open() function to open the hn_2014.json file as a file object.
+# - Use the json.load() function to parse the file object and assign the result to hn.
 def main():
     with open('hn_2014.json') as file:
         hn = json.load(file)
