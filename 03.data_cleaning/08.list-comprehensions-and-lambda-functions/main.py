@@ -24,8 +24,11 @@ def get_num_comments(hn_2014) -> int:
     return hn_2014['numComments']
 
 
-# - Use Series.apply() and len() to create a boolean mask based on whether each item in tags has a length of 4.
-# - Use the boolean mask to filter tags. Assign the result to four_tags.
+# - Use Series.apply() and a lambda function to extract the tag data from tags:
+#   - Where the item is a list with length four, return the last item.
+#   - In all other cases, return None.
+#   - Assign the result to cleaned_tags.
+# - Assign the cleaned_tags series to the tags column of the hn_df dataframe.
 def main():
     with open('hn_2014.json') as file:
         hn = json.load(file)
@@ -33,10 +36,10 @@ def main():
         hn_df = pd.DataFrame.from_dict(hn_clean)
 
         tags = hn_df['tags']
-        four_tags = tags[tags.apply(len) == 4]
 
-        print(four_tags)
-
+        cleaned_tags = tags.apply(lambda tag: tag[-1] if len(tag) == 4 else None)
+        hn_df['tags'] = cleaned_tags
+        
 
 if __name__ == '__main__':
     main()
