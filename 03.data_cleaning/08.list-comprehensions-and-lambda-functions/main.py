@@ -23,17 +23,17 @@ def get_num_comments(hn_2014) -> int:
     return hn_2014['numComments']
 
 
-# - Create a "key function" that accepts a single dictionary and returns the value from the numComments key.
-# - Use the max() function with the "key function" you just created to find the value from the hn_clean list with the
-#   most comments:
-#   - Assign the result to the variable most_comments.
+# - In the display code, we have defined (in comments) a function multiply() using traditional syntax.
+# - Create a lambda function that performs the same operation. Assign it to the variable name multiply.
 def main():
     with open('hn_2014.json') as file:
         hn = json.load(file)
         hn_clean = [del_key(story, 'createdAtI') for story in hn]
 
-        most_comments = max(hn_clean, key=get_num_comments)
-        print(most_comments['title'], most_comments['numComments'], sep=' : ')
+        # def multiply(a, b):
+        #    return a * b
+
+        multiply = lambda a, b: a * b
 
 
 if __name__ == '__main__':
