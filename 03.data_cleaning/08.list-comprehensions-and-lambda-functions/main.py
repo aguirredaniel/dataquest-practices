@@ -23,17 +23,22 @@ def get_num_comments(hn_2014) -> int:
     return hn_2014['numComments']
 
 
-# - In the display code, we have defined (in comments) a function multiply() using traditional syntax.
-# - Create a lambda function that performs the same operation. Assign it to the variable name multiply.
+# - Using sorted() and a lambda function, sort the hn_clean JSON list by the number of points (dictionary key points)
+#   from highest to lowest:
+#   - Check the documentation for sorted() to see how to reverse the order to highest to lowest.
+#   - Assign the result to hn_sorted_points.
+# - Use a list comprehension to return a list of the five post titles (dictionary key title) that have the most points
+#   in our data set:
+#   - Assign the result to top_5_titles.
 def main():
     with open('hn_2014.json') as file:
         hn = json.load(file)
         hn_clean = [del_key(story, 'createdAtI') for story in hn]
 
-        # def multiply(a, b):
-        #    return a * b
+        hn_sorted_points = sorted(hn_clean, key=lambda story: story['points'], reverse=True)
+        top_5_titles = [story['title'] for story in hn_sorted_points[:5]]
 
-        multiply = lambda a, b: a * b
+        print(top_5_titles)
 
 
 if __name__ == '__main__':
