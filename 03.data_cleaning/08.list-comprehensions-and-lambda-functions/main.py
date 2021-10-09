@@ -10,10 +10,9 @@ def del_key(dict_, key):
     return modified_dict
 
 
-# - Create an empty list, hn_clean to store the cleaned data set.
-# - Loop over the dictionaries in the hn list. In each iteration:
-#   - Use the del_key() function to delete the createdAtI key from the dictionary.
-#   - Append the cleaned dictionary to hn_clean.
+# - Create a list comprehension representation of the loop from the previous screen:
+#   - Call the del_key() function to remove the createdAtI value from each dictionary in the hn list.
+#   - Assign the results to a new list, hn_clean.
 def main():
     with open('hn_2014.json') as file:
         hn = json.load(file)
