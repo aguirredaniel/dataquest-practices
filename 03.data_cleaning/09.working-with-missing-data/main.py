@@ -108,20 +108,16 @@ def summarize_missing(mvc: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(v_missing_data, columns=col_labels)
 
 
-# - Uncomment the commented lines (you might want to use this keyboard shortcut).
-# - Add code to the body of the loop that:
-#   - Creates a boolean mask for values where the vehicle column is null and the cause column is non-null.
-#   - Creates a boolean mask for values where the cause column is null and the vehicle column is non-null.
-#   - Uses the first boolean mask to fill matching values from the vehicle column with the string Unspecified.
-#   - Uses the second boolean mask to fill matching values from the cause column with the string Unspecified.
-#  - Outside the loop, use the summarize_missing() function to check that you have removed all matching values. Assign
-#    the result to summary_after.
-def main():
-    mvc = pd.read_csv('nypd_mvc_2018.csv')
-
-    impute_total_of_group_columns(mvc)
-
-    summary_before = summarize_missing(mvc)
+def impute_vehicle_and_cause(mvc: pd.DataFrame):
+    """
+    - For vehicle_n column is null and the cause_n column is non-null, fill vehicle column with the string 'Unspecified'
+    - For vehicle_n column is non-null and the cause_n column is null, fill cause column with the string 'Unspecified'
+    Args:
+        mvc:
+         The nypd_mvc_2018.csv pd.DataFrame
+    Returns:
+        None
+    """
 
     for v in range(1, 6):
         v_col = 'vehicle_{}'.format(v)
@@ -133,9 +129,30 @@ def main():
         mvc[v_col] = mvc[v_col].mask(v_missing_mask, 'Unspecified')
         mvc[c_col] = mvc[c_col].mask(c_missing_mask, 'Unspecified')
 
-    summary_after = summarize_missing(mvc)
 
-    print(summary_before, summary_after, sep='\n\n')
+# - Loop over the column names in location_cols. In each iteration of the loop, use Series.mask() to replace values in
+#   the column in the mvc dataframe:
+#   - The mask should represent whether the values in column in the mvc has a null value or not.
+#   - Where the mask is true, the value should be replaced with the equivalent value in sup_data.
+# - Calculate the number of null values across the location_cols columns in mvc after you adding the supplemental data.
+#   Assign the result to null_after.
+def main():
+    mvc = pd.read_csv('nypd_mvc_2018.csv')
+    sup_data = pd.read_csv('supplemental_data.csv')
+
+    impute_total_of_group_columns(mvc)
+    impute_vehicle_and_cause(mvc)
+
+    location_cols = ['location', 'on_street', 'off_street', 'borough']
+    null_before = mvc[location_cols].isnull().sum()
+
+    for col in location_cols:
+        missing_mask = mvc[col].isnull()
+        mvc[col] = mvc[col].mask(missing_mask, sup_data[col])
+
+    null_after = mvc[location_cols].isnull().sum()
+
+    print(null_before, null_after, sep='\n\n')
 
 
 if __name__ == '__main__':
