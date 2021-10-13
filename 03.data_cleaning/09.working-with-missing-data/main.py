@@ -49,12 +49,9 @@ def plot_null_correlations(df):
     plt.show()
 
 
-# - Assign the total_injured column from the injured dataframe to the same column in the mvc dataframe.
-# - Assign the total_killed column from the killed dataframe to the same column in the mvc dataframe.
-def main():
-    mvc = pd.read_csv('nypd_mvc_2018.csv')
-
+def clean_total_count_of_group_columns(mvc):
     killed_cols = [col for col in mvc.columns if 'killed' in col]
+
     killed = mvc[killed_cols].copy()
     killed_manual_sum = killed.iloc[:, :3].sum(axis=1)
 
@@ -78,8 +75,30 @@ def main():
     mvc['total_killed'] = killed['total_killed']
     mvc['total_injured'] = injured['total_injured']
 
-    vehicle = mvc[[col for col in mvc.columns if 'vehicle' in col]]
-    plot_null_correlations(vehicle)
+
+# - Assign the total_injured column from the injured dataframe to the same column in the mvc dataframe.
+# - Assign the total_killed column from the killed dataframe to the same column in the mvc dataframe.
+def main():
+    mvc = pd.read_csv('nypd_mvc_2018.csv')
+
+    clean_total_count_of_group_columns(mvc)
+
+    # vehicle = mvc[[col for col in mvc.columns if 'vehicle' in col]]
+    # plot_null_correlations(vehicle)
+
+    col_labels = ['v_number', 'vehicle_missing', 'cause_missing']
+    vc_null_data = []
+    for v in range(1, 6):
+        v_col = 'vehicle_{}'.format(v)
+        c_col = 'cause_vehicle_{}'.format(v)
+
+        v_null = (mvc[v_col].isnull() & mvc[c_col].notnull()).sum()
+        c_null = (mvc[c_col].isnull() & mvc[v_col].notnull()).sum()
+
+        vc_null_data.append([v, v_null, c_null])
+
+    vc_null_df = pd.DataFrame(vc_null_data, columns=col_labels)
+    print(vc_null_df)
 
 
 if __name__ == '__main__':
