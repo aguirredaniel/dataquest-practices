@@ -2,10 +2,8 @@ import numpy as np
 import pandas as pd
 
 
-# - Use Series.mask() to replace any null values from the total_injured column with their equivalents from the
-#   injured_manual_sum series.
-# - Use Series.mask() to replace any numbers from total_injured that aren't equal to their equivalents in
-#   injured_manual_sum with np.nan.
+# - Assign the total_injured column from the injured dataframe to the same column in the mvc dataframe.
+# - Assign the total_killed column from the killed dataframe to the same column in the mvc dataframe.
 def main():
     mvc = pd.read_csv('nypd_mvc_2018.csv')
 
@@ -29,6 +27,9 @@ def main():
 
     injured_no_equal_mask = injured['total_injured'] != injured_manual_sum
     injured['total_injured'] = injured['total_injured'].mask(injured_no_equal_mask, np.nan)
+
+    mvc['total_killed'] = killed['total_killed']
+    mvc['total_injured'] = injured['total_injured']
 
 
 if __name__ == '__main__':
