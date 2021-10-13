@@ -49,7 +49,7 @@ def plot_null_correlations(df):
     plt.show()
 
 
-def clean_total_count_of_group_columns(mvc):
+def impute_total_of_group_columns(mvc):
     killed_cols = [col for col in mvc.columns if 'killed' in col]
 
     killed = mvc[killed_cols].copy()
@@ -76,29 +76,24 @@ def clean_total_count_of_group_columns(mvc):
     mvc['total_injured'] = injured['total_injured']
 
 
-# - Assign the total_injured column from the injured dataframe to the same column in the mvc dataframe.
-# - Assign the total_killed column from the killed dataframe to the same column in the mvc dataframe.
+# - Create a dataframe containing only the columns from mvc, identified by the list comprehension v_cols.
+# - Use DataFrame.stack() to stack the values from the dataframe into a single series object.
+# - Use Series.value_counts() to count the unique values from the stacked series. Assign the first 10 values to
+#   top10_vehicles.
 def main():
     mvc = pd.read_csv('nypd_mvc_2018.csv')
 
-    clean_total_count_of_group_columns(mvc)
+    impute_total_of_group_columns(mvc)
 
     # vehicle = mvc[[col for col in mvc.columns if 'vehicle' in col]]
     # plot_null_correlations(vehicle)
 
-    col_labels = ['v_number', 'vehicle_missing', 'cause_missing']
-    vc_null_data = []
-    for v in range(1, 6):
-        v_col = 'vehicle_{}'.format(v)
-        c_col = 'cause_vehicle_{}'.format(v)
+    v_cols = [c for c in mvc.columns if c.startswith("vehicle")]
 
-        v_null = (mvc[v_col].isnull() & mvc[c_col].notnull()).sum()
-        c_null = (mvc[c_col].isnull() & mvc[v_col].notnull()).sum()
-
-        vc_null_data.append([v, v_null, c_null])
-
-    vc_null_df = pd.DataFrame(vc_null_data, columns=col_labels)
-    print(vc_null_df)
+    vehicle = mvc[v_cols]
+    vehicle_1d = vehicle.stack()
+    top10_vehicles = vehicle_1d.value_counts().head(10)
+    print(top10_vehicles)
 
 
 if __name__ == '__main__':
