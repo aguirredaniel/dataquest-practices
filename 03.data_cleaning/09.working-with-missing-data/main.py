@@ -49,7 +49,15 @@ def plot_null_correlations(df):
     plt.show()
 
 
-def impute_total_of_group_columns(mvc):
+def impute_total_of_group_columns(mvc: pd.DataFrame):
+    """
+        Impute the missing data in columns 'total_killed' and 'total_injured'
+    Args:
+        mvc:
+         The nypd_mvc_2018.csv pd.DataFrame
+    Returns:
+        None
+    """
     killed_cols = [col for col in mvc.columns if 'killed' in col]
 
     killed = mvc[killed_cols].copy()
@@ -76,24 +84,58 @@ def impute_total_of_group_columns(mvc):
     mvc['total_injured'] = injured['total_injured']
 
 
-# - Create a dataframe containing only the columns from mvc, identified by the list comprehension v_cols.
-# - Use DataFrame.stack() to stack the values from the dataframe into a single series object.
-# - Use Series.value_counts() to count the unique values from the stacked series. Assign the first 10 values to
-#   top10_vehicles.
+def summarize_missing(mvc: pd.DataFrame) -> pd.DataFrame:
+    """
+         Count missing values across the pairs of columns of vehicle_n and cause_vehicle_n.
+    Args:
+        mvc:
+         The nypd_mvc_2018.csv pd.DataFrame
+    Returns:
+        pd.DataFrame with columns ["vehicle_number", "vehicle_missing", "cause_missing"].
+    """
+    v_missing_data = []
+
+    for v in range(1, 6):
+        v_col = 'vehicle_{}'.format(v)
+        c_col = 'cause_vehicle_{}'.format(v)
+
+        v_missing = (mvc[v_col].isnull() & mvc[c_col].notnull()).sum()
+        c_missing = (mvc[c_col].isnull() & mvc[v_col].notnull()).sum()
+
+        v_missing_data.append([v, v_missing, c_missing])
+
+    col_labels = columns = ["vehicle_number", "vehicle_missing", "cause_missing"]
+    return pd.DataFrame(v_missing_data, columns=col_labels)
+
+
+# - Uncomment the commented lines (you might want to use this keyboard shortcut).
+# - Add code to the body of the loop that:
+#   - Creates a boolean mask for values where the vehicle column is null and the cause column is non-null.
+#   - Creates a boolean mask for values where the cause column is null and the vehicle column is non-null.
+#   - Uses the first boolean mask to fill matching values from the vehicle column with the string Unspecified.
+#   - Uses the second boolean mask to fill matching values from the cause column with the string Unspecified.
+#  - Outside the loop, use the summarize_missing() function to check that you have removed all matching values. Assign
+#    the result to summary_after.
 def main():
     mvc = pd.read_csv('nypd_mvc_2018.csv')
 
     impute_total_of_group_columns(mvc)
 
-    # vehicle = mvc[[col for col in mvc.columns if 'vehicle' in col]]
-    # plot_null_correlations(vehicle)
+    summary_before = summarize_missing(mvc)
 
-    v_cols = [c for c in mvc.columns if c.startswith("vehicle")]
+    for v in range(1, 6):
+        v_col = 'vehicle_{}'.format(v)
+        c_col = 'cause_vehicle_{}'.format(v)
 
-    vehicle = mvc[v_cols]
-    vehicle_1d = vehicle.stack()
-    top10_vehicles = vehicle_1d.value_counts().head(10)
-    print(top10_vehicles)
+        v_missing_mask = mvc[v_col].isnull() & mvc[c_col].notnull()
+        c_missing_mask = mvc[v_col].notnull() & mvc[c_col].isnull()
+
+        mvc[v_col] = mvc[v_col].mask(v_missing_mask, 'Unspecified')
+        mvc[c_col] = mvc[c_col].mask(c_missing_mask, 'Unspecified')
+
+    summary_after = summarize_missing(mvc)
+
+    print(summary_before, summary_after, sep='\n\n')
 
 
 if __name__ == '__main__':
