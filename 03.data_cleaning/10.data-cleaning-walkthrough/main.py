@@ -1,6 +1,8 @@
 import pandas as pd
 
 
+# - Loop through each key in data. For each key:
+#   - Display the first five rows of the dataframe associated with the key.
 def main():
     data_files = [
         "ap_2010.csv",
@@ -16,7 +18,7 @@ def main():
         file_name = file.split('.')[0]
         data[file_name] = pd.read_csv(f'schools/{file}')
 
-    print(data['sat_results'].head())
+        print(data[file_name].head())
 
 
 if __name__ == '__main__':
