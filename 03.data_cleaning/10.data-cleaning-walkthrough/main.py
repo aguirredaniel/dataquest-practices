@@ -1,11 +1,13 @@
 import pandas as pd
 
 
-# - Copy the data from the dbn column of survey into a new column in survey called DBN.
-# - Filter survey so it only contains the columns we listed above. You can do this using pandas.DataFrame.loc[].
-#   - Remember that we renamed dbn to DBN; be sure to change the list of columns we want to keep accordingly.
-# - Assign the dataframe survey to the key survey in the dictionary data.
-# - When you're finished, the value in data["survey"] should be a dataframe with 23 columns and 1702 rows.
+# - Copy the dbn column in hs_directory into a new column called DBN.
+# - Create a new column called padded_csd in the class_size dataset.
+#   - Use the pandas.Series.apply() method along with a custom function to generate this column.
+#     - Make sure to apply the function along the data["class_size"]["CSD"] column.
+# - Use the addition operator (+) along with the padded_csd and SCHOOL CODE columns of class_size, then assign the
+#   result to the DBN column of class_size.
+# - Display the first few rows of class_size to double check the DBN column.
 def main():
     data_files = [
         "ap_2010.csv",
@@ -34,7 +36,13 @@ def main():
     survey = survey.loc[:, survey_columns]
     data['survey'] = survey
 
-    assert survey.shape, (23, 1702)
+    class_size = data["class_size"]
+    class_size['padded_csd'] = class_size['CSD'].apply(
+        lambda csd: str(csd) if len(str(csd)) == 2 else f'0{csd}')
+
+    class_size['DBN'] = class_size['padded_csd'] + class_size['SCHOOL CODE']
+
+    print(data["class_size"]['DBN'])
 
 
 if __name__ == '__main__':
