@@ -1,13 +1,15 @@
 import pandas as pd
+import re
 
 
-# - Copy the dbn column in hs_directory into a new column called DBN.
-# - Create a new column called padded_csd in the class_size dataset.
-#   - Use the pandas.Series.apply() method along with a custom function to generate this column.
-#     - Make sure to apply the function along the data["class_size"]["CSD"] column.
-# - Use the addition operator (+) along with the padded_csd and SCHOOL CODE columns of class_size, then assign the
-#   result to the DBN column of class_size.
-# - Display the first few rows of class_size to double check the DBN column.
+# - Convert the SAT Math Avg. Score, SAT Critical Reading Avg. Score, and SAT Writing Avg. Score columns in the
+#   sat_results data set from the object (string) data type to a numeric data type.
+#   - Use the pandas.to_numeric() function on each of the columns, and assign the result back to the same column.
+#  - Pass in the keyword argument errors="coerce".
+# - Create a column called sat_score in sat_results that holds the combined SAT score for each student.
+#   - Add up SAT Math Avg. Score, SAT Critical Reading Avg. Score, and SAT Writing Avg. Score, and assign the total to
+#     the sat_score column of sat_results.
+# - Display the first few rows of the sat_score column of sat_results to verify that everything went okay.
 def main():
     data_files = [
         "ap_2010.csv",
@@ -42,7 +44,17 @@ def main():
 
     class_size['DBN'] = class_size['padded_csd'] + class_size['SCHOOL CODE']
 
-    print(data["class_size"]['DBN'])
+    sat_results = data['sat_results']
+    sat_results_columns = ['SAT Math Avg. Score', 'SAT Critical Reading Avg. Score', 'SAT Writing Avg. Score']
+    for column in sat_results_columns:
+        sat_results[column] = sat_results[column].apply(lambda x: pd.to_numeric(x, errors="coerce"))
+
+    sat_results['sat_score'] = sat_results.loc[:, sat_results_columns].sum(axis=1)
+
+    pattern = r"\((.+),.+\)"
+    hs_directory = data['hs_directory']
+    hs_directory['lat'] = hs_directory['Location 1'].str.extract(pattern, expand=False, flags=re.I)
+    print(hs_directory['lat'])
 
 
 if __name__ == '__main__':
