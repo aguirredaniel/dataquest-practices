@@ -2,14 +2,16 @@ import pandas as pd
 import re
 
 
-# - Convert the SAT Math Avg. Score, SAT Critical Reading Avg. Score, and SAT Writing Avg. Score columns in the
-#   sat_results data set from the object (string) data type to a numeric data type.
-#   - Use the pandas.to_numeric() function on each of the columns, and assign the result back to the same column.
-#  - Pass in the keyword argument errors="coerce".
-# - Create a column called sat_score in sat_results that holds the combined SAT score for each student.
-#   - Add up SAT Math Avg. Score, SAT Critical Reading Avg. Score, and SAT Writing Avg. Score, and assign the total to
-#     the sat_score column of sat_results.
-# - Display the first few rows of the sat_score column of sat_results to verify that everything went okay.
+# - Write a function that:
+#   - Takes in a string.
+#   - Uses the regular expression on the previous screen to extract the coordinates.
+#   - Uses string manipulation functions to pull out the longitude.
+#   - Returns the longitude.
+# - Use the Series.apply() method to apply the function across the Location 1 column of hs_directory. Assign the result
+#   to the lon column of hs_directory.
+# - Use the to_numeric() function to convert the lat and lon columns of hs_directory to numbers.
+#   - Specify the errors="coerce" keyword argument to handle missing values properly.
+# - Display the first few rows of hs_directory to verify the results.
 def main():
     data_files = [
         "ap_2010.csv",
@@ -54,7 +56,16 @@ def main():
     pattern = r"\((.+),.+\)"
     hs_directory = data['hs_directory']
     hs_directory['lat'] = hs_directory['Location 1'].str.extract(pattern, expand=False, flags=re.I)
-    print(hs_directory['lat'])
+
+    pattern = r"\(.+,(.+)\)"
+    hs_directory['lon'] = hs_directory['Location 1'].str.extract(pattern, expand=False, flags=re.I)
+
+    for column in ['lat', 'lon']:
+        hs_directory[column] = hs_directory[column].apply(lambda x: pd.to_numeric(x, errors="coerce"))
+
+    print(hs_directory.head())
+
+    sat_results['hs_directory'] = hs_directory
 
 
 if __name__ == '__main__':
