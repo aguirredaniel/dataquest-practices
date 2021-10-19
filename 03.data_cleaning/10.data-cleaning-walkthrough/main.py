@@ -1,21 +1,11 @@
 import pandas as pd
 
 
-# - Read in survey_all.txt.
-#   - Use the pandas.read_csv() function to read survey_all.txt into the variable all_survey. Recall that this file is
-#     located in the schools folder.
-#     - Specify the keyword argument delimiter="\t".
-#     - Specify the keyword argument encoding="windows-1252".
-# - Read in survey_d75.txt.
-#   - Use the pandas.read_csv() function to read schools/survey_d75.txt into the variable d75_survey. Recall that this
-#     file is located in the schools folder.
-#     - Specify the keyword argument delimiter="\t".
-#     - Specify the keyword argument encoding="windows-1252".
-# - Combine d75_survey and all_survey into a single dataframe.
-#   - Use the pandas concat() function with the keyword argument axis=0 to combine d75_survey and all_survey into the
-#     dataframe survey.
-#   - Pass in all_survey first, then d75_survey when calling the pandas.concat() function.
-# - Display the first five rows of survey using the pandas.DataFrame.head() function.
+# - Copy the data from the dbn column of survey into a new column in survey called DBN.
+# - Filter survey so it only contains the columns we listed above. You can do this using pandas.DataFrame.loc[].
+#   - Remember that we renamed dbn to DBN; be sure to change the list of columns we want to keep accordingly.
+# - Assign the dataframe survey to the key survey in the dictionary data.
+# - When you're finished, the value in data["survey"] should be a dataframe with 23 columns and 1702 rows.
 def main():
     data_files = [
         "ap_2010.csv",
@@ -36,7 +26,15 @@ def main():
 
     survey = pd.concat([all_survey, d75_survey])
 
-    print(survey.head())
+    survey_columns = ["DBN", "rr_s", "rr_t", "rr_p", "N_s", "N_t", "N_p", "saf_p_11", "com_p_11", "eng_p_11",
+                      "aca_p_11", "saf_t_11", "com_t_11", "eng_t_11", "aca_t_11", "saf_s_11", "com_s_11", "eng_s_11",
+                      "aca_s_11", "saf_tot_11", "com_tot_11", "eng_tot_11", "aca_tot_11"]
+    survey['DBN'] = survey['dbn']
+
+    survey = survey.loc[:, survey_columns]
+    data['survey'] = survey
+
+    assert survey.shape, (23, 1702)
 
 
 if __name__ == '__main__':
