@@ -2,11 +2,9 @@ import pandas as pd
 from challenge_03_data_cleaning.nyc_high_school_data import read_data, make_initial_clean
 
 
-# - Calculate the means of all of the columns in combined using the pandas.DataFrame.mean() method.
-# - Fill in any missing values in combined with the means of the respective columns using the pandas.DataFrame.fillna()
-#   method.
-# - Fill in any remaining missing values in combined with 0 using the df.fillna() method.
-# - Display the first few rows of combined to verify that the correct operations occurred.
+# - Write a function that extracts the first two characters of a string and returns them.
+# - Apply the function to the DBN column of combined and assign the result to the school_dist column of combined.
+# - Display the first few items in the school_dist column of combined to verify the results.
 def main():
     data = read_data()
     data = make_initial_clean(data)
@@ -44,6 +42,10 @@ def main():
 
     combined = combined.fillna(combined.mean())
     combined = combined.fillna(0)
+
+    combined['school_dist'] = combined['DBN'].str[:2]
+
+    print(combined['school_dist'].head())
 
 
 if __name__ == '__main__':
