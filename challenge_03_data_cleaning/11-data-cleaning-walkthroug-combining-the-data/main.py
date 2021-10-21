@@ -2,11 +2,9 @@ from challenge_03_data_cleaning.nyc_high_school_data import read_data, make_init
 import numpy as np
 
 
-# - Create a new variable called class_size and assign the value of data["class_size"] to it.
-# - Filter class_size so the GRADE  column only contains the value 09-12. Note that the name of the GRADE  column has a
-#   space at the end; you'll generate an error if you don't include it.
-# - Filter class_size so that the PROGRAM TYPE column only contains the value GEN ED.
-# - Display the first five rows of class_size to verify.
+# - Filter demographics, only selecting rows in data["demographics"] where schoolyear is 20112012.
+#   - schoolyear is actually an integer, so be careful about how you perform your comparison.
+# - Display the first few rows of data["demographics"] to verify that the filtering worked.
 def main():
     data = read_data()
     data = make_initial_clean(data)
@@ -21,6 +19,10 @@ def main():
 
     data['class_size'] = class_size
 
+    demographics = data["demographics"]
+    demographics = demographics[demographics['schoolyear'] == 20112012]
+    data["demographics"] = demographics
+    print(demographics)
 
-if __name__ == '__main__':
-    main()
+    if __name__ == '__main__':
+        main()
