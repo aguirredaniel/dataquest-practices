@@ -2,12 +2,11 @@ import pandas as pd
 from challenge_03_data_cleaning.nyc_high_school_data import read_data, make_initial_clean
 
 
-# - Merge class_size into combined. Then, merge demographics, survey, and hs_directory into combined one by one, in that
-#   order.
-#   - Be sure to follow the exact order above.
-#   - Remember to specify the correct column to join on, as well as the correct join type.
+# - Calculate the means of all of the columns in combined using the pandas.DataFrame.mean() method.
+# - Fill in any missing values in combined with the means of the respective columns using the pandas.DataFrame.fillna()
+#   method.
+# - Fill in any remaining missing values in combined with 0 using the df.fillna() method.
 # - Display the first few rows of combined to verify that the correct operations occurred.
-# - Use the pandas.DataFrame.shape attribute to display the shape of the dataframe to see how many rows now exist..
 def main():
     data = read_data()
     data = make_initial_clean(data)
@@ -43,7 +42,8 @@ def main():
     for df in ['class_size', 'demographics', 'survey', 'hs_directory']:
         combined = pd.merge(combined, data[df], on='DBN', how='inner')
 
-    print(combined, combined.shape, sep='\n')
+    combined = combined.fillna(combined.mean())
+    combined = combined.fillna(0)
 
 
 if __name__ == '__main__':
