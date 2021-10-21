@@ -2,14 +2,12 @@ import pandas as pd
 from challenge_03_data_cleaning.nyc_high_school_data import read_data, make_initial_clean
 
 
-# - Use the pandas pandas.DataFrame.merge() method to merge the ap_2010 dataset into combined.
-#   - Make sure to specify how="left" as a keyword argument to indicate the correct join type.
-#   - Make sure to assign the result of the merge operation back to combined.
-# - Use the pandas df.merge() method to merge the graduation dataset into combined.
-#   - Make sure to specify how="left" as a keyword argument to get the correct join type.
-#   -Make sure to assign the result of the merge operation back to combined.
+# - Merge class_size into combined. Then, merge demographics, survey, and hs_directory into combined one by one, in that
+#   order.
+#   - Be sure to follow the exact order above.
+#   - Remember to specify the correct column to join on, as well as the correct join type.
 # - Display the first few rows of combined to verify that the correct operations occurred.
-# - Use the pandas.DataFrame.shape attribute to display the shape of the dataframe and see how many rows now exist.
+# - Use the pandas.DataFrame.shape attribute to display the shape of the dataframe to see how many rows now exist..
 def main():
     data = read_data()
     data = make_initial_clean(data)
@@ -39,11 +37,13 @@ def main():
 
     combined = data["sat_results"]
 
-    combined = pd.merge(combined, data['ap_2010'], how='left')
-    combined = pd.merge(combined, data['graduation'], how='left')
+    combined = pd.merge(combined, data['ap_2010'], on="DBN", how='left')
+    combined = pd.merge(combined, data['graduation'], on="DBN", how='left')
+
+    for df in ['class_size', 'demographics', 'survey', 'hs_directory']:
+        combined = pd.merge(combined, data[df], on='DBN', how='inner')
 
     print(combined, combined.shape, sep='\n')
-    print(combined.shape)
 
 
 if __name__ == '__main__':

@@ -76,4 +76,6 @@ def make_initial_clean(nyc_data: dict) -> dict:
 
     for column in ['lat', 'lon']:
         hs_directory[column] = hs_directory[column].apply(lambda x: pd.to_numeric(x, errors="coerce"))
+
+    hs_directory.rename(columns={'dbn': 'DBN'}, inplace=True)
     return data
