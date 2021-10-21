@@ -1,4 +1,5 @@
 from challenge_03_data_cleaning.nyc_high_school_data import read_data, make_initial_clean
+import numpy as np
 
 
 # - Create a new variable called class_size and assign the value of data["class_size"] to it.
@@ -10,10 +11,15 @@ def main():
     data = read_data()
     data = make_initial_clean(data)
 
+    data = data.copy()
+
     class_size = data['class_size']
     class_size = class_size[(class_size['GRADE '] == '09-12') & (class_size['PROGRAM TYPE'] == 'GEN ED')]
 
-    print(class_size.head())
+    class_size_dbn = class_size.groupby('DBN').mean()
+    class_size = class_size_dbn.reset_index()
+
+    data['class_size'] = class_size
 
 
 if __name__ == '__main__':
