@@ -2,9 +2,9 @@ from challenge_03_data_cleaning.nyc_high_school_data import read_data, make_init
 import numpy as np
 
 
-# - Filter demographics, only selecting rows in data["demographics"] where schoolyear is 20112012.
-#   - schoolyear is actually an integer, so be careful about how you perform your comparison.
-# - Display the first few rows of data["demographics"] to verify that the filtering worked.
+# - Filter graduation, only select rows where the Cohort column equals 2006.
+# - Filter graduation, only select rows where the Demographic column equals Total Cohort.
+# - Display the first few rows of data["graduation"] to verify that everything worked properly.
 def main():
     data = read_data()
     data = make_initial_clean(data)
@@ -22,7 +22,11 @@ def main():
     demographics = data["demographics"]
     demographics = demographics[demographics['schoolyear'] == 20112012]
     data["demographics"] = demographics
-    print(demographics)
 
-    if __name__ == '__main__':
-        main()
+    graduation = data['graduation']
+    graduation = graduation[(graduation['Cohort'] == '2006') & (graduation['Demographic'] == 'Total Cohort')]
+    data['graduation'] = graduation
+
+
+if __name__ == '__main__':
+    main()
