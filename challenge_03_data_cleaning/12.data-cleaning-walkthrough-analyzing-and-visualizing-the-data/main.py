@@ -11,8 +11,8 @@ def main():
 
     correlations = combined.corr()['sat_score']
 
-    low_enrollment = combined[(combined['total_enrollment'] < 1000) & (combined['sat_score'] < 1000)]
-    print(low_enrollment['School Name'])
+    combined.plot(kind='scatter', x='ell_percent', y='sat_score')
+    plt.show()
 
 
 if __name__ == '__main__':
