@@ -1,12 +1,19 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 
-# While the FiveThirtyEight team did a wonderful job acquiring the data, it still has some inconsistencies. Your lesson,
-# if you choose to accept it, is to clean up their dataset so it can be more useful for analysis in pandas. Let's read
-# it into pandas as a dataframe and preview the first five rows to get a better sense of it.
+# - We only want to keep the Avengers who were introduced after 1960.
+#   - Store only the rows describing Avengers added in 1960 or later in true_avengers.
 def main():
     avengers = pd.read_csv("avengers.csv")
-    print(avengers.head(5))
+
+    avengers['Year'].hist()
+    plt.show()
+
+    true_avengers = avengers[avengers['Year'] >= 1960].copy()
+
+    true_avengers['Year'].hist()
+    plt.show()
 
 
 if __name__ == '__main__':
