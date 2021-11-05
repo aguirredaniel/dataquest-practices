@@ -2,32 +2,31 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-# Explore the dataset.
-# - Print the first five rows using DataFrame.head() and the last five rows with DataFrame.tail().
-# - Find the number of rows and columns using DataFrame.shape.
-# - Learn about each column from the documentation. You can also find useful documentation in this glossary and on
-#   WNBA's official page.
-
-# Take one measure of the sampling error.
-# - Use the Games Played column to find the maximum number of games played by a player in the 2016-2017 season. The
-#   dataset contains all the players who played at least one game, so it's a population relative to our question. Find
-#   this parameter, and assign the result to a variable named parameter.
-# - Using the DataFrame.sample() method, randomly sample 30 players from the population, and assign the result to a
-#   variable named sample.
-# - When calling Series.sample(), use the argument random_state = 1. This makes your results reproducible, and it helps
-#   us with the answer-checking (we'll discuss this on the next screen).
-# - Find the maximum number of games using the sample, and assign the result to a variable named statistic.
-# - Measure the sampling error, and assign the result to a variable named sampling_error.
+# Perform stratified sampling: stratify the dataset by player position, and then do simple random sampling on every
+# stratum. At the end, use the sample to determine which position scores the highest number of points per game.
+# - Create a new column that describes the number of points a player scored per game during the season. The number of
+#   total points a player scored during the entire season is in the PTS column, and the number of games played is in the
+#   Games Played column. Give the new column a relevant name.
+# - Stratify the wnba data set by player position. The Pos column describes a player's position. Assign each stratum to
+#   a different variable.
+# - Loop through the strata, and for each stratum, do the following:
+#    - Sample 10 observations using simple random sampling (set random_state = 0).
+#    - Find the mean points per game using the sample. Use the new column you created earlier.
+#    - Find a way to store the mean along with its corresponding position. You can use a dictionary.
+# - Find the position that scores the highest number of points per game, and assign its name to a variable named
+#   position_most_points.
+# To find the dictionary key that has the greatest dictionary value, you can use this technique.
 def main():
     wnba = pd.read_csv('wnba.csv')
 
-    parameter = wnba['PTS'].mean()
-    samples = [wnba['PTS'].sample(10, random_state=i).mean() for i in range(100)]
+    wnba['PTG'] = wnba['PTS'] / wnba['Games Played']
 
-    plt.scatter(x=range(1, 101), y=samples)
-    plt.axhline(parameter)
+    strata = {pos: wnba[wnba['Pos'] == pos] for pos in wnba['Pos'].unique()}
 
-    plt.show()
+    stratified_sampling = {pos: df['PTG'].sample(n=10, random_state=0).mean() for pos, df in strata.items()}
+    position_most_points = max(stratified_sampling, key=stratified_sampling.get)
+
+    print(position_most_points)
 
 
 if __name__ == '__main__':
