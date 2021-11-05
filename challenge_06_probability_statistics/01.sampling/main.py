@@ -1,20 +1,33 @@
-# Identify which is the case, and assign to the corresponding variable the string 'population' or 'sample'.
-# Here are the questions we need to answer:
-# - What's the average salary of the individuals in our company working in IT roles? (Assign either 'population' or
-#   'sample' to the variable question1.)
-# - What's the proportion of individuals in the IT department having salaries under $60000? (Assign either 'population'
-#   or 'sample' to the variable question2.)
-# - What's the minimum salary in the entire company? (Assign either 'population' or 'sample' to the variable question3.)
-# - What's the minimum salary in the IT department of our company? (Assign either 'population' or 'sample' to the
-#   variable question4.)
-# - What's the proportion of salaries under $20000 in the entire company? (Assign either 'population' or 'sample' to
-#   the variable question5.)
+import pandas as pd
+
+
+# Explore the dataset.
+# - Print the first five rows using DataFrame.head() and the last five rows with DataFrame.tail().
+# - Find the number of rows and columns using DataFrame.shape.
+# - Learn about each column from the documentation. You can also find useful documentation in this glossary and on
+#   WNBA's official page.
+
+# Take one measure of the sampling error.
+# - Use the Games Played column to find the maximum number of games played by a player in the 2016-2017 season. The
+#   dataset contains all the players who played at least one game, so it's a population relative to our question. Find
+#   this parameter, and assign the result to a variable named parameter.
+# - Using the DataFrame.sample() method, randomly sample 30 players from the population, and assign the result to a
+#   variable named sample.
+# - When calling Series.sample(), use the argument random_state = 1. This makes your results reproducible, and it helps
+#   us with the answer-checking (we'll discuss this on the next screen).
+# - Find the maximum number of games using the sample, and assign the result to a variable named statistic.
+# - Measure the sampling error, and assign the result to a variable named sampling_error.
 def main():
-    question1 = 'population'
-    question2 = 'population'
-    question3 = 'sample'
-    question4 = 'population'
-    question5 = 'sample'
+    wnba = pd.read_csv('wnba.csv')
+    print(wnba.head(), wnba.shape, sep='\n')
+
+    parameter = wnba['Games Played'].max()
+
+    sample = wnba.sample(n=30, random_state=1)
+    statistic = sample['Games Played'].max()
+
+    sampling_error = parameter - statistic
+    print(sampling_error)
 
 
 if __name__ == '__main__':
