@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 
 # Explore the dataset.
@@ -19,15 +20,14 @@ import pandas as pd
 # - Measure the sampling error, and assign the result to a variable named sampling_error.
 def main():
     wnba = pd.read_csv('wnba.csv')
-    print(wnba.head(), wnba.shape, sep='\n')
 
-    parameter = wnba['Games Played'].max()
+    parameter = wnba['PTS'].mean()
+    samples = [wnba['PTS'].sample(10, random_state=i).mean() for i in range(100)]
 
-    sample = wnba.sample(n=30, random_state=1)
-    statistic = sample['Games Played'].max()
+    plt.scatter(x=range(1, 101), y=samples)
+    plt.axhline(parameter)
 
-    sampling_error = parameter - statistic
-    print(sampling_error)
+    plt.show()
 
 
 if __name__ == '__main__':
