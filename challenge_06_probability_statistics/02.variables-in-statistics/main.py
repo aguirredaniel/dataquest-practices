@@ -1,14 +1,21 @@
-import pandas
 import pandas as pd
 
 
-# - Add the variables measured on a nominal scale to a list named nominal_scale, and sort the elements in the list
-#   alphabetically (the sorting helps us with answer checking).
-# - Notice that we've added a new variable named Height_labels. Instead of showing the height in centimeters, the new
-#   variable shows labels like "short", "medium", or "tall". By considering the principles that characterize the nominal
-#   scale, think whether the new Height_labels variable should be included in your nominal_scale list.
+# - Using the Height_labels variable only, we can tell whether player Kiah Stokes is taller than Riquna Williams. Assign
+#   your answer to a variable named question1.
+# - We can measure the height difference between Kiah Stokes and Riquna Williams using the Height_labels variable. Assign
+#   your answer to question2.
+# - The Height_labels and the College variables are both measured on an ordinal scale. Assign your answer to question3.
+# - The Games Played variable is not measured on an ordinal scale. Assign your answer to question4.
+# - The Experience variable is measured on an ordinal scale. Assign your answer to question5.
+# - The Height_labels variable is qualitative because it is measured using words. Assign your answer to question6.
 def main():
-    nominal_scale = sorted(['Name', 'Team', 'Pos', 'Birth_Place', 'College'])
+    question1 = True
+    question2 = False
+    question3 = False
+    question4 = True
+    question5 = False
+    question6 = False
 
 
 if __name__ == '__main__':
