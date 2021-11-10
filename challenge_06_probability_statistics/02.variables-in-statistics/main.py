@@ -2,12 +2,14 @@ import pandas
 import pandas as pd
 
 
+# - Add the variables measured on a nominal scale to a list named nominal_scale, and sort the elements in the list
+#   alphabetically (the sorting helps us with answer checking).
+# - Notice that we've added a new variable named Height_labels. Instead of showing the height in centimeters, the new
+#   variable shows labels like "short", "medium", or "tall". By considering the principles that characterize the nominal
+#   scale, think whether the new Height_labels variable should be included in your nominal_scale list.
 def main():
-    wnba = pandas.read_csv('wnba.csv')
-    variables = {'Name': 'qualitative', 'Team': 'qualitative', 'Pos': 'qualitative', 'Height': 'quantitative',
-                 'BMI': 'quantitative', 'Birth_Place': 'qualitative', 'Birthdate': 'quantitative',
-                 'Age': 'quantitative', 'College': 'qualitative', 'Experience': 'quantitative',
-                 'Games Played': 'quantitative', 'MIN': 'quantitative', 'FGM': 'quantitative', 'FGA': 'quantitative',
-                 '3PA': 'quantitative', 'FTM': 'quantitative', 'FTA': 'quantitative', 'FT%': 'quantitative',
-                 'OREB': 'quantitative', 'DREB': 'quantitative', 'REB': 'quantitative', 'AST': 'quantitative',
-                 'PTS': 'quantitative'}
+    nominal_scale = sorted(['Name', 'Team', 'Pos', 'Birth_Place', 'College'])
+
+
+if __name__ == '__main__':
+    main()
