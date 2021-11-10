@@ -1,19 +1,19 @@
 import pandas as pd
 
 
-# - For the variables measured on a interval scale, add their names as a string to a list named interval. Sort the
-#   list alphabetically.
-# - For the variables measured on a ratio scale, add their names as a string to a list named ratio. Sort the list
-#   alphabetically.
-# - We've also added the Weight_deviation variable to the dataset, so make sure you include that one too in one of the
-#   lists.
+# - In the code editor, we've already extracted for you the names of the variables that are measured on ratio and
+#   interval scales. Every variable name is registered as a dictionary key.
+# - If a variable is discrete, then assign the string 'discrete' to its corresponding dictionary key.
+# - If a variable is continuous, then assign the string 'continuous' to its corresponding dictionary key.
 def main():
     wnba = pd.read_csv('wnba.csv')
 
-    interval = sorted(['Birthdate', 'Weight_deviation'])
-    ratio = sorted(['Height', 'Weight', 'BMI', 'Age', 'Experience', 'Games Played', 'MIN', 'FGM', 'FGA', 'FG%', '15:00',
-                    '3PA', '3P%', 'FTM', 'FTA', 'FT%', 'OREB', 'DREB', 'REB', 'AST', 'STL', 'BLK', 'TO', 'PTS', 'DD2',
-                    'TD3'])
+    ratio_interval_only = {'Height': 'continuous', 'Weight': 'continuous', 'BMI': 'continuous', 'Age': 'continuous',
+                           'Games Played': 'discrete', 'MIN': 'continuous', 'FGM': 'discrete', 'FGA': 'discrete',
+                           'FG%': 'continuous', '3PA': 'discrete', '3P%': 'continuous', 'FTM': 'discrete',
+                           'FTA': 'discrete', 'FT%': 'continuous', 'OREB': 'discrete', 'DREB': 'discrete',
+                           'REB': 'discrete', 'AST': 'discrete', 'STL': 'discrete', 'BLK': 'discrete', 'TO': 'discrete',
+                           'PTS': 'discrete', 'DD2': 'discrete', 'TD3': 'discrete', 'Weight_deviation': 'continuous'}
 
 
 if __name__ == '__main__':
