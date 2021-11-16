@@ -1,29 +1,34 @@
 import pandas as pd
 
 
-# - Generate a frequency distribution table for the Age variable, which is measured on a ratio scale, and sort the table
-#   by unique values.
-# - Sort the table by unique values in an ascending order, and assign the result to a variable named age_ascending.
-# - Sort the table by unique values in a descending order, and assign the result to a variable named age_descending.
-# - How many players are under 20?
-# - How many players are 30 or over?
+def make_pts_ordinal(row):
+    if row['PTS'] <= 20:
+        return 'very few points'
+    if 20 < row['PTS'] <= 80:
+        return 'few points'
+    if 80 < row['PTS'] <= 150:
+        return 'many, but below average'
+    if 150 < row['PTS'] <= 300:
+        return 'average number of points'
+    if 300 < row['PTS'] <= 450:
+        return 'more than average'
+    else:
+        return 'much more than average'
+
+
+# - Generate a frequency distribution table for the transformed PTS_ordinal_scale column.
+# - Order the table by unique values in a descending order (not alphabetically).
+# - Assign the result to a variable named pts_ordinal_desc.
 def main():
     pd.options.display.max_rows = 200
     pd.options.display.max_columns = 50
 
     wnba = pd.read_csv('../data/wnba.csv')
+    wnba['PTS_ordinal_scale'] = wnba.apply(make_pts_ordinal, axis=1)
+    freq_distro_pts_ordinal = wnba['PTS_ordinal_scale'].value_counts()
+    print(freq_distro_pts_ordinal)
 
-    freq_distro_age = wnba['Age'].value_counts()
-    age_ascending = freq_distro_age.sort_index()
-    age_descending = freq_distro_age.sort_index(ascending=False)
-
-    print(age_ascending, age_descending, sep='\n')
-
-    players_under_20 = 0
-    players_are_or_over_30 = 38
-
-    assert players_under_20 == freq_distro_age[freq_distro_age.index < 20].sum()
-    assert players_are_or_over_30 == freq_distro_age[freq_distro_age.index >= 30].sum()
+    pts_ordinal_desc = freq_distro_pts_ordinal.iloc[[4, 3, 0, 2, 1, -1]]
 
 
 if __name__ == '__main__':
