@@ -1,28 +1,22 @@
 import pandas as pd
 
 
-# - Use the Age variable along with Series.describe() to answer the following questions:
-#   - What's the upper quartile of the Age variable? Assign your answer to a variable named age_upper_quartile.
-#   - What's the middle quartile of the Age variable? Assign your answer to a variable named age_middle_quartile.
-#   - What's the 95th percentile of the Age variable? Assign your answer to a variable named age_95th_percentile.
-# - Indicate the truth value of the following sentences:
-#   - A percentile is a value of a variable, and it corresponds to a certain percentile rank in the distribution of that
-#     variable. (If you think this is true, assign True (boolean, not string) to a variable named question1, otherwise
-#     assign False.)
-#   - A percentile rank is a numerical value from the distribution of a variable. (Assign True or False to question2.)
-#   - The 25th percentile is the same thing as the lower quartile, and the upper quartile is the same thing as the third
-#     quartile. (Assign True or False to question3)
+# - Examine the frequency table for the PTS (total points) variable trying to find some patterns in the distribution of
+#   values. Then, generate a grouped frequency distribution table for the PTS variable with the following
+#   characteristics:
+# - The table has 10 class intervals.
+# - For each class interval, the table shows percentages instead of frequencies.
+# - The class intervals are sorted in descending order.
+# - Assign the table to a variable named grouped_freq_table, then print it and try again to find some patterns in the
+#  distribution of values.
 def main():
     pd.options.display.max_rows = 200
     pd.options.display.max_columns = 50
 
     wnba = pd.read_csv('../data/wnba.csv')
 
-    age_describe = wnba['Age'].describe(percentiles=[.75, .50, .95])
-    age_middle_quartile, age_upper_quartile, age_95th_percentile = age_describe[4:-1]
-
-    question1, question2, question3 = True, False, True
-    print(age_upper_quartile, age_middle_quartile, age_95th_percentile)
+    grouped_freq_table = (wnba['PTS'].value_counts(bins=10, normalize=True) * 100).sort_index(ascending=False)
+    print(grouped_freq_table)
 
 
 if __name__ == '__main__':
