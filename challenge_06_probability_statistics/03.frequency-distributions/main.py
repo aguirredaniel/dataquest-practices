@@ -1,4 +1,5 @@
 import pandas as pd
+from scipy.stats import percentileofscore
 
 
 def make_pts_ordinal(row):
@@ -16,25 +17,21 @@ def make_pts_ordinal(row):
         return 'much more than average'
 
 
-# - Answer the following questions about the Age variable:
-# - What proportion of players are 25 years old? Assign your answer to a variable named proportion_25.
-# - What percentage of players are 30 years old? Assign your answer to a variable named percentage_30.
-# - What percentage of players are 30 years or older? Assign your answer to a variable named percentage_over_30.
-# - What percentage of players are 23 years or younger? Assign your answer to a variable named percentage_below_23.
+# - What percentage of players played half the number of games or less in the 2016-2017 season (there are 34 games in
+#   the WNBA’s regular season)? Use the Games Played column to find the data you need, and assign your answer to a
+#    variable named percentile_rank_half_less.
+# - What percentage of players played more than half the number of games of the season 2016-2017? Assign your result to
+#   percentage_half_more.
 def main():
     pd.options.display.max_rows = 200
     pd.options.display.max_columns = 50
 
     wnba = pd.read_csv('../data/wnba.csv')
     wnba['PTS_ordinal_scale'] = wnba.apply(make_pts_ordinal, axis=1)
-    freq_relative_age = wnba['Age'].value_counts(normalize=True) * 100
 
-    proportion_25 = freq_relative_age[25] / 100
-    percentage_30 = freq_relative_age[30]
-    percentage_over_30 = freq_relative_age[freq_relative_age.index >= 30].sum()
-    percentage_below_23 = freq_relative_age[freq_relative_age.index <= 23].sum()
-
-    print(proportion_25, percentage_30, percentage_over_30, percentage_below_23, sep='\n')
+    percentile_rank_half_less = percentileofscore(wnba['Games Played'], 17, kind='weak')
+    percentage_half_more = 100 - percentile_rank_half_less
+    print(percentile_rank_half_less, percentage_half_more, sep='\n')
 
 
 if __name__ == '__main__':
