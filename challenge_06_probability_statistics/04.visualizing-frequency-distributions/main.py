@@ -35,12 +35,16 @@ def experience_to_ordinal_scale(experience: int) -> str:
     return 'Veteran'
 
 
-# - Using Series.plot.hist(), generate a histogram to visualize the distribution of the PTS variable.
+# - Examine the distribution of the Games Played variable using the Series.describe() method. Just from the output of
+#   this method, predict how the histogram of the Games Played variable should look like.
+# - Once you have a good idea of what histogram shape to expect, plot a histogram for the Games Played variable using
+#   Series.plot.hist().
 def main():
     wnba = pd.read_csv('../data/wnba.csv')
     wnba['Exp_ordinal'] = pd.to_numeric(wnba['Experience'], errors='coerce').apply(experience_to_ordinal_scale)
 
-    wnba['PTS'].plot.hist()
+    wnba['Games Played'].describe()
+    wnba['Games Played'].plot.hist()
     plt.show()
 
 
