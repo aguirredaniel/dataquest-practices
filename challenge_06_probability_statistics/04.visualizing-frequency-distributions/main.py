@@ -35,19 +35,25 @@ def experience_to_ordinal_scale(experience: int) -> str:
     return 'Veteran'
 
 
-# - Generate a histogram for the Games Played variable, and customize it in the following way:
-# - Each bin must cover an interval of 4 games. The first bin must start at 1, the last bin must end at 32.
-# - Add the title "The distribution of players by games played".
-# - Add a label to the x-axis named "Games played".
+# - Examine the distribution of the following two variables:
+# - AST (number of assists).
+# - FT% (percentage of free throws made out of all attempts).
+# - Depending on the shape of the distribution, assign the string 'left skewed' or 'right skewed' to the following
+#   variables:
+#  - assists_distro for the AST column.
+#  - ft_percent_distro for the FT% column.
+# - For instance, if you think the AST variable has a right skewed distribution, your answer should be assists_distro =
+#   'right skewed'.
 def main():
     wnba = pd.read_csv('../data/wnba.csv')
     wnba['Exp_ordinal'] = pd.to_numeric(wnba['Experience'], errors='coerce').apply(experience_to_ordinal_scale)
 
-    wnba['Games Played'].plot.hist(
-        range=(1, 32), bins=8, title='The distribution of players by games played'
-    )
-    plt.xlabel('Games played')
+    wnba['AST'].plot.hist()
     plt.show()
+    wnba['FT%'].plot.hist()
+    plt.show()
+
+    ft_percent_distro, assists_distro = 'left skewed', 'right skewed'
 
 
 if __name__ == '__main__':
