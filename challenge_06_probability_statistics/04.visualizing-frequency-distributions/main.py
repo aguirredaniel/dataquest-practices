@@ -35,16 +35,18 @@ def experience_to_ordinal_scale(experience: int) -> str:
     return 'Veteran'
 
 
-# - Examine the distribution of the Games Played variable using the Series.describe() method. Just from the output of
-#   this method, predict how the histogram of the Games Played variable should look like.
-# - Once you have a good idea of what histogram shape to expect, plot a histogram for the Games Played variable using
-#   Series.plot.hist().
+# - Generate a histogram for the Games Played variable, and customize it in the following way:
+# - Each bin must cover an interval of 4 games. The first bin must start at 1, the last bin must end at 32.
+# - Add the title "The distribution of players by games played".
+# - Add a label to the x-axis named "Games played".
 def main():
     wnba = pd.read_csv('../data/wnba.csv')
     wnba['Exp_ordinal'] = pd.to_numeric(wnba['Experience'], errors='coerce').apply(experience_to_ordinal_scale)
 
-    wnba['Games Played'].describe()
-    wnba['Games Played'].plot.hist()
+    wnba['Games Played'].plot.hist(
+        range=(1, 32), bins=8, title='The distribution of players by games played'
+    )
+    plt.xlabel('Games played')
     plt.show()
 
 
