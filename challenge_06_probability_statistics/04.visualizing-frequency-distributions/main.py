@@ -35,20 +35,12 @@ def experience_to_ordinal_scale(experience: int) -> str:
     return 'Veteran'
 
 
-# - Generate a frequency table for the Exp_ordinal variable. Don't sort the table this time.
-# - Use the Series.plot.pie() method to generate the pie plot.
-#   - Use the figsize parameter to specify a width and a height of 6 inches each.
-#   - Use the autopct parameter to have percentages displayed with a precision of 2 decimal places.
-#   - Add the following title to the plot: "Percentage of players in WNBA by level of experience".
-#   - Remove the Exp_ordinal label.
+# - Using Series.plot.hist(), generate a histogram to visualize the distribution of the PTS variable.
 def main():
     wnba = pd.read_csv('../data/wnba.csv')
     wnba['Exp_ordinal'] = pd.to_numeric(wnba['Experience'], errors='coerce').apply(experience_to_ordinal_scale)
 
-    frequency_table = wnba['Exp_ordinal'].value_counts()
-    frequency_table.plot.pie(
-        figsize=(6, 6), autopct='%.2f%%', title='Percentage of players in WNBA by level of experience')
-    plt.ylabel('')
+    wnba['PTS'].plot.hist()
     plt.show()
 
 
