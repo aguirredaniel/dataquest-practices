@@ -35,10 +35,15 @@ def experience_to_ordinal_scale(experience: int) -> str:
     return 'Veteran'
 
 
+# - Generate a frequency table for the Exp_ordinal variable.
+# - Sort the table by unique labels in an ascending order.
+# - Use the Series.plot.barh() method to generate the horizontal bar plot.
+# - Add the following title to the plot: "Number of players in WNBA by level of experience"
 def main():
     wnba = pd.read_csv('../data/wnba.csv')
     wnba['Exp_ordinal'] = pd.to_numeric(wnba['Experience'], errors='coerce').apply(experience_to_ordinal_scale)
-    wnba['Exp_ordinal'].value_counts().iloc[[-2, 0, 2, 1, -1]].plot.bar()
+    wnba['Exp_ordinal'].value_counts().iloc[[-2, 0, 2, 1, -1]] \
+        .plot.barh(title='Number of players in WNBA by level of experience')
     plt.show()
 
 
