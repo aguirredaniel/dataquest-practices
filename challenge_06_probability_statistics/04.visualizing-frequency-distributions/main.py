@@ -35,25 +35,24 @@ def experience_to_ordinal_scale(experience: int) -> str:
     return 'Veteran'
 
 
-# - Examine the distribution of the following two variables:
-# - AST (number of assists).
-# - FT% (percentage of free throws made out of all attempts).
-# - Depending on the shape of the distribution, assign the string 'left skewed' or 'right skewed' to the following
-#   variables:
-#  - assists_distro for the AST column.
-#  - ft_percent_distro for the FT% column.
-# - For instance, if you think the AST variable has a right skewed distribution, your answer should be assists_distro =
-#   'right skewed'.
+# - Examine the distribution of the following variables, trying to determine which one resembles the most a normal
+#   distribution:
+#   - Age
+#   - Height
+#   - MIN
+# - Assign to the variable normal_distribution the name of the variable (as a string) whose distribution resembles the
+#   most a normal one.
+# - For instance, if you think the MIN variable is the correct answer, then your answer should be normal_distribution =
+#   'MIN'.
 def main():
     wnba = pd.read_csv('../data/wnba.csv')
     wnba['Exp_ordinal'] = pd.to_numeric(wnba['Experience'], errors='coerce').apply(experience_to_ordinal_scale)
 
-    wnba['AST'].plot.hist()
-    plt.show()
-    wnba['FT%'].plot.hist()
-    plt.show()
+    for column in ['Age', 'Height', 'MIN']:
+        wnba[column].plot.hist(title=column)
+        plt.show()
 
-    ft_percent_distro, assists_distro = 'left skewed', 'right skewed'
+    normal_distribution = 'Height'
 
 
 if __name__ == '__main__':
