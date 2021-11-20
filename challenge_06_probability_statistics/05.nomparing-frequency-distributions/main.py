@@ -36,12 +36,12 @@ def experience_to_ordinal_scale(experience: int) -> str:
     return 'Veteran'
 
 
-# - Reproduce the kernel density plots above, and add a vertical line to demarcate the average point.
-#   - The vertical line should be at point 497 on the x-axis.
-#   - Label the vertical line 'Average' and make sure the label is displayed in the legend.
+# - Using strip plots, examine the distribution of player weight (not height) as a function of player position. The
+#   graph should have the following properties:
+#   - The Pos variable in on the x-axis and the Weight variable on the y-axis.
+#   - Each strip plot has jitter added to it. The amount of jitter to apply is the one specific to jitter = True.
 #   - Specify plt.show() to display the plot.
-# - Can we still see that most of the old players that belong to the "average or above" category play significantly more
-#   than average? If so, is the pattern more obvious (faster to observe) than in the case of the step-type histograms?
+# - Do you see any similarity with the distributions of the Height variable? If so, how could this be explained?
 def main():
     wnba = pd.read_csv('../data/wnba.csv')
     wnba['Exp_ordinal'] = pd.to_numeric(wnba['Experience'], errors='coerce').apply(experience_to_ordinal_scale)
@@ -49,11 +49,7 @@ def main():
     wnba['age_mean_relative'] = wnba['Age'].apply(lambda x: 'old' if x >= 27 else 'young')
     wnba['min_mean_relative'] = wnba['MIN'].apply(lambda x: 'average or above' if x >= 497 else 'below average')
 
-    wnba[wnba.Age >= 27]['MIN'].plot.kde(label='Old', legend=True)
-    wnba[wnba.Age < 27]['MIN'].plot.kde(label='Young', legend=True)
-
-    plt.axvline(497, label='Average')
-    plt.legend()
+    sns.stripplot(x='Pos', y='Weight', data=wnba, jitter=True)
     plt.show()
 
 
