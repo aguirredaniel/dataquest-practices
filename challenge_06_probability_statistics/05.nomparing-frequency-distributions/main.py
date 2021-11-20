@@ -36,11 +36,12 @@ def experience_to_ordinal_scale(experience: int) -> str:
     return 'Veteran'
 
 
-# - Looking on our graph above, it's not easy to visualize where the average number of minutes is. Using the
-#   plt.axvline() function, add a vertical line to demarcate the average point:
+# - Reproduce the kernel density plots above, and add a vertical line to demarcate the average point.
 #   - The vertical line should be at point 497 on the x-axis.
-#   - Use the label parameter of plt.axvline() to label it 'Average'. Display the label by running plt.legend().
+#   - Label the vertical line 'Average' and make sure the label is displayed in the legend.
 #   - Specify plt.show() to display the plot.
+# - Can we still see that most of the old players that belong to the "average or above" category play significantly more
+#   than average? If so, is the pattern more obvious (faster to observe) than in the case of the step-type histograms?
 def main():
     wnba = pd.read_csv('../data/wnba.csv')
     wnba['Exp_ordinal'] = pd.to_numeric(wnba['Experience'], errors='coerce').apply(experience_to_ordinal_scale)
@@ -48,8 +49,9 @@ def main():
     wnba['age_mean_relative'] = wnba['Age'].apply(lambda x: 'old' if x >= 27 else 'young')
     wnba['min_mean_relative'] = wnba['MIN'].apply(lambda x: 'average or above' if x >= 497 else 'below average')
 
-    wnba[wnba.Age >= 27]['MIN'].plot.hist(histtype='step', label='Old', legend=True)
-    wnba[wnba.Age < 27]['MIN'].plot.hist(histtype='step', label='Young', legend=True)
+    wnba[wnba.Age >= 27]['MIN'].plot.kde(label='Old', legend=True)
+    wnba[wnba.Age < 27]['MIN'].plot.kde(label='Young', legend=True)
+
     plt.axvline(497, label='Average')
     plt.legend()
     plt.show()
