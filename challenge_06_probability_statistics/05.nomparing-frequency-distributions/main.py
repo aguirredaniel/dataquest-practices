@@ -36,24 +36,26 @@ def experience_to_ordinal_scale(experience: int) -> str:
     return 'Veteran'
 
 
-# - Usng sns.countplot(), generate a grouped bar plot similar to the one above.
-#  - Place the Exp_ordinal variable on the x-axis.
-#  - Generate the bar plots for the Pos variable. The data set is stored in wnba variable.
-#  - Using the order parameter of sns.countplot(), order the values on the x-axis in ascending order. The order
-#    parameter takes in a list of strings, so you should use order = ['Rookie', 'Little experience', ..........].
-#  - Using the hue_order parameter, order the bars of each bar plot in ascending alphabetic order. hue_order takes in a
-#    list of strings, so you can use hue_order = ['C', 'F', ......].
+# - Generate a grouped bar plot to confirm or reject our hypothesis. Using sns.countplot():
+#   - Place the age_mean_relative variable on the x-axis. The age_mean_relative and min_mean_relative are already
+#     defined.
+#   - Generate the frequency distributions for the min_mean_relative variable.
+# - Analyze the graph and determine whether the data confirms or rejects our hypothesis. If it's a confirmation assign
+#   the string 'confirmation' to a variable named result. If it's a rejection, assign the string 'rejection' to the
+#   variable result.
 def main():
     wnba = pd.read_csv('../data/wnba.csv')
     wnba['Exp_ordinal'] = pd.to_numeric(wnba['Experience'], errors='coerce').apply(experience_to_ordinal_scale)
 
+    wnba['age_mean_relative'] = wnba['Age'].apply(lambda x: 'old' if x >= 27 else 'young')
+    wnba['min_mean_relative'] = wnba['MIN'].apply(lambda x: 'average or above' if x >= 497 else 'below average')
+
     sns.countplot(
-        x='Exp_ordinal', hue='Pos', data=wnba,
-        hue_order=['C', 'F', 'F/C', 'G', 'G/F'],
-        order=['Rookie', 'Little experience', 'Experienced', 'Very experienced', 'Veteran'])
+        x='age_mean_relative', hue='min_mean_relative', data=wnba)
 
     plt.show()
 
+    result = 'rejection'
 
 if __name__ == '__main__':
     main()
