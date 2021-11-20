@@ -36,12 +36,9 @@ def experience_to_ordinal_scale(experience: int) -> str:
     return 'Veteran'
 
 
-# - Using strip plots, examine the distribution of player weight (not height) as a function of player position. The
-#   graph should have the following properties:
-#   - The Pos variable in on the x-axis and the Weight variable on the y-axis.
-#   - Each strip plot has jitter added to it. The amount of jitter to apply is the one specific to jitter = True.
-#   - Specify plt.show() to display the plot.
-# - Do you see any similarity with the distributions of the Height variable? If so, how could this be explained?
+# - Using sns.boxplot(), generate a series of box plots to examine the distribution of player weight as a function of
+#   player position. Place the Pos variable on the x-axis and the Weight variable on the y-axis.
+# - Specify plt.show() to display the plot.
 def main():
     wnba = pd.read_csv('../data/wnba.csv')
     wnba['Exp_ordinal'] = pd.to_numeric(wnba['Experience'], errors='coerce').apply(experience_to_ordinal_scale)
@@ -49,7 +46,7 @@ def main():
     wnba['age_mean_relative'] = wnba['Age'].apply(lambda x: 'old' if x >= 27 else 'young')
     wnba['min_mean_relative'] = wnba['MIN'].apply(lambda x: 'average or above' if x >= 497 else 'below average')
 
-    sns.stripplot(x='Pos', y='Weight', data=wnba, jitter=True)
+    sns.boxplot(x='Pos', y='Weight', data=wnba)
     plt.show()
 
 
