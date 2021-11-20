@@ -36,13 +36,11 @@ def experience_to_ordinal_scale(experience: int) -> str:
     return 'Veteran'
 
 
-# - Generate a grouped bar plot to confirm or reject our hypothesis. Using sns.countplot():
-#   - Place the age_mean_relative variable on the x-axis. The age_mean_relative and min_mean_relative are already
-#     defined.
-#   - Generate the frequency distributions for the min_mean_relative variable.
-# - Analyze the graph and determine whether the data confirms or rejects our hypothesis. If it's a confirmation assign
-#   the string 'confirmation' to a variable named result. If it's a rejection, assign the string 'rejection' to the
-#   variable result.
+# - Looking on our graph above, it's not easy to visualize where the average number of minutes is. Using the
+#   plt.axvline() function, add a vertical line to demarcate the average point:
+#   - The vertical line should be at point 497 on the x-axis.
+#   - Use the label parameter of plt.axvline() to label it 'Average'. Display the label by running plt.legend().
+#   - Specify plt.show() to display the plot.
 def main():
     wnba = pd.read_csv('../data/wnba.csv')
     wnba['Exp_ordinal'] = pd.to_numeric(wnba['Experience'], errors='coerce').apply(experience_to_ordinal_scale)
@@ -50,12 +48,12 @@ def main():
     wnba['age_mean_relative'] = wnba['Age'].apply(lambda x: 'old' if x >= 27 else 'young')
     wnba['min_mean_relative'] = wnba['MIN'].apply(lambda x: 'average or above' if x >= 497 else 'below average')
 
-    sns.countplot(
-        x='age_mean_relative', hue='min_mean_relative', data=wnba)
-
+    wnba[wnba.Age >= 27]['MIN'].plot.hist(histtype='step', label='Old', legend=True)
+    wnba[wnba.Age < 27]['MIN'].plot.hist(histtype='step', label='Young', legend=True)
+    plt.axvline(497, label='Average')
+    plt.legend()
     plt.show()
 
-    result = 'rejection'
 
 if __name__ == '__main__':
     main()
