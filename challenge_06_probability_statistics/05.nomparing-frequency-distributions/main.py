@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+import seaborn as sns
 
 
 def experience_to_ordinal_scale(experience: int) -> str:
@@ -35,26 +36,23 @@ def experience_to_ordinal_scale(experience: int) -> str:
     return 'Veteran'
 
 
-# - For each segment, generate a frequency distribution table for the Pos variable.
-# - For the rookies segment, assign the frequency distribution table to a variable named rookie_distro.
-# - For the little experience segment, assign the table to little_xp_distro.
-# - For the experienced segment, assign the table to experienced_distro.
-# - For the very experienced segment, assign the table to very_xp_distro.
-# - For the veterans segment, assign the table to veteran_distro.
-# - Print all the tables and analyze them comparatively to determine whether there are any clear patterns in the
-#   distribution of player position depending on the level of experience.
+# - Usng sns.countplot(), generate a grouped bar plot similar to the one above.
+#  - Place the Exp_ordinal variable on the x-axis.
+#  - Generate the bar plots for the Pos variable. The data set is stored in wnba variable.
+#  - Using the order parameter of sns.countplot(), order the values on the x-axis in ascending order. The order
+#    parameter takes in a list of strings, so you should use order = ['Rookie', 'Little experience', ..........].
+#  - Using the hue_order parameter, order the bars of each bar plot in ascending alphabetic order. hue_order takes in a
+#    list of strings, so you can use hue_order = ['C', 'F', ......].
 def main():
     wnba = pd.read_csv('../data/wnba.csv')
     wnba['Exp_ordinal'] = pd.to_numeric(wnba['Experience'], errors='coerce').apply(experience_to_ordinal_scale)
 
-    rookies = wnba[wnba['Exp_ordinal'] == 'Rookie']
-    little_xp = wnba[wnba['Exp_ordinal'] == 'Little experience']
-    experienced = wnba[wnba['Exp_ordinal'] == 'Experienced']
-    very_xp = wnba[wnba['Exp_ordinal'] == 'Very experienced']
-    veterans = wnba[wnba['Exp_ordinal'] == 'Veteran']
+    sns.countplot(
+        x='Exp_ordinal', hue='Pos', data=wnba,
+        hue_order=['C', 'F', 'F/C', 'G', 'G/F'],
+        order=['Rookie', 'Little experience', 'Experienced', 'Very experienced', 'Veteran'])
 
-    frequency_distributions = [df['Pos'].value_counts() for df in [rookies, little_xp, experienced, very_xp, veterans]]
-    print(frequency_distributions, sep='\n')
+    plt.show()
 
 
 if __name__ == '__main__':
