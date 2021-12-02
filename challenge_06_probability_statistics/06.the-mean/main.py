@@ -6,48 +6,28 @@ def mean(distribution):
     return sum(distribution) / len(distribution)
 
 
-# - For each iteration of a for loop that iterates 101 times:
+# -Take 10000 samples of sample size 100 from the population of sale prices and measure the mean of each sample. For each of the 10000 iterations of a for loop:
 #
-# Sample the SalePrice distribution using the Series.sample() method.
-# For the first iteration, the random_state parameter is 0, for the second iteration is 1, for the third is 2, and so on.
-# For the first iteration, the sample size is 5.
-# The last sample size is 2905 (which is close to 2930, the population's size).
-# To achieve that, you'll need to increment the sample size by 29 for every new iteration. Note that you'll first have to define the sample size with a value of 5 outside the loop.
-# Compute the sample mean.
-# Compute the sampling error. For answer checking purposes, use parameter - static
-# Generate a scatter plot to represent visually how the sampling error changes as the sample size increases.
+# Use Series.sample() to take a sample of size 100 from the SalePrice variable. The random_state parameter is 0 for the first iteration, 1 for the second iteration, 2 for the third iteration, and so on.
+# Compute the mean of the sample.
+# Use plt.hist() to generate a histogram to visualize the distribution of sample means.
 #
-# Place the sample sizes on the x-axis.
-# Place the sampling errors on the y-axis.
-# Use plt.axhline() to generate a horizontal line at 0 to illustrate the point where the sampling error is 0.
-# Use plt.axvline() to generate a vertical line at 2930 to illustrate the population size.
-# Label the x-axis "Sample size".
-# Label the y-axis "Sampling error".
+# Draw a vertical line for the population mean.
+# Label the x-axis "Sample mean".
+# Label the y-axis "Frequency".
+# Set the range of the x-axis to (0,500000). This is the same range as the histogram we built above has. Can you observe any obvious difference between the two histograms now that we've increased the sample size?
 def main():
     houses = pd.read_csv('AmesHousing_1.txt', sep='\t')
+    sale_price = houses['SalePrice']
+    parameter = sale_price.mean()
+    statistics = [sale_price.sample(n=100, random_state=i).mean() for i in range(10000)]
 
-    parameter = houses['SalePrice'].mean()
-    sample_size = 5
+    plt.hist(statistics)
+    plt.xlabel('Sample mean')
+    plt.ylabel('Frequency')
+    plt.axvline(parameter)
 
-    sample_sizes = []
-    sampling_errors = []
-    for i in range(101):
-        sample = houses['SalePrice'].sample(n=sample_size, random_state=i)
-
-        static = sample.mean()
-        sampling_error = parameter - static
-
-        sample_sizes.append(sample_size)
-        sampling_errors.append(sampling_error)
-
-        sample_size += 29
-
-    plt.scatter(x=sample_sizes, y=sampling_errors)
-    plt.axhline(0)
-    plt.axvline(2930)
-    plt.xlabel('Sample size')
-    plt.ylabel('Sampling error')
-
+    plt.xlim((0, 500000))
     plt.show()
 
 
