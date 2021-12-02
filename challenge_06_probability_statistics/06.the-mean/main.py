@@ -1,35 +1,44 @@
 from numpy.random import randint, seed
 
 
-# - Generate 5000 different distributions, measure the total distances above and below the mean, and check whether they
-#   are equal. For each of the 5000 iterations of a for loop:
-#   - Set a seed using the seed() function from numpy.random. For the first iteration, the seed number should be 0, for
-#     the second iteration it should be 1, for the third it should be 2, and so on.
-#   - Generate randomly a distribution of integers using the randint() function from numpy.random. Pass the right
-#     arguments to randint() such that each distribution will:
-#     - Have 10 values.
-#     - The values can range from 0 to 1000.
-#   - Compute the mean of the distribution.
-#   - Measure the total distance above and below the mean.
-#     - Round off each distance to 1 decimal place using the round() function. This will prevent rounding errors at the
-#       13th or 14th decimal place.
-#   - Compare the two sums. If they are equal, then increment a variable named equal_distances with 1. You'll need to
-#     define equal_distances outside the loop with a value of 0.
-# - At the end equal_distances should have a value of 5000. This will confirm that for each of the 5000 distributions
-#   the total distance of the values above the mean is equal to the total distance of the values below the mean.
+def mean(distribution: [int]) -> float:
+    """
+    Calculate a mean value for given distributions of values.
+    Args:
+        distribution: list of int values represent a distribution.
+
+    Returns:
+        The mean of distribution
+
+    Examples
+    -----------
+    >>> values = [42, 24, 32, 11]
+    >>> mean(values)
+    27.25
+    """
+    sum_distribution = 0
+    n = len(distribution)
+    for i in range(n):
+        sum_distribution += distribution[i]
+
+    return sum_distribution / n
+
+
+# - Write a  function takes in an array of numbers and returns its mean value.
+# - Use the function you wrote to compute the mean of the three distributions we already defined in the code editor:
+#   - For the distribution in distribution_1 assign the mean to a variable named mean_1.
+#   - For the distribution in distribution_2 assign the mean to a variable named mean_2.
+#   - For the distribution in distribution_3 assign the mean to a variable named mean_3.
 def main():
-    equal_distances = 0
-    for i in range(5000):
-        seed(i)
-        distribution = randint(0, 100, 10)
-        mean = sum(distribution) / len(distribution)
-        below_differences = (mean - value for value in distribution if value < mean)
-        above_differences = (value - mean for value in distribution if value > mean)
+    distribution_1 = [42, 24, 32, 11]
+    distribution_2 = [102, 32, 74, 15, 38, 45, 22]
+    distribution_3 = [3, 12, 7, 2, 15, 1, 21]
 
-        if round(sum(below_differences), 1) == round(sum(above_differences), 1):
-            equal_distances += 1
+    mean_1 = mean(distribution_1)
+    mean_2 = mean(distribution_2)
+    mean_3 = mean(distribution_3)
 
-    print(equal_distances)
+    print(mean_1, mean_2, mean_3, sep='\n')
 
 
 if __name__ == '__main__':
