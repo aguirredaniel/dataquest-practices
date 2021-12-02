@@ -14,47 +14,7 @@ def mean(distribution):
 # The last sample size is 2905 (which is close to 2930, the population's size).
 # To achieve that, you'll need to increment the sample size by 29 for every new iteration. Note that you'll first have to define the sample size with a value of 5 outside the loop.
 # Compute the sample mean.
-# Compute the sampling error. For answer checking purposes, use
-# p
-# a
-# r
-# a
-# m
-# e
-# t
-# e
-# r
-# −
-# s
-# t
-# a
-# t
-# i
-# s
-# t
-# i
-# c
-# , not
-# s
-# t
-# a
-# t
-# i
-# s
-# t
-# i
-# c
-# −
-# p
-# a
-# r
-# a
-# m
-# e
-# t
-# e
-# r
-# .
+# Compute the sampling error. For answer checking purposes, use parameter - static
 # Generate a scatter plot to represent visually how the sampling error changes as the sample size increases.
 #
 # Place the sample sizes on the x-axis.
