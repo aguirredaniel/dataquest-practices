@@ -1,45 +1,28 @@
-from numpy.random import randint, seed
+import pandas as pd
 
 
-def mean(distribution: [int]) -> float:
-    """
-    Calculate a mean value for given distributions of values.
-    Args:
-        distribution: list of int values represent a distribution.
-
-    Returns:
-        The mean of distribution
-
-    Examples
-    -----------
-    >>> values = [42, 24, 32, 11]
-    >>> mean(values)
-    27.25
-    """
-    sum_distribution = 0
-    n = len(distribution)
-    for i in range(n):
-        sum_distribution += distribution[i]
-
-    return sum_distribution / n
-
-
-# - Write a  function takes in an array of numbers and returns its mean value.
-# - Use the function you wrote to compute the mean of the three distributions we already defined in the code editor:
-#   - For the distribution in distribution_1 assign the mean to a variable named mean_1.
-#   - For the distribution in distribution_2 assign the mean to a variable named mean_2.
-#   - For the distribution in distribution_3 assign the mean to a variable named mean_3.
+# - The data set is stored in a file named AmesHousing_1.txt. Read the file as a pandas DataFrame, and store it in a
+#   variable named houses.
+#   - The values in each row are tab-separated, which means AmesHousing_1.txt is a TSV (tab-separated value) file. This
+#     is different from a CSV (comma-separated values) file, where the values are separated by commas, not by a tab
+#     character.
+#    - Use the pd.read_table() function or pd.read_csv(sep = '\t') to read in the data set.
+# - With the help of the documentation and by exploring the data set yourself, assess the truth value of the following
+#   sentences:
+#   - This data set has variables measured on every scale of measurement: nominal, ordinal, interval and ratio. (If you
+#     think this is true, assign the boolean True to the variable one, otherwise assign False.)
+#   - The SalePrice column is continuous and measured on an interval scale. (If you think this is true, assign the
+#     boolean True to the variable two, otherwise assign False.)
+#   - In the paper he published here, professor Dean DeCock wrote "The initial Excel file contained 113 variables
+#     describing 3970 property sales that had occurred in Ames, Iowa between 2006 an 2010". If we wanted to measure the
+#     mean sale prices for all the houses sold between 2006 and 2010 in Ames, Iowa, the data stored in the
+#      AmesHousing_1.txt would be a sample. (If you think the last sentence is true, assign the boolean True to the
+#      variable three, otherwise assign False.)
 def main():
-    distribution_1 = [42, 24, 32, 11]
-    distribution_2 = [102, 32, 74, 15, 38, 45, 22]
-    distribution_3 = [3, 12, 7, 2, 15, 1, 21]
-
-    mean_1 = mean(distribution_1)
-    mean_2 = mean(distribution_2)
-    mean_3 = mean(distribution_3)
-
-    print(mean_1, mean_2, mean_3, sep='\n')
-
+    houses = pd.read_csv('AmesHousing_1.txt', sep='\t')
+    one = True
+    two = False
+    three = True
 
 if __name__ == '__main__':
     main()
