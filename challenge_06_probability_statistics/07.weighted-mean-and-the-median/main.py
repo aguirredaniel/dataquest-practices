@@ -1,13 +1,14 @@
 import pandas as pd
 
 
-# - Compute the mean of the Mean Price column in the houses_per_year data set. Assign the value to a variable named
-#   mean_new.
-#   - Note that houses_per_year is a DataFrame object, so you can use directly the Series.mean() method.
-# - Compute the mean of the SalePrice column in the houses data set. Assign the value to a variable named mean_original.
-# - Measure the difference between the two means, and assign the result to a variable named difference. If they are
-#   equal, the difference should be 0.
-#   - For answer checking purposes use mean_original - mean_new, not mean_new - mean_original.
+# - Using only the data we have in the houses_per_year data set, compute the sum of prices for each year.
+# - Add all the sums together.
+# - Divide the final sum by the total number of houses sold. Assign the result to a variable named weighted_mean.
+# - Compute again the mean of the SalePrice column in the houses data set. Assign the value to a variable named
+#   mean_original.
+# - Round each mean value to 10 decimal places to get rid of minor rounding errors and then measure the difference
+#   between the two means. Assign the result to a variable named difference. If the two means are equal, you should get
+#   a difference of 0.
 def main():
     houses = pd.read_csv('../data/AmesHousing_1.txt', sep='\t')
     houses_per_year_data = {
@@ -18,11 +19,14 @@ def main():
 
     houses_per_year = pd.DataFrame(houses_per_year_data)
 
-    mean_new = houses_per_year['Mean Price'].mean()
+    sums_price_year = (houses_per_year['Mean Price'] * houses_per_year['Houses Sold']).sum()
+    weighted_mean = sums_price_year / houses_per_year['Houses Sold'].sum()
+
     mean_original = houses['SalePrice'].mean()
-    difference = mean_original - mean_new
+    difference = round(mean_original) - round(weighted_mean)
 
     print(difference)
+
 
 if __name__ == '__main__':
     main()
