@@ -40,18 +40,14 @@ def weighted_mean(means, weights) -> float:
 def main():
     houses = pd.read_csv('../data/AmesHousing_1.txt', sep='\t')
 
-    lot_area = houses['Lot Area']
-    lot_area.plot.box()
+    mean = houses['Overall Cond'].mean()
+    median = houses['Overall Cond'].median()
+
+    houses['Overall Cond'].plot.hist()
     plt.show()
 
-    sale_price = houses['SalePrice']
-    sale_price.plot.box()
-    plt.show()
-
-    lotarea_difference = lot_area.mean() - lot_area.median()
-    saleprice_difference = sale_price.mean() - sale_price.median()
-
-    print(lotarea_difference, saleprice_difference, sep='\n')
+    print(mean, median, sep='\n')
+    more_representative = 'mean'
 
 
 if __name__ == '__main__':
