@@ -27,26 +27,20 @@ def weighted_mean(means, weights) -> float:
     return mean_weight / weight
 
 
-# - Compute the median for each of the three distributions we already defined in the code editor.
-#   - Assign the median of distribution1 to a variable named median1.
-#   - Assign the median of distribution2 to a variable named median2.
-#   - Assign the median of distribution3 to a variable named median3.
+# - Find the median value of the TotRms AbvGrd column.
+#   - Sort the values in the column in ascending order.
+#     - Replace the '10 or more' value with the integer 10 using the Series.replace() method. We do this only for
+#       sorting purposes. To avoid modifying the data in the original data set, make a copy of the column using the
+#       Series.copy() method and save it to a distinct variable.
+#     - Convert the column to the int type using the Series.astype() method.
+#     - Sort the values in ascending order using the Series.sort_values() method.
+# - Depending on whether the distribution has an odd or even number of values, find the median and assign it to a
+#   variable named median.
 def main():
     houses = pd.read_csv('../data/AmesHousing_1.txt', sep='\t')
-    houses_per_year_data = {
-        'Year': [2006, 2007, 2008, 2009, 2010],
-        'Mean Price': [181761.648000, 185138.207493, 178841.750804, 181404.567901, 172597.598240],
-        'Houses Sold': [625, 694, 622, 648, 341]
-    }
-    houses_per_year = pd.DataFrame(houses_per_year_data)
-
-    distribution1 = [23, 24, 22, '20 years or lower,', 23, 42, 35]
-    distribution2 = [55, 38, 123, 40, 71]
-    distribution3 = [45, 22, 7, '5 books or lower', 32, 65, '100 books or more']
-
-    median1 = 23
-    median2 = 55
-    median3 = 32
+    number_rooms = houses['TotRms AbvGrd'].replace({'10 or more': 10}).copy().astype(int)
+    number_rooms = number_rooms.sort_values()
+    median = number_rooms.median()
 
 
 if __name__ == '__main__':
