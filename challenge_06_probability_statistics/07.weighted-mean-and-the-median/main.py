@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 
 def weighted_mean(means, weights) -> float:
@@ -38,9 +39,19 @@ def weighted_mean(means, weights) -> float:
 #   variable named median.
 def main():
     houses = pd.read_csv('../data/AmesHousing_1.txt', sep='\t')
-    number_rooms = houses['TotRms AbvGrd'].replace({'10 or more': 10}).copy().astype(int)
-    number_rooms = number_rooms.sort_values()
-    median = number_rooms.median()
+
+    lot_area = houses['Lot Area']
+    lot_area.plot.box()
+    plt.show()
+
+    sale_price = houses['SalePrice']
+    sale_price.plot.box()
+    plt.show()
+
+    lotarea_difference = lot_area.mean() - lot_area.median()
+    saleprice_difference = sale_price.mean() - sale_price.median()
+
+    print(lotarea_difference, saleprice_difference, sep='\n')
 
 
 if __name__ == '__main__':
