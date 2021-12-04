@@ -1,26 +1,57 @@
 import pandas as pd
 
 
-# - Read in the TSV file (AmesHousing_1.txt) as a pandas DataFrame and save it to a variable named houses.
-# - Explore the Land Slope column to find its scale of measurement. Refer to the documentation to find the data
-#   dictionary of this column.
-#   - Assign your answer as a string to the variable scale_land. Depending on the scale of measurement, choose between
-#     these following strings: 'nominal', 'ordinal', 'interval', and 'ratio'.
-# - Explore the Roof Style variable and find its scale of measurement. Assign your answer as a string to a variable
-#   named scale_roof (choose between the four strings listed above).
-#   - What measure of average would you choose for this column?
-# - Explore the Kitchen AbvGr variable and determine whether it's continuous or discrete. Assign your answer as a string
-#   to a variable named kitchen_variable — the string should be either 'continuous', or 'discrete'.
+def mode(values: []):
+    """
+    Takes in an array of values (including strings) and returns the mode of that array.
+    Args:
+        values: List of values to calculate the mode.
+
+    Returns:
+        The mode of given array.
+
+    Examples
+    ______
+    >>> values = [1, '30', '30', 2, 3, '30']
+    >>> mode (values)
+    '30'
+    """
+    frequency_table = {}
+    for v in values:
+        if v in frequency_table:
+            frequency_table[v] = frequency_table[v] + 1
+        else:
+            frequency_table[v] = 1
+
+    return sorted(frequency_table, key=frequency_table.get)[-1]
+
+
+# - Write a function that takes in an array of values (including strings) and returns the mode of that array. Inside the
+#   function's definition:
+#   - Initialize an empty dictionary.
+#   - Loop through the values of the array that the function takes in. For each iteration of the loop:
+#     - If the value is already a key in the dictionary we initialized before the loop, increment its dictionary value
+#       by 1.
+#     - Else, define the value as a key in the dictionary, and set the initial dictionary value to 1.
+#   - You should end up with a dictionary containing the unique values of the array as dictionary keys and the count for
+#     each unique value as a dictionary value: example_dictionary = {'unique_value1': 230, 'unique_value2': 23,
+#     'unique_value3': 328}.
+#   - Return the key with the highest count (this key is the mode of the array). For instance, for the
+#     example_dictionary above, you should return the string unique_value3.
+#   - You can use this technique to return the key corresponding to the highest value.
+# - Using the function you wrote, measure the mode of the Land Slope variable, and assign the result to a variable
+#   named mode_function.
+# - Using the Series.mode() method, measure the mode of the Land Slope variable, and assign the result to a
+#   variable named mode_method.
+# - Compare the two modes using the == operator to check whether they are the same and assign the result of the
+#   comparison to a variable named same.
 def main():
     houses = pd.read_csv('../data/AmesHousing_1.txt', sep='\t')
-    print(houses['Land Slope'].value_counts())
-    scale_land = 'ordinal'
+    mode_function = mode(houses['Land Slope'])
+    mode_method = houses['Land Slope'].mode().iloc[0]
+    same = mode_function == mode_method
 
-    print(houses['Roof Style'].value_counts())
-    scale_roof = 'nominal'
-
-    print(houses['Kitchen AbvGr'].value_counts())
-    kitchen_variable = 'discrete'
+    assert same
 
 
 if __name__ == '__main__':
