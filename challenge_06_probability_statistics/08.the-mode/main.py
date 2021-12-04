@@ -26,22 +26,24 @@ def get_mode(values: []):
     return max(frequency_table, key=frequency_table.get), frequency_table
 
 
-# - Edit the function you wrote to return both the mode of an array and the dictionary containing the count for each
-#   unique value in the array.
-# - Use the edited function to return, at the same time, the mode of the Roof Style variable and the dictionary
-#   containing the counts for each unique value.
-#   - Assign the mode to a variable named mode.
-#   - Assign the dictionary to a variable named value_counts.
-# - Inspect the content of value_counts and compare it to the value count we'd get by using the Series.value_counts()
-#   method.
-#   - This exercise is meant to give you a better understanding of what happens under the hood when we run
-#     Series.value_counts().
+# - Explore the Bedroom AbvGr variable, and find whether it's discrete or continuous. You can refer to the documentation
+#   for the possible values for this column.
+#   - If it's discrete, assign the string 'discrete' to a variable named bedroom_variable, otherwise assign 'continuous'
+#   - If it's discrete, compute its mode using Series.mode() and assign the result to a variable named bedroom_mode.
+# - Find whether the SalePrice variable is discrete or continuous.
+#   - If it's discrete, assign the string 'discrete' to a variable named price_variable, otherwise assign 'continuous'.
+#   -If it's discrete, compute its mode using Series.mode() and assign the result to a variable named price_mode.
 def main():
     houses = pd.read_csv('../data/AmesHousing_1.txt', sep='\t')
-    mode, value_counts = get_mode(houses['Roof Style'])
-    value_counts_method = houses['Roof Style'].value_counts()
 
-    assert value_counts == dict(value_counts_method)
+    print(houses['Bedroom AbvGr'].unique())
+    print(houses['SalePrice'].unique())
+
+    bedroom_variable = 'discrete'
+    bedroom_mode = houses['Bedroom AbvGr'].mode()
+    price_variable = 'continuous'
+
+    print(bedroom_mode)
 
 
 if __name__ == '__main__':
