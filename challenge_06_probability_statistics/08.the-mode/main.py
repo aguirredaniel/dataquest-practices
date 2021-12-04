@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 
 def get_mode(values: []):
@@ -13,7 +14,7 @@ def get_mode(values: []):
     Examples
     ______
     >>> values = [1, '30', '30', 2, 3, '30']
-    >>> mode (values)
+    >>> get_mode(values)
     ('30', {1:1, '30': 3, 2:1, 3:1})
     """
     frequency_table = {}
@@ -26,24 +27,18 @@ def get_mode(values: []):
     return max(frequency_table, key=frequency_table.get), frequency_table
 
 
-# - In the code editor you can see the mean, mode and median for three distributions. Indicate whether the mean, median,
-#   and mode of each distribution suggest a left or a right skew.
-#   - If the values for distribution_1 indicate a right skew, assign the string 'right skew' to a variable named
-#     shape_1, otherwise assign 'left skew'.
-#   - If the values for distribution_2 indicate a right skew, assign the string 'right skew' to a variable named
-#     shape_2, otherwise assign 'left skew'.
-#   - If the values for distribution_3 indicate a right skew, assign the string 'right skew' to a variable named
-#     shape_3, otherwise assign 'left skew'.
+# -
 def main():
     houses = pd.read_csv('../data/AmesHousing_1.txt', sep='\t')
 
-    distribution_1 = {'mean': 3021, 'median': 3001, 'mode': 2947}
-    distribution_2 = {'median': 924, 'mode': 832, 'mean': 962}
-    distribution_3 = {'mode': 202, 'mean': 143, 'median': 199}
-
-    shape_1 = 'right skew'
-    shape_2 = 'right skew'
-    shape_3 = 'left skew'
+    houses['Mo Sold'].plot.kde(xlim=(
+        houses['Mo Sold'].min(), houses['Mo Sold'].max()))
+    plt.axvline(houses['Mo Sold'].mode().iloc[0], color='Green', label='Mode')
+    plt.axvline(houses['Mo Sold'].median(), color='Orange', label='Median')
+    plt.axvline(houses['Mo Sold'].mean(), color='Black', label='Mean')
+    plt.legend()
+    
+    plt.show()
 
 
 if __name__ == '__main__':
