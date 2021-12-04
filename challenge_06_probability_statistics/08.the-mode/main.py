@@ -26,34 +26,24 @@ def get_mode(values: []):
     return max(frequency_table, key=frequency_table.get), frequency_table
 
 
-# - Find the class interval with the highest frequency, then find its midpoint. For instance, the midpoint of the class
-#   interval (0, 100000] is 50000.
-#   - Assign the midpoint value to a variable named mode. Make sure the value you assign is of the int type.
-# - Find the mean of the SalePrice column and assign it to a variable named mean.
-# - Find the median of the SalePrice column and assign it to a variable named median.
-# - Assess the truth value of the following sentences:
-#   - The mode is lower than the median, and the median is lower than the mean.
-#     - If you think this is true, assign the boolean True to a variable named sentence_1, otherwise assign False.
-#   - The mean is greater than the median, and the median is greater than the mode.
-#     - Assign True or False to a variable named sentence_2.
+# - In the code editor you can see the mean, mode and median for three distributions. Indicate whether the mean, median,
+#   and mode of each distribution suggest a left or a right skew.
+#   - If the values for distribution_1 indicate a right skew, assign the string 'right skew' to a variable named
+#     shape_1, otherwise assign 'left skew'.
+#   - If the values for distribution_2 indicate a right skew, assign the string 'right skew' to a variable named
+#     shape_2, otherwise assign 'left skew'.
+#   - If the values for distribution_3 indicate a right skew, assign the string 'right skew' to a variable named
+#     shape_3, otherwise assign 'left skew'.
 def main():
     houses = pd.read_csv('../data/AmesHousing_1.txt', sep='\t')
 
-    intervals = pd.interval_range(start=0, end=800000, freq=100000)
-    gr_freq_table = pd.Series([0, 0, 0, 0, 0, 0, 0, 0], index=intervals)
+    distribution_1 = {'mean': 3021, 'median': 3001, 'mode': 2947}
+    distribution_2 = {'median': 924, 'mode': 832, 'mean': 962}
+    distribution_3 = {'mode': 202, 'mean': 143, 'median': 199}
 
-    for value in houses['SalePrice']:
-        for interval in intervals:
-            if value in interval:
-                gr_freq_table.loc[interval] += 1
-                break
-
-    mode = (100000 + 200000) / 2
-    mean = houses['SalePrice'].mean()
-    median = houses['SalePrice'].median()
-
-    sentence_1 = True
-    sentence_2 = True
+    shape_1 = 'right skew'
+    shape_2 = 'right skew'
+    shape_3 = 'left skew'
 
 
 if __name__ == '__main__':
