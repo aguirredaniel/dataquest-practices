@@ -101,21 +101,25 @@ def standard_deviation(distribution: []):
     return sqrt(variance(distribution))
 
 
-# - Write a function that takes in a numerical array and returns the standard deviation of that array. Inside the
-#   function:
-#   - Compute the mean of the array.
-#   - Loop through the values of the array. For each iteration:
-#     - Compute the squared distance (squared deviation).
-#     - Append the squared distance to a list.
-#  - Compute the mean of the list of squared distances — this is the variance.
-#  - Return the square root of the variance.
-# - Compute the standard deviation of distribution C, and assign the result to a variable named standard_deviation_C.
-# - Is the result considerably less than 20 but greater than 0, as we expected?
+# - The standard deviation of the SalePrice variable should give us a picture about the diversity of prices on the real
+#   estate market.
+#   - Find the year with the greatest variability of prices and assign the answer as an integer to the variable
+#     greatest_variability.
+#   - Find the year with the lowest variability of prices and assign the answer as an integer to the variable
+#     lowest_variability.
+#   - Use the function you wrote in the previous screen to measure the standard deviation of each year.
+#   - You can find information about the years of sale in the Yr Sold column.
+#   - There are many ways you can solve this exercise. If you get stuck, you can check the hint or the solution code.
 def main():
     houses = pd.read_csv('../data/AmesHousing_1.txt', sep='\t')
-    C = [1, 1, 1, 1, 1, 1, 1, 1, 1, 21]
-    standard_deviation_C = standard_deviation(C)
-    print(standard_deviation_C)
+    years = houses['Yr Sold'].unique()
+    sales = houses['SalePrice']
+    variability_by_year = {year: standard_deviation(sales[houses['Yr Sold'] == year]) for year in years}
+
+    greatest_variability = max(variability_by_year, key=variability_by_year.get)
+    lowest_variability = min(variability_by_year, key=variability_by_year.get)
+
+    print(greatest_variability, lowest_variability, sep='\n')
 
 
 if __name__ == '__main__':
