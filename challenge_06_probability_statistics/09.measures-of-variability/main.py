@@ -103,31 +103,34 @@ def standard_deviation(distribution: []):
     return sqrt(variance(distribution))
 
 
-# - Use the Series.std() method to compute the sample standard deviation for the SalePrice column. You can use the ddof
-#   parameter to choose between n and n − 1. Save the result to a variable named pandas_stdev.
-# - Use the numpy.std() function to compute the sample standard deviation for the SalePrice column. You can use the ddof
-#   parameter to choose between n and n − 1. Save the result to a variable named numpy_stdev.
-# - Compare pandas_stdev with numpy_stdev using the == operator. Assign the result of the comparison to a variable named
-#   equal_stdevs.
-# - Use the Series.var() method to compute the sample variance for the SalePrice column. Assign the result to pandas_var.
-# - Use the numpy.var() function to compute the sample variance for the SalePrice column. Assign the result to numpy_var.
-# - Compare pandas_var with numpy_var using the == operator. Assign the result of the comparison to a variable named
+# - Compute the sample variance and sample standard deviation for each sample.
+#   - Take the mean of all the sample variances. Compare the mean variance with the population variance (which you'll
+#     have to compute) using the == operator, and assign the result to a variable equal_var.
+#   - If the sample variance is biased in this case, the result should be False.
+# - Take the mean of all the sample standard deviations. Compare the mean standard deviation with the population
+#   standard deviation using the == operator, and assign the result to equal_stdev.
+#   - If the sample variance is biased in this case, the result should be False.
 #   equal_vars.
 def main():
     houses = pd.read_csv('../data/AmesHousing_1.txt', sep='\t')
 
-    sample = houses.sample(100, random_state=1)
-    sale = sample['SalePrice']
+    population = [0, 3, 6]
 
-    pandas_stdev = sale.std(ddof=1)
-    numpy_stdev = std(sale, ddof=1)
-    equal_stdevs = pandas_stdev == numpy_stdev
-    assert equal_stdevs
+    samples = [[0, 3], [0, 6],
+               [3, 0], [3, 6],
+               [6, 0], [6, 3]
+               ]
 
-    pandas_var = sale.var(ddof=1)
-    numpy_var = var(sale, ddof=1)
-    equal_vars = pandas_var == numpy_var
-    assert equal_vars
+    variances = [var(sample, ddof=1) for sample in samples]
+    mean_variances = sum(variances) / len(variances)
+    population_variance = var(population)
+    equal_var = mean_variances == population_variance
+
+    standard_deviations = [std(sample, ddof=1) for sample in samples]
+
+    mean_standard_deviations = sum(standard_deviations) / len(standard_deviations)
+    population_standard_deviation = std(population)
+    equal_stdev = mean_standard_deviations == population_standard_deviation
 
 
 if __name__ == '__main__':
