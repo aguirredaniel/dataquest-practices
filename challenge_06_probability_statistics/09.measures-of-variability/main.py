@@ -40,6 +40,27 @@ def average_distance(distribution: []):
     return distances / len(distribution)
 
 
+def mean_absolute_deviation(distribution: []):
+    """
+    For given numerical array returns the mean absolute deviation.
+    Args:
+        distribution:
+
+    Returns:
+        A numerical value represent the mean absolute deviation of distribution.
+
+    Examples
+    _______
+    >>> distribution = [30,19,10]
+    >>> mean_absolute_deviation(distribution)
+    6.888888888888889
+    """
+    mean = sum(distribution) / len(distribution)
+    distances = sum((abs(v - mean) for v in distribution))
+
+    return distances / len(distribution)
+
+
 # - Write a function that takes in a numerical array and returns the average distance (as explained above). Inside the
 #   function's definition:
 #   - Compute the mean of the array.
@@ -56,8 +77,8 @@ def average_distance(distribution: []):
 def main():
     houses = pd.read_csv('../data/AmesHousing_1.txt', sep='\t')
     C = [1, 1, 1, 1, 1, 1, 1, 1, 1, 21]
-    avg_distance = average_distance(C)
-    print(avg_distance)
+    mad = mean_absolute_deviation(C)
+    print(mad)
 
 
 if __name__ == '__main__':
