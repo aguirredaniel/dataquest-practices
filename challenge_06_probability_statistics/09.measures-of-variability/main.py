@@ -1,6 +1,7 @@
 import pandas as pd
 from math import sqrt
 import matplotlib.pyplot as plt
+from numpy import std, var
 
 
 def get_range(distribution: []):
@@ -102,20 +103,31 @@ def standard_deviation(distribution: []):
     return sqrt(variance(distribution))
 
 
-# - Modify the code we wrote in the previous exercise by implementing Bessel's correction, and generate the histogram again.
-# - If you want to challenge yourself, delete the display code and recode everything from scratch.
-# - Does it look like Bessel's correction added any improvement?
+# - Use the Series.std() method to compute the sample standard deviation for the SalePrice column. You can use the ddof
+#   parameter to choose between n and n − 1. Save the result to a variable named pandas_stdev.
+# - Use the numpy.std() function to compute the sample standard deviation for the SalePrice column. You can use the ddof
+#   parameter to choose between n and n − 1. Save the result to a variable named numpy_stdev.
+# - Compare pandas_stdev with numpy_stdev using the == operator. Assign the result of the comparison to a variable named
+#   equal_stdevs.
+# - Use the Series.var() method to compute the sample variance for the SalePrice column. Assign the result to pandas_var.
+# - Use the numpy.var() function to compute the sample variance for the SalePrice column. Assign the result to numpy_var.
+# - Compare pandas_var with numpy_var using the == operator. Assign the result of the comparison to a variable named
+#   equal_vars.
 def main():
     houses = pd.read_csv('../data/AmesHousing_1.txt', sep='\t')
-    sales = houses['SalePrice']
-    parameter = standard_deviation(sales)
-    standard_deviations = [standard_deviation(sales.sample(10, random_state=i))
-                           for i in range(5000)]
 
-    plt.hist(standard_deviations)
-    plt.axvline(parameter)
+    sample = houses.sample(100, random_state=1)
+    sale = sample['SalePrice']
 
-    plt.show()
+    pandas_stdev = sale.std(ddof=1)
+    numpy_stdev = std(sale, ddof=1)
+    equal_stdevs = pandas_stdev == numpy_stdev
+    assert equal_stdevs
+
+    pandas_var = sale.var(ddof=1)
+    numpy_var = var(sale, ddof=1)
+    equal_vars = pandas_var == numpy_var
+    assert equal_vars
 
 
 if __name__ == '__main__':
