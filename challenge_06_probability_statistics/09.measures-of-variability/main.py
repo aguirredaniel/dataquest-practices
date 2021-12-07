@@ -1,5 +1,6 @@
 import pandas as pd
 from math import sqrt
+import matplotlib.pyplot as plt
 
 
 def get_range(distribution: []):
@@ -101,25 +102,30 @@ def standard_deviation(distribution: []):
     return sqrt(variance(distribution))
 
 
-# - The standard deviation of the SalePrice variable should give us a picture about the diversity of prices on the real
-#   estate market.
-#   - Find the year with the greatest variability of prices and assign the answer as an integer to the variable
-#     greatest_variability.
-#   - Find the year with the lowest variability of prices and assign the answer as an integer to the variable
-#     lowest_variability.
-#   - Use the function you wrote in the previous screen to measure the standard deviation of each year.
-#   - You can find information about the years of sale in the Yr Sold column.
-#   - There are many ways you can solve this exercise. If you get stuck, you can check the hint or the solution code.
+# - We took two samples of 50 sample points each from the distribution of the Year Built variable. Examine the graph
+#   below, and estimate visually which sample has a bigger spread.
+#   - Assign your answer to a variable named bigger_spread. If you think sample 1 has a bigger spread, assign the string
+#    'sample 1' to bigger_spread, otherwise assign 'sample 2'.
+#   - Sanity check your visual estimate by computing and comparing the standard deviations of the two samples.
+#     - You can see the two samples already saved in the code editor.
+#     - Assign the standard deviation of sample 1 to a variable named st_dev1. Compute the standard deviation using the
+#       standard_deviation() function.
+#     - Assign the standard deviation of sample 2 to a variable named st_dev2. Compute the standard deviation using the
+#       standard_deviation() function.
 def main():
     houses = pd.read_csv('../data/AmesHousing_1.txt', sep='\t')
-    years = houses['Yr Sold'].unique()
-    sales = houses['SalePrice']
-    variability_by_year = {year: standard_deviation(sales[houses['Yr Sold'] == year]) for year in years}
+    sample1 = houses['Year Built'].sample(50, random_state=1)
+    sample2 = houses['Year Built'].sample(50, random_state=2)
 
-    greatest_variability = max(variability_by_year, key=variability_by_year.get)
-    lowest_variability = min(variability_by_year, key=variability_by_year.get)
+    st_dev1 = standard_deviation(sample1)
+    st_dev2 = standard_deviation(sample2)
+    print(st_dev1, st_dev2, sep='\n')
+    bigger_spread = 'sample 2'
 
-    print(greatest_variability, lowest_variability, sep='\n')
+    sample1.plot.hist()
+    plt.show()
+    sample2.plot.hist()
+    plt.show()
 
 
 if __name__ == '__main__':
