@@ -82,7 +82,7 @@ def variance(distribution: []):
     mean = sum(distribution) / len(distribution)
     squared_distances = sum((pow(v - mean, 2) for v in distribution))
 
-    return squared_distances / len(distribution)
+    return squared_distances / (len(distribution) - 1)
 
 
 def standard_deviation(distribution: []):
@@ -102,17 +102,9 @@ def standard_deviation(distribution: []):
     return sqrt(variance(distribution))
 
 
-# - Let's consider the data we have for SalePrice a population and sample it 5000 times. For each of the 5000 iterations
-#   of a for loop:
-#   - Sample 10 data points from the SalePrice variable using the Series.sample() method.
-#     - The random_state of Series.sample() should be 0 for the first iteration, 1 for the second iteration, 2 for the
-#       third, and so on.
-#   - Compute the standard deviation of the sample using the standard_deviation() function.
-#   - Append the standard deviation to a list that will eventually store all the 5000 sample standard deviations.
-# - Generate a histogram using plt.hist() to visualize the distribution of the 5000 sample standard deviations.
-# - Draw a vertical line using plt.axvline() to mark the population standard deviation.
-# - Examine the histogram and try to figure out whether most sample standard deviations cluster above or below the
-#   population standard deviation, or right at the center of it.
+# - Modify the code we wrote in the previous exercise by implementing Bessel's correction, and generate the histogram again.
+# - If you want to challenge yourself, delete the display code and recode everything from scratch.
+# - Does it look like Bessel's correction added any improvement?
 def main():
     houses = pd.read_csv('../data/AmesHousing_1.txt', sep='\t')
     sales = houses['SalePrice']
