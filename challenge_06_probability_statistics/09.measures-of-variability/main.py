@@ -1,11 +1,12 @@
 import pandas as pd
+from math import sqrt
 
 
 def get_range(distribution: []):
     """
     For given array of numerical values, returns the range of that array.
     Args:
-        distribution:
+        distribution: Numerical array
 
     Returns:
         A numerical value represent a range of distribution.
@@ -23,7 +24,8 @@ def average_distance(distribution: []):
     """
     For given numerical array returns the average distance.
     Args:
-        distribution:
+        distribution: Numerical array
+
 
     Returns:
         A numerical value represent the average distance of distribution.
@@ -44,7 +46,7 @@ def mean_absolute_deviation(distribution: []):
     """
     For given numerical array returns the mean absolute deviation.
     Args:
-        distribution:
+        distribution: Numerical array
 
     Returns:
         A numerical value represent the mean absolute deviation of distribution.
@@ -65,7 +67,7 @@ def variance(distribution: []):
     """
     For given numerical array returns the variance.
     Args:
-        distribution:
+        distribution: Numerical array
 
     Returns:
         A numerical value represent the variance of distribution.
@@ -82,25 +84,38 @@ def variance(distribution: []):
     return squared_distances / len(distribution)
 
 
-# - Write a function that takes in a numerical array and returns the average distance (as explained above). Inside the
-#   function's definition:
+def standard_deviation(distribution: []):
+    """
+     For given numerical array returns the standard deviation.
+     Args:
+         distribution: Numerical array
+     Returns:
+         A numerical value represent the standard deviation of distribution.
+
+     Examples
+     _______
+     >>> distribution = [30,19,10]
+     >>> standard_deviation(distribution)
+     8.178562764256865
+     """
+    return sqrt(variance(distribution))
+
+
+# - Write a function that takes in a numerical array and returns the standard deviation of that array. Inside the
+#   function:
 #   - Compute the mean of the array.
-#   - Initialize an empty list.
 #   - Loop through the values of the array. For each iteration:
-#     - Compute the distance between the current value and the mean. Use value - mean every time, as indicated by the
-#        formula.
-#     - Append the distance to the list we initialized before the loop.
-#     - At the end of the loop, the list should contain all the distances.
-#   - Return the mean of the list.
-#  - Compute the average distance for distribution C using the function you wrote, and assign the result to a variable
-#    named avg_distance.
-#  - Print the result. Why do you think we got that value? (Hint: The mean is the balance point of a distribution.).
+#     - Compute the squared distance (squared deviation).
+#     - Append the squared distance to a list.
+#  - Compute the mean of the list of squared distances — this is the variance.
+#  - Return the square root of the variance.
+# - Compute the standard deviation of distribution C, and assign the result to a variable named standard_deviation_C.
+# - Is the result considerably less than 20 but greater than 0, as we expected?
 def main():
     houses = pd.read_csv('../data/AmesHousing_1.txt', sep='\t')
     C = [1, 1, 1, 1, 1, 1, 1, 1, 1, 21]
-    variance_C = variance(C)
-    print(variance_C)
-
+    standard_deviation_C = standard_deviation(C)
+    print(standard_deviation_C)
 
 
 if __name__ == '__main__':
