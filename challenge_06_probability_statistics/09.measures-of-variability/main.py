@@ -19,25 +19,45 @@ def get_range(distribution: []):
     return max(distribution) - min(distribution)
 
 
-# - Using the function you wrote, measure the range of the SalePrice variable for each year of sales. You can find the
-#   year of sale in the Yr Sold column.
-#   - Store the measures in a dictionary named range_by_year. The keys should be the individual years, and the
-#     dictionary values should be the ranges. This is how the dictionary should look like: {2010: 598868, 2009: 575100,
-#     2008: 601900,...}.
-# - Using the measures of variability you got, assess the truth value of the following sentences:
-#   - Prices had the greatest variability in 2008.
-#     - If you consider this sentence true, assign the boolean True to a variable named one, otherwise assign False.
-#   - Prices variability had a peak in 2007, then the variability started to decrease until 2010 when there was a short
-#     increase in variability compared to the previous year (2009).
-#     - If you consider this sentence true, assign the boolean True to a variable named two, otherwise assign False.
+def average_distance(distribution: []):
+    """
+    For given numerical array returns the average distance.
+    Args:
+        distribution:
+
+    Returns:
+        A numerical value represent the average distance of distribution.
+
+    Examples
+    _______
+    >>> distribution = [30,19,10]
+    >>> average_distance(distribution)
+    -1.1842378929335002e-15
+    """
+    mean = sum(distribution) / len(distribution)
+    distances = sum((v - mean for v in distribution))
+
+    return distances / len(distribution)
+
+
+# - Write a function that takes in a numerical array and returns the average distance (as explained above). Inside the
+#   function's definition:
+#   - Compute the mean of the array.
+#   - Initialize an empty list.
+#   - Loop through the values of the array. For each iteration:
+#     - Compute the distance between the current value and the mean. Use value - mean every time, as indicated by the
+#        formula.
+#     - Append the distance to the list we initialized before the loop.
+#     - At the end of the loop, the list should contain all the distances.
+#   - Return the mean of the list.
+#  - Compute the average distance for distribution C using the function you wrote, and assign the result to a variable
+#    named avg_distance.
+#  - Print the result. Why do you think we got that value? (Hint: The mean is the balance point of a distribution.).
 def main():
     houses = pd.read_csv('../data/AmesHousing_1.txt', sep='\t')
-    range_by_year = {year: get_range(houses[houses['Yr Sold'] == year]['SalePrice'])
-                     for year in houses['Yr Sold'].unique()}
-
-    print(range_by_year)
-    one = False
-    two = True
+    C = [1, 1, 1, 1, 1, 1, 1, 1, 1, 21]
+    avg_distance = average_distance(C)
+    print(avg_distance)
 
 
 if __name__ == '__main__':
