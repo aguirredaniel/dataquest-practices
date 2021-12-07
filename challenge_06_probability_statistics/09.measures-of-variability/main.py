@@ -56,9 +56,30 @@ def mean_absolute_deviation(distribution: []):
     6.888888888888889
     """
     mean = sum(distribution) / len(distribution)
-    distances = sum((abs(v - mean) for v in distribution))
+    absolute_distances = sum((abs(v - mean) for v in distribution))
 
-    return distances / len(distribution)
+    return absolute_distances / len(distribution)
+
+
+def variance(distribution: []):
+    """
+    For given numerical array returns the variance.
+    Args:
+        distribution:
+
+    Returns:
+        A numerical value represent the variance of distribution.
+
+    Examples
+    _______
+    >>> distribution = [30,19,10]
+    >>> variance(distribution)
+    66.8888888888889
+    """
+    mean = sum(distribution) / len(distribution)
+    squared_distances = sum((pow(v - mean, 2) for v in distribution))
+
+    return squared_distances / len(distribution)
 
 
 # - Write a function that takes in a numerical array and returns the average distance (as explained above). Inside the
@@ -77,8 +98,9 @@ def mean_absolute_deviation(distribution: []):
 def main():
     houses = pd.read_csv('../data/AmesHousing_1.txt', sep='\t')
     C = [1, 1, 1, 1, 1, 1, 1, 1, 1, 21]
-    mad = mean_absolute_deviation(C)
-    print(mad)
+    variance_C = variance(C)
+    print(variance_C)
+
 
 
 if __name__ == '__main__':
