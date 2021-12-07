@@ -102,29 +102,27 @@ def standard_deviation(distribution: []):
     return sqrt(variance(distribution))
 
 
-# - We took two samples of 50 sample points each from the distribution of the Year Built variable. Examine the graph
-#   below, and estimate visually which sample has a bigger spread.
-#   - Assign your answer to a variable named bigger_spread. If you think sample 1 has a bigger spread, assign the string
-#    'sample 1' to bigger_spread, otherwise assign 'sample 2'.
-#   - Sanity check your visual estimate by computing and comparing the standard deviations of the two samples.
-#     - You can see the two samples already saved in the code editor.
-#     - Assign the standard deviation of sample 1 to a variable named st_dev1. Compute the standard deviation using the
-#       standard_deviation() function.
-#     - Assign the standard deviation of sample 2 to a variable named st_dev2. Compute the standard deviation using the
-#       standard_deviation() function.
+# - Let's consider the data we have for SalePrice a population and sample it 5000 times. For each of the 5000 iterations
+#   of a for loop:
+#   - Sample 10 data points from the SalePrice variable using the Series.sample() method.
+#     - The random_state of Series.sample() should be 0 for the first iteration, 1 for the second iteration, 2 for the
+#       third, and so on.
+#   - Compute the standard deviation of the sample using the standard_deviation() function.
+#   - Append the standard deviation to a list that will eventually store all the 5000 sample standard deviations.
+# - Generate a histogram using plt.hist() to visualize the distribution of the 5000 sample standard deviations.
+# - Draw a vertical line using plt.axvline() to mark the population standard deviation.
+# - Examine the histogram and try to figure out whether most sample standard deviations cluster above or below the
+#   population standard deviation, or right at the center of it.
 def main():
     houses = pd.read_csv('../data/AmesHousing_1.txt', sep='\t')
-    sample1 = houses['Year Built'].sample(50, random_state=1)
-    sample2 = houses['Year Built'].sample(50, random_state=2)
+    sales = houses['SalePrice']
+    parameter = standard_deviation(sales)
+    standard_deviations = [standard_deviation(sales.sample(10, random_state=i))
+                           for i in range(5000)]
 
-    st_dev1 = standard_deviation(sample1)
-    st_dev2 = standard_deviation(sample2)
-    print(st_dev1, st_dev2, sep='\n')
-    bigger_spread = 'sample 2'
+    plt.hist(standard_deviations)
+    plt.axvline(parameter)
 
-    sample1.plot.hist()
-    plt.show()
-    sample2.plot.hist()
     plt.show()
 
 
