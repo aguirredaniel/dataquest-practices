@@ -24,33 +24,29 @@ def z_score(distribution: [], value, bessel=0) -> float:
     return (value - mean(distribution)) / std(distribution, ddof=bessel)
 
 
-# - Find out the location for which $200,000 has the z-score closest to 0. Code-wise, there are several ways to complete
-#   this task, and we encourage you to think of a way yourself. Below we describe one way to complete this task:
-#   - Isolate the data for each of the five neighborhoods. The neigborhoods are described in the Neighborhood column.
-#     These are the abbreviations for our neighborhoods of interest:
-#     - 'NAmes' for North Ames.
-#     - 'CollgCr' for College Creek.
-#     - 'OldTown' for Old Town.
-#     - 'Edwards' for Edwards.
-#    - 'Somerst' for Somerset.
-#   - For example, to isolate the data for North Ames you can do houses[houses['Neighborhood'] == 'NAmes'] and save the
-#     data to a variable.
-#   -  Find the z-score of a $200,000 price for each of the five data sets you isolated. Assume that each data set is a
-#      population.
-#   - Examine the z-scores to find the best location to invest in. Assign your answer as a string to the variable
-#     best_investment. Choose between the following strings: 'North Ames', 'College Creek', 'Old Town', 'Edwards', and 'Somerset'.
+# - We've already transformed the distribution of the SalePrice variable to distribution of z-scores and saved the new
+#   values to a column named z_prices.
+#   - Compute the mean of the z_prices column and assign the result to a variable named z_mean_price.
+#   - Compute the standard deviation of the z_prices column and assign the result to a variable named z_stdev_price.
+#     Assume that you're computing the standard deviation for a population.
+# - Transform the distribution of the Lot Area variable into a distribution of z-scores.
+#   - Compute the mean of the new distribution of z-scores and assign the result to a variable named z_mean_area.
+#   - Compute the standard deviation of the new distribution of z-scores and assign the result to a variable named
+#     z_stdev_area. Assume that you're computing the standard deviation for a population.
+# - Compare the values of z_mean_price and z_mean_area. What do you observe? How can you explain that?
+# - Compare the values of z_stdev_price and z_stdev_area. What do you observe? How can you explain that?
 def main():
     houses = pd.read_csv('../data/AmesHousing_1.txt', sep='\t')
 
     sale = houses['SalePrice']
-    all_neighborhoods = houses['Neighborhood']
-    price = 200000
-    neighborhoods = ['NAmes', 'CollgCr', 'OldTown', 'Edwards', 'Somerst']
-    neighborhood_z_scores = {n: abs(z_score(sale[all_neighborhoods == n], price, 1))
-                             for n in neighborhoods}
+    houses['z_prices'] = sale.apply(lambda v: z_score(sale, v))
+    z_mean_price = houses['z_prices'].mean()
+    z_stdev_price = houses['z_prices'].std(ddof=0)
 
-    best_investment = min(neighborhood_z_scores, key=neighborhood_z_scores.get)
-    best_investment = 'College Creek'
+    area = houses['Lot Area']
+    houses['z_area'] = area.apply(lambda v: z_score(area, v))
+    z_mean_area = houses['z_area'].mean()
+    z_stdev_area = houses['z_area'].std(ddof=0)
 
 
 if __name__ == '__main__':
