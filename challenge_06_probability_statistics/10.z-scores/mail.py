@@ -3,12 +3,13 @@ import pandas as pd
 from numpy import mean, std
 
 
-def z_score(distribution: [], value) -> float:
+def z_score(distribution: [], value, bessel=0) -> float:
     """
         Calculate the Z score of value in distributions that belongs.
     Args:
         distribution: array of numerically values.
         value: value that  belongs to distribution array.
+        bessel: Bassel's correction for standard deviation.
 
     Returns:
         Float value, represent how far off a value is from the mean in terms of number of standard deviations.
@@ -20,32 +21,36 @@ def z_score(distribution: [], value) -> float:
     1.2634656762057945
     """
 
-    return (value - mean(distribution)) / std(distribution)
+    return (value - mean(distribution)) / std(distribution, ddof=bessel)
 
 
-# - Write a function that takes in a value, the array the value belongs to, and returns the z-score of that value.
-#   Inside the function's definition:
-#   - Compute the mean of the array.
-#   - Compute the standard deviation of the array. Make sure your function is flexible enough to compute z-scores for
-#     both samples and populations.
-#     - You can use the std() function from numpy.
-#   - Find out the distance between the value and the mean of the array.
-#   - Compute the z-score by dividing the distance to the standard deviation of the array.
-#   - Return the z-score.
-# - Compute the z-score for min_val, mean_val, max_val, which are already defined in the code editor. Assume that the
-#   values come from a population.
-#   - Assign the z-score for min_val to a variable named min_z.
-#   -Assign the z-score for mean_val to a variable named mean_z.
-#   - Assign the z-score for max_val to a variable named max_z.
+# - Find out the location for which $200,000 has the z-score closest to 0. Code-wise, there are several ways to complete
+#   this task, and we encourage you to think of a way yourself. Below we describe one way to complete this task:
+#   - Isolate the data for each of the five neighborhoods. The neigborhoods are described in the Neighborhood column.
+#     These are the abbreviations for our neighborhoods of interest:
+#     - 'NAmes' for North Ames.
+#     - 'CollgCr' for College Creek.
+#     - 'OldTown' for Old Town.
+#     - 'Edwards' for Edwards.
+#    - 'Somerst' for Somerset.
+#   - For example, to isolate the data for North Ames you can do houses[houses['Neighborhood'] == 'NAmes'] and save the
+#     data to a variable.
+#   -  Find the z-score of a $200,000 price for each of the five data sets you isolated. Assume that each data set is a
+#      population.
+#   - Examine the z-scores to find the best location to invest in. Assign your answer as a string to the variable
+#     best_investment. Choose between the following strings: 'North Ames', 'College Creek', 'Old Town', 'Edwards', and 'Somerset'.
 def main():
     houses = pd.read_csv('../data/AmesHousing_1.txt', sep='\t')
 
     sale = houses['SalePrice']
-    min_z = z_score(sale, sale.min())
-    mean_z = z_score(sale, sale.mean())
-    max_z = z_score(sale, sale.max())
+    all_neighborhoods = houses['Neighborhood']
+    price = 200000
+    neighborhoods = ['NAmes', 'CollgCr', 'OldTown', 'Edwards', 'Somerst']
+    neighborhood_z_scores = {n: abs(z_score(sale[all_neighborhoods == n], price, 1))
+                             for n in neighborhoods}
 
-    print(min_z, mean_z, max_z, sep='\n')
+    best_investment = min(neighborhood_z_scores, key=neighborhood_z_scores.get)
+    best_investment = 'College Creek'
 
 
 if __name__ == '__main__':
