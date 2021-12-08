@@ -24,29 +24,18 @@ def z_score(distribution: [], value, bessel=0) -> float:
     return (value - mean(distribution)) / std(distribution, ddof=bessel)
 
 
-# - We've already transformed the distribution of the SalePrice variable to distribution of z-scores and saved the new
-#   values to a column named z_prices.
-#   - Compute the mean of the z_prices column and assign the result to a variable named z_mean_price.
-#   - Compute the standard deviation of the z_prices column and assign the result to a variable named z_stdev_price.
-#     Assume that you're computing the standard deviation for a population.
-# - Transform the distribution of the Lot Area variable into a distribution of z-scores.
-#   - Compute the mean of the new distribution of z-scores and assign the result to a variable named z_mean_area.
-#   - Compute the standard deviation of the new distribution of z-scores and assign the result to a variable named
-#     z_stdev_area. Assume that you're computing the standard deviation for a population.
-# - Compare the values of z_mean_price and z_mean_area. What do you observe? How can you explain that?
-# - Compare the values of z_stdev_price and z_stdev_area. What do you observe? How can you explain that?
+# - Standardize the population of values stored in the population variable and compute its mean  μz and its standard
+#    deviation σz .
+#   - Assign the value of μz to a variable named mean_z.
+#   - Assign the value of σ z to a variable named stdev_z.
 def main():
     houses = pd.read_csv('../data/AmesHousing_1.txt', sep='\t')
 
-    sale = houses['SalePrice']
-    houses['z_prices'] = sale.apply(lambda v: z_score(sale, v))
-    z_mean_price = houses['z_prices'].mean()
-    z_stdev_price = houses['z_prices'].std(ddof=0)
+    population = [0, 8, 0, 8]
 
-    area = houses['Lot Area']
-    houses['z_area'] = area.apply(lambda v: z_score(area, v))
-    z_mean_area = houses['z_area'].mean()
-    z_stdev_area = houses['z_area'].std(ddof=0)
+    standard_populaiton = [(p - mean(population)) / std(population) for p in population]
+    mean_z = mean(standard_populaiton)
+    stdev_z = std(standard_populaiton)
 
 
 if __name__ == '__main__':
