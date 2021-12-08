@@ -24,18 +24,18 @@ def z_score(distribution: [], value, bessel=0) -> float:
     return (value - mean(distribution)) / std(distribution, ddof=bessel)
 
 
-# - Standardize the population of values stored in the population variable and compute its mean  μz and its standard
-#    deviation σz .
-#   - Assign the value of μz to a variable named mean_z.
-#   - Assign the value of σ z to a variable named stdev_z.
+# - Compute the standard deviation of standardized_sample using the sample standard deviation formula, and assign the
+#   result to a variable named stdev_sample.
+# - Inspect the result to see if the standard deviation equals 1.
 def main():
     houses = pd.read_csv('../data/AmesHousing_1.txt', sep='\t')
 
     population = [0, 8, 0, 8]
 
-    standard_populaiton = [(p - mean(population)) / std(population) for p in population]
-    mean_z = mean(standard_populaiton)
-    stdev_z = std(standard_populaiton)
+    standardized_sample = [(p - mean(population)) / std(population, ddof=1) for p in population]
+    stdev_sample = std(standardized_sample, ddof=1)
+
+    print(stdev_sample)
 
 
 if __name__ == '__main__':
