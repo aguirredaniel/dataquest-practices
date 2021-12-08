@@ -1,26 +1,52 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+from numpy import mean, std
 
 
-# - Find out the number of standard deviations away from the mean for a price of $220,000 in the distribution of the
-#   SalePrice variable.
-#   - Measure the distance between $220,000 and the mean of the SalePrice column.
-#   - Divide the distance by the standard deviation of the SalePrice column (assume the data we have is a population) to
-#     find the number of standard deviations away from the mean.
-#     - Assign your result to a variable named st_devs_away.
-#     - If you can't understand why we divide, think about this way: if we have a distance of 6 and a standard deviation
-#       of 2, then that is three standard deviations away because 6 : 2 = 3 .
-# - Does the number of standard deviations match our visual estimate from the last exercise?
+def z_score(distribution: [], value) -> float:
+    """
+        Calculate the Z score of value in distributions that belongs.
+    Args:
+        distribution: array of numerically values.
+        value: value that  belongs to distribution array.
+
+    Returns:
+        Float value, represent how far off a value is from the mean in terms of number of standard deviations.
+
+    Examples
+    ______
+    >>> distribution = [30, 19, 10]
+    >>> z_score(distribution, 30)
+    1.2634656762057945
+    """
+
+    return (value - mean(distribution)) / std(distribution)
+
+
+# - Write a function that takes in a value, the array the value belongs to, and returns the z-score of that value.
+#   Inside the function's definition:
+#   - Compute the mean of the array.
+#   - Compute the standard deviation of the array. Make sure your function is flexible enough to compute z-scores for
+#     both samples and populations.
+#     - You can use the std() function from numpy.
+#   - Find out the distance between the value and the mean of the array.
+#   - Compute the z-score by dividing the distance to the standard deviation of the array.
+#   - Return the z-score.
+# - Compute the z-score for min_val, mean_val, max_val, which are already defined in the code editor. Assume that the
+#   values come from a population.
+#   - Assign the z-score for min_val to a variable named min_z.
+#   -Assign the z-score for mean_val to a variable named mean_z.
+#   - Assign the z-score for max_val to a variable named max_z.
 def main():
     houses = pd.read_csv('../data/AmesHousing_1.txt', sep='\t')
 
     sale = houses['SalePrice']
-    mean = sale.mean()
-    std = sale.std(ddof=0)
-    price = 220000
-    st_devs_away = abs(mean - price) / std
+    min_z = z_score(sale, sale.min())
+    mean_z = z_score(sale, sale.mean())
+    max_z = z_score(sale, sale.max())
 
-    print(st_devs_away)
+    print(min_z, mean_z, max_z, sep='\n')
+
 
 if __name__ == '__main__':
     main()
