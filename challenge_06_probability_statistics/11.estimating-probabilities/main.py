@@ -1,25 +1,17 @@
-# - An insurance company conducted a study with 200 individuals, and found that:
-#   - 87 individuals opted for at least a life insurance policy.
-#   - 40 individuals opted for at least life and car insurance policies.
-#   - 63 individuals opted for at least a house insurance policy.
-#   - 160 individuals opted for at least one type of insurance policy.
-# - We can't predict people's choices with certainty, so an individual choosing to buy an insurance policy is a random
-#   experiment. 200 individuals were part of the study, so you can consider the random experiment was performed 200
-#   times. Find:
-#   - P(L): The probability that a new customer opts for at least a life insurance. Assign your answer to a variable
-#     named p_l.
-#   - P(L and C): The probability that an individual opts for at least a life and a car insurance policy. Assign your
-#     answer to a variable named p_l_and_c.
-#   - P(H): The probability that an individual opts for at least a house insurance policy. Assign your answer to a
-#     variable named p_h.
-#   -P(NO): The probability that an individual opts for no insurance at all. Assign your answer to a variable named
-#    p_no.
+# - Find the theoretical probability of getting a 5 when rolling a six-sided die. Assign your answer to p_5.
+# - Tossing a coin twice has four possible outcomes (assume all the outcomes are equally likely):
+#   - Heads on the first toss and heads on the second toss (HH).
+#   - Heads on the first toss and tails on the second (HT).
+#   - Tails on the first toss and heads on the second (TH).
+#   - Tails on the first toss and tails on the second (TT).
+# - Find:
+#   - P(HT): Assign your result to p_ht.
+#   - P(TT): Assign your result to p_tt.
 def main():
-    p_l = 87 / 200
-    p_l_and_c = 40 / 200
-    p_h = 63 / 200
-    p_no = (200 - 160) / 200
-    print(p_l, p_l_and_c, p_h, p_no, sep='\n')
+    p_5 = 1 / 6
+    p_ht = 1 / 4
+    p_tt = 1 / 4
+    print(p_5, p_ht, p_tt, sep='\n')
 
 
 if __name__ == '__main__':
