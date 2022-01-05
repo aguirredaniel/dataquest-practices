@@ -1,14 +1,12 @@
-# - An online betting company offers customers the possibility of betting on a variety of games and events (football,
-#   tennis, hockey, horse races, car races, etc.). Based on historical data, the company knows the empirical
-#   probabilities of the following events:
-#   - Event F (a new customer's first bet is on football) — the probability is 0.26.
-#   - Event T (a new customer's first bet is on tennis) — the probability is 0.11.
-#   - Event "T and F" (a new customer's first bet is on both football and tennis) — the probability is 0.03.
-# - Find the probability that a new customer's first bet is either on football or tennis. Assign your answer to p_f_or_t
-#   You can't use theoretical probability formula to solve this, so you'll need to make use of the addition rule.
+# - Based on historical data, the company knows the empirical probabilities of the following events:
+#   - Event H (a new customer's first bet is on hockey) — the probability is 0.08.
+#   - Event C (a new customer's first bet is on car races) — the probability is 0.11.
+#   - Event "H or C" (a new customer's first bet is either on hockey or car races) — the probability is 0.17.
+# - Find the probability that a new customer's first bet is on both hockey and car races. Assign your answer to
+#   p_h_and_c. Check the hint if you get stuck.
 def main():
-    p_f_or_t = 0.26 + 0.11 - 0.03
-    print(p_f_or_t)
+    p_h_and_c = 0.08 + 0.11 - 0.17
+    print(p_h_and_c)
 
 
 if __name__ == '__main__':
