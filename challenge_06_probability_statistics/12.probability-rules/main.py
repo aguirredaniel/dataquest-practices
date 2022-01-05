@@ -1,12 +1,22 @@
-# - Based on historical data, the company knows the empirical probabilities of the following events:
-#   - Event H (a new customer's first bet is on hockey) — the probability is 0.08.
-#   - Event C (a new customer's first bet is on car races) — the probability is 0.11.
-#   - Event "H or C" (a new customer's first bet is either on hockey or car races) — the probability is 0.17.
-# - Find the probability that a new customer's first bet is on both hockey and car races. Assign your answer to
-#   p_h_and_c. Check the hint if you get stuck.
+# - Consider the following sets:
+#   - M = {100, 22, 1, 2}
+#   - N = {22, car insurance, 2, house insurance}
+#   - O = {HHHH, TTTT, TH}
+#   - P = {Hockey, Cycling, Athletics, Swimming}
+# - Consider the following set operations and their results:
+#   - M ∪ P = Ø: If you think the result is correct, assign the boolean True to a variable named operation_1, otherwise
+#     assign False.
+#   - N ∩ M = {22, 2}: If you think the result is correct, assign the boolean True to a variable named operation_2,
+#     otherwise assign False.
+#   - O ∪ M = {HHHH, TTTT, 100, 22, 2}: If you think the result is correct, assign the boolean True to a variable named
+#     operation_3, otherwise assign False.
+#   - P ∩ N = Ø: If you think the result is correct, assign the boolean True to a variable named operation_4, otherwise
+#     assign False.
 def main():
-    p_h_and_c = 0.08 + 0.11 - 0.17
-    print(p_h_and_c)
+    operation_1 = False
+    operation_2 = True
+    operation_3 = False
+    operation_4 = True
 
 
 if __name__ == '__main__':
