@@ -9,12 +9,16 @@
 #       .  .  .  .  .  .
 #       7 8 9 10, 11, 12
 # - Using the table above, find for the same experiment the probability of the following events:
-#   - The sum is either 2 or 4. Assign the probability as a proportion to p_2_or_4.
-#    - The sum is either 12 or 13. Assign the probability as a proportion to p_12_or_13.
+#   - The sum is either 5 or 9 — assign your answer to p_5_or_9.
+#   - The sum is either even or less than 2 — assign your answer to p_even_or_less_2.
+#   - The sum is either 4 or a multiple of 3 — assign your answer to p_4_or_3_multiple. Check the hint if you don't
+#     remember what a multiple is.
 def main():
-    p_2_or_4 = 4 / 36
-    p_12_or_13 = 1 / 36
-    print(p_2_or_4, p_12_or_13, sep='\n')
+    p_5_or_9 = 8 / 36
+    p_even_or_less_2 = 18 / 36
+    p_4_or_3_multiple = 15 / 36
+
+    print(p_5_or_9, p_even_or_less_2, p_4_or_3_multiple, sep='\n')
 
 
 if __name__ == '__main__':
