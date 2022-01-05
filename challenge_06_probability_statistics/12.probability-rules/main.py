@@ -8,16 +8,13 @@
 #       .  .  .  .  .  .
 #       .  .  .  .  .  .
 #       7 8 9 10, 11, 12
-# - Use the table above to find the probability of the following events:
-#   - The sum of the two rolls is 6. Assign the probability to p_sum_6.
-#   - The sum of the two rolls is lower than 15. Assign the probability to p_lower_15.
-#   - The sum of the two rolls is greater than 13. Assign the probability to p_greater_13.
+# - Using the table above, find for the same experiment the probability of the following events:
+#   - The sum is either 2 or 4. Assign the probability as a proportion to p_2_or_4.
+#    - The sum is either 12 or 13. Assign the probability as a proportion to p_12_or_13.
 def main():
-    p_sum_6 = 5 / 36
-    p_lower_15 = 36 / 36
-    p_greater_13 = 0 / 36
-
-    print(p_sum_6, p_lower_15, p_greater_13, sep='\n')
+    p_2_or_4 = 4 / 36
+    p_12_or_13 = 1 / 36
+    print(p_2_or_4, p_12_or_13, sep='\n')
 
 
 if __name__ == '__main__':
