@@ -1,18 +1,16 @@
-# - An advertisement company monitors the activity for a specific ad and shows it repeatedly to the same users (so a
-#   single user sees the ad multiple times). Regardless of the number of times the ad is shown to a user, the
-#   probability that the user clicks on the ad is 0.5. Find:
-#   - The probability that a user doesn't click on the ad. Assign your answer to p_non_click.
-#   - The probability that it takes two times or less for a user to click on the ad. Assign your answer to
-#     p_two_or_less.
-#   - The probability that it takes three times or more for a user to click on the ad. Assign your answer to
-#     p_three_or_more.
+# - For rolling a fair six-sided die, find:
+#   - The probability of getting a 6 two times in a row. Assign your result to p_6_6.
+#   - The probability of getting a 3 on the first throw and a 2 on the second throw. Assign your result to p_3_2.
+#   - The probability of getting an even number on both throws. Assign your result to p_even_even.
+#   - The probability of getting a 1 on the first throw and an even number on the second throw. Assign your result to
+#     p_1_even.
 def main():
-    p_non_click = 1 - 0.5
-    p_two_or_less = 3 / 4
-    p_three_or_more = 1 - p_two_or_less
+    p_6_6 = 1 / 6 * 1 / 6
+    p_3_2 = 1 / 6 * 1 / 6
+    p_even_even = 3 / 6 * 3 / 6
+    p_1_even = 1 / 6 * 3 / 6
 
-    print(p_two_or_less, p_three_or_more, sep='\n')
-
+    print(p_6_6, p_3_2, p_even_even, p_1_even, sep='\n')
 
 if __name__ == '__main__':
-    main()
+        main()
