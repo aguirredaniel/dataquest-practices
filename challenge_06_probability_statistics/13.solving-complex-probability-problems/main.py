@@ -1,13 +1,14 @@
-# - Find the probability of getting at least one double-six in 24 throws of two six-sided dice (the two dice are thrown
-#   simultaneously). Assign your answer to p_one_double_6. The table below shows all the outcomes of throwing two
-#   six-sided dice.
+# - We're sampling without replacement from a standard 52-card deck. Find the probability of:
+#   - Getting two kings in a row. Assign your answer to p_kk.
+#   - Getting a seven of hearts, followed by a queen of diamonds. Assign your answer to p_7q.
+#   - Getting a jack, followed by a queen of diamonds, followed by a king, followed by another jack. Assign your answer
+#     to p_jqkj. This one is a bit tricky, so pay attention to the details of the question.
 def main():
-    p_double_six = 1 / 6 ** 2
-    p_non_double_six = 1 - p_double_six
-    p_non_double_six_24 = p_non_double_six ** 24
-    p_one_double_6 = 1 - p_non_double_six_24
+    p_kk = 4 / 52 * 3 / 51
+    p_7q = 1 / 52 * 1 / 51
+    p_jqkj = 4 / 52 * 1 / 51 * 4 / 50 * 3 / 49
 
-    print(p_one_double_6)
+    print(p_kk, p_7q, p_jqkj, sep='\n')
 
 
 if __name__ == '__main__':
