@@ -26,11 +26,11 @@ def factorial(n, k=None):
 
 
 def main():
-    perm_3_52 = factorial(n=52, k=5)
-    print(perm_3_52)
-    assert perm_3_52 == 311875200
-    assert factorial(6) == 720
-    print(perm_3_52, sep='\n')
+    perm_3_52 = factorial(52, 3)
+    perm_4_20 = factorial(20, 4)
+    perm_4_27 = factorial(27, 4)
+
+    print(perm_3_52, perm_4_20, perm_4_27, sep='\n')
 
 
 if __name__ == '__main__':
