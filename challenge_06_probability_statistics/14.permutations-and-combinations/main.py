@@ -48,14 +48,15 @@ def permutation(n, k):
     return factorial(n) / factorial(n - k)
 
 
+def combinations(n, k):
+    return factorial(n) / (factorial(k) * factorial(n - k))
+
+
 def main():
-    c = permutation(52, 5) / factorial(5)
-    p_aces_7 = 1 / c
+    c_18 = combinations(34, 18)
+    p_non_Y = 1 - 1 / c_18
 
-    c_lottery = permutation(49, 6) / factorial(6)
-    p_big_prize = 1 / c_lottery
-
-    print(c, p_aces_7, c_lottery, p_big_prize, sep='\n')
+    print(c_18, p_non_Y, sep='\n')
 
 
 if __name__ == '__main__':
