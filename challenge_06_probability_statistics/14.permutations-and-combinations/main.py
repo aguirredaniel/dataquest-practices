@@ -1,16 +1,17 @@
-# - Consider the composite experiment E1E2, where E1 is rolling a fair six-sided die once, and E2 is rolling the same
-#   die again. One of the outcomes of E1E2 could be (1, 6), which means we get a 1 for the first roll and a 6 for the
-#   second one.
-#   - Use the rule of product to calculate the total number of outcomes. Assign your answer to n_outcomes.
-#   - Use n_outcomes to calculate the probability of getting a (6,6). Assign your answer to p_six_six. Check the hint if
-#     you have difficulties calculating this.
-#    - Use n_outcomes to calculate the probability of not getting a (5,5) and assign your answer to p_not_five_five.
+# - We roll a fair six-sided die three times and then randomly draw a card from a standard 52-card deck. One of the
+#   outcomes is (6, 6, 6, ace of diamonds), which means getting three 6's in a row when we roll the die, followed by
+#   drawing an ace of diamonds from the deck.
+#   - Use the extended rule of product to calculate the total number of outcomes. Assign your answer to total_outcomes.
+#   - Use total_outcomes to calculate the probability of getting (6, 6, 6, ace of diamonds) — three sixes in a row
+#     followed by an ace of diamonds. Assign your answer to p_666_ace_diamonds.
+#   - Use p_666_ace_diamonds to calculate the probability of getting anything but (6, 6, 6, ace of diamonds). Assign
+#     your answer to p_no_666_ace_diamonds.
 def main():
-    n_outcomes = 6 * 6
-    p_six_six = 1 / 6 ** 2
-    p_not_five_five = 1 - 1 / 6 ** 2
+    total_outcomes = 6 ** 3 * 52
+    p_666_ace_diamonds = 1 / 6 ** 3 * 1 / 52
+    p_no_666_ace_diamonds = 1 - p_666_ace_diamonds
 
-    print(n_outcomes, p_six_six, p_not_five_five, sep='\n')
+    print(total_outcomes, p_666_ace_diamonds, p_no_666_ace_diamonds, sep='\n')
 
 
 if __name__ == '__main__':
