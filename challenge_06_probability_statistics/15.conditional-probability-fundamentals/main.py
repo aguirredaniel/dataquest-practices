@@ -1,14 +1,17 @@
-# - A student is randomly selected from a class. All we know is that he was born during winter. Assume the winter months
-#  are December, January, and February and ignore the fact that these three months have different number of days. Find:
-#   - The probability that he was born in December. Assign your answer to p_december.
-#   - The probability that he was born during summer. Assign your answer to p_summer.
-#   - The probability that he was born in a month which ends in letter "r" — "September", for instance, ends in "r",
-#     while "April" doesn't. Assign your answer to p_ends_r.
+# - Two fair six-sided dice are simultaneously rolled, and the two numbers they show are added together. The diagram
+#   below shows all the possible results that we can get from adding the two numbers together.
+# - Find P(A|B), where A is the event where the sum is an even number, and B is the event that the sum is less than
+#   eight.
+#   - Find card(B). Assign your answer to card_b.
+#   - Note that you'll have to treat identical sums differently if they come from different die numbers. On the diagram
+#     above, we see that we have three sums of 4, but they all come from different die outcomes: (3, 1), (2,2), and (1, 3), where the first number describes the outcome of the first die throw, and the second number the outcome of the second die throw.
+#   - Find card(A ∩ B). Assign your answer to card_a_and_b.
+#   - Calculate P(A|B). Assign your answer to p_a_given_b.
 def main():
-    p_december = 1 / 3
-    p_summer = 0
-    p_ends_r = 1 / 3
-    print(p_december, p_summer, p_ends_r, sep='\n')
+    card_b = 21
+    card_a_and_b = 9
+    p_a_given_b = card_a_and_b / card_b
+    print(p_a_given_b, sep='\n')
 
 
 if __name__ == '__main__':
