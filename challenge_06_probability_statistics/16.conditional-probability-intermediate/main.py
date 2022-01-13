@@ -1,17 +1,19 @@
-# - P(M), the probability that a customer buys a mouse — assign your answer to p_m.
-# - P(M|L), the probability that a customer buys a mouse given that they bought a laptop — assign your answer to
-#   p_m_given_l.
-# - P(M ∩ L), the probability that a customer buys both a mouse and a laptop — assign your answer to p_m_and_l.
-# - P(M ∪ L), the probability that a customer buys a mouse or a laptop — assign your answer to p_m_or_l. Check the hint
-#   if you don't remember how to calculate this.
+# - Using the two rules we learned above, find:
+#   - P(BC|M), and assign your answer to p_non_b_given_m.
+#   - P(CC|L), and assign your answer to p_non_c_given_l.
+#   - P(B|C), and assign your answer to p_b_given_c.
+#   - P(B|MC), and assign your answer to p_b_given_non_m. If you think you can't calculate the probability using any of
+#     the two rules above, assign the string 'not possible' to the same variable p_b_given_non_m.
 def main():
-    p_m = 515 / 2000
-    p_l = 90 / 2000
-    p_m_given_l = (32 / 2000) / p_l
-    p_m_and_l = p_m_given_l * p_l
-    p_m_or_l = p_m + p_l - p_m_and_l
+    p_b_given_m = 0.1486
+    p_c_given_l = 0.0928
+    p_non_b_given_c = 0.7622
 
-    print(p_m, p_l, p_m_given_l, p_m_and_l, p_m_or_l, sep='\n')
+    p_non_b_given_m = 1 - p_b_given_m
+    p_non_c_given_l = 1 - p_c_given_l
+    p_b_given_c = 1 - p_non_b_given_c
+
+    p_b_given_non_m = 'not possible'
 
 
 if __name__ == '__main__':
