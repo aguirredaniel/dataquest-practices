@@ -1,22 +1,18 @@
-# - For the exercises below, we know:
-#   - The probability that a customer buys RAM memory from an electronics store is P(RAM) = 0.0822.
-#   - The probability that a customer buys a gaming laptop is P(GL) = 0.0184.
-#   - The probability that a customer buys RAM memory given that they bought a gaming laptop is P(RAM | GL) = 0.0022.
-# - Calculate:
-#   - P(GL ∩ RAM) — assign your answer to p_gl_and_ram.
-#   - P(RAMC | GL) — assign your answer to p_non_ram_given_gl.
-#   - P(GL ∩ RAMC) — assign your answer to p_gl_and_non_ram..
+# - A fair six-sided die is rolled twice and the following three events are considered:
+#   - Event K — the die showed a 4 on the second roll
+#   - Event L — the die showed a 2 on the first roll
+#   - Event M — the die showed an even number on the second roll
+# - Find whether the following events are independent or not:
+#   -  Events K and L — assign the string 'independent' to a variable named k_and_l if the events are independent,
+#      otherwise assign the string 'dependent'.
+#   -  Events L and M — assign the string 'independent' to a variable named l_and_m if the events are independent,
+#      otherwise assign the string 'dependent'.
+#   - Events K and M — assign the string 'independent' to a variable named k_and_m if the events are independent,
+#     otherwise assign the string 'dependent'.
 def main():
-    p_ram = 0.0822
-    p_gl = 0.0184
-    p_ram_given_gl = 0.0022
-
-    p_gl_and_ram = p_gl * p_ram_given_gl
-    p_non_ram_given_gl = 1 - p_ram_given_gl
-    p_gl_and_non_ram = p_gl * p_non_ram_given_gl
-    p_gl_or_ram = p_gl + p_ram - p_gl_and_ram
-
-    print(p_gl_and_ram, p_non_ram_given_gl, p_gl_and_non_ram, p_gl_or_ram, sep='\n')
+    k_and_l = 'independent'
+    l_and_m = 'independent'
+    k_and_m = 'dependent'
 
 
 if __name__ == '__main__':
