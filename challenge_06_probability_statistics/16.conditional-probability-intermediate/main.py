@@ -1,20 +1,24 @@
-# - Find whether the following events are independent or not (check the hint if you don't know how to solve this):
-#   - Events L and M — assign the string 'independent' to a variable named l_and_m if the events are independent,
-#     otherwise assign the string 'dependent'.
-#   - Events L and MC — assign the string 'independent' to a variable named l_and_non_m if the events are independent,
-#     otherwise assign the string 'dependent'.
-# - Use the formulas we learned to calculate (you could also calculate the probabilities just by looking at the table in
-#   this case, but try to use the formulas):
-#   - P(L ∩ M) — assign your answer to p_l_and_m.
-#   - P(L ∩ MC) — assign your answer to p_l_and_non_m.
+# - For our electronics store example, say new data is collected, and we know that:
+#   - The probability that a customer buys an electric toothbrush is P(ET) = 0.0432.
+#   - The probability that a customer buys an electric toothbrush is P(ET) = 0.0432.
+#   - The probability that a customer buys an air conditioning system is P(AC) = 0.0172
+#   - The probability that a customer buys a PlayStation is P(PS) = 0.0236.
+#  - Assuming events ET, AC, and PS are mutually independent, calculate:
+#   - P(ET ∩ PS) — assign your answer to p_et_and_ps.
+#   - P(ET ∩ AC) — assign your answer to p_et_and_ac.
+#   - P(AC ∩ PS) — assign your answer to p_ac_and_ps.
+#   - P(ET ∩ AC ∩ PS) — assign your answer to p_et_and_ac_and_ps.
 def main():
-    l_and_m = 'dependent'
-    l_and_non_m = 'dependent'
+    p_et = 0.0432
+    p_ac = 0.0172
+    p_ps = 0.0236
 
-    p_l_and_m = 515 / 2000 * 32 / 515
-    p_l_and_non_m = 1485 / 2000 * 58 / 1485
+    p_et_and_ps = p_et * p_ps
+    p_et_and_ac = p_et * p_ac
+    p_ac_and_ps = p_ac * p_ps
+    p_et_and_ac_and_ps = p_et * p_ac * p_ps
 
-    print(p_l_and_m, p_l_and_non_m, sep='\n')
+    print(p_et_and_ps, p_et_and_ac, p_ac_and_ps, p_et_and_ac_and_ps, sep='\n')
 
 
 if __name__ == '__main__':
