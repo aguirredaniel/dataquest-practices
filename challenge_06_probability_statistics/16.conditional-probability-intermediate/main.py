@@ -1,24 +1,19 @@
-# - For our electronics store example, say new data is collected, and we know that:
-#   - The probability that a customer buys an electric toothbrush is P(ET) = 0.0432.
-#   - The probability that a customer buys an electric toothbrush is P(ET) = 0.0432.
-#   - The probability that a customer buys an air conditioning system is P(AC) = 0.0172
-#   - The probability that a customer buys a PlayStation is P(PS) = 0.0236.
-#  - Assuming events ET, AC, and PS are mutually independent, calculate:
-#   - P(ET ∩ PS) — assign your answer to p_et_and_ps.
-#   - P(ET ∩ AC) — assign your answer to p_et_and_ac.
-#   - P(AC ∩ PS) — assign your answer to p_ac_and_ps.
-#   - P(ET ∩ AC ∩ PS) — assign your answer to p_et_and_ac_and_ps.
+# - For our electronics store example, say new data is collected. We know that:
+#   - The probability that a customer doesn't buy a set of laptop stickers is P(LSC) = 0.9821.
+#   - The probability that a customer buys screen cleaning wipes given that they bought a set of laptop stickers is
+#     P(CW | LS) = 0.0079.
+#   - The probability that a customer buys a laptop given that they bought both a set of laptop stickers and screen
+#     cleaning wipes is P(L | LS ∩ CW) = 0.2908.
+# - Assume events LS, CW, and L are dependent and calculate P(LS ∩ CW ∩ L). Assign your answer to p_ls_and_cw_and_l.
 def main():
-    p_et = 0.0432
-    p_ac = 0.0172
-    p_ps = 0.0236
+    p_non_ls = 0.9821
+    p_cw_given_ls = 0.0079
+    p_l_given_ls_and_cw = 0.2908
 
-    p_et_and_ps = p_et * p_ps
-    p_et_and_ac = p_et * p_ac
-    p_ac_and_ps = p_ac * p_ps
-    p_et_and_ac_and_ps = p_et * p_ac * p_ps
+    p_ls = 1 - p_non_ls
+    p_ls_and_cw_and_l = p_ls * p_cw_given_ls * p_l_given_ls_and_cw
 
-    print(p_et_and_ps, p_et_and_ac, p_ac_and_ps, p_et_and_ac_and_ps, sep='\n')
+    print(p_ls_and_cw_and_l)
 
 
 if __name__ == '__main__':
