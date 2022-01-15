@@ -4,15 +4,18 @@
 #   - Use Bayes' theorem to find P(Airbus|Delay). Assign your answer to p_airbus_delay. Don't forget you can check the
 #     hint if you get stuck.
 def main():
-    p_boeing = 0.73
-    p_airbus = 0.27
-    p_delay_given_boeing = 0.03
-    p_delay_given_airbus = 0.08
+    p_spam = 0.2388
+    p_secret_given_spam = 0.4802
+    p_secret_given_non_spam = 0.1284
+    p_non_span = 1 - p_spam
+    p_secret = p_spam * p_secret_given_spam + p_non_span * p_secret_given_non_spam
 
-    p_delay = p_boeing * p_delay_given_boeing + p_airbus * p_delay_given_airbus
-    p_airbus_delay = (p_airbus * p_delay_given_airbus) / p_delay
+    p_spam_given_secret = (p_spam * p_secret_given_spam) / p_secret
+    prior = p_spam
+    posterior = p_spam_given_secret
+    ratio = posterior / prior
 
-    print(p_delay, p_airbus_delay, sep='\n')
+    print(p_spam_given_secret, prior, posterior, ratio, sep='\n')
 
 
 if __name__ == '__main__':
