@@ -1,23 +1,25 @@
-# - We can find the word "secret" in many spam emails. However, some emails are not spam even though they contain the
-#   word "secret." Let's say we know the following probabilities:
-#   - The probability of getting a spam email is 23.88%. That is P ( S p a m ) = 0.2388 .
-#   - The probability of an email containing the word "secret" given that the email is spam is 48.02%. That is
-#     P ( "secret" | S p a m ) = 0.4802 .
-#   - The probability of an email containing the word "secret" given that the email is not spam is 12.84%. That is
-#      P ( "secret" | S p a m C ) = 0.1284 .
+# - An airline transports passengers using two types of planes: a Boeing 737 and an Airbus A320.
+#   - The Boeing operates 73% of the flights. Out of these flights, 3% arrive at the destination with a delay.
+#   - The Airbus operates the remaining 27% of the flights. Out of these flights, 8% arrive with a delay.
+# - Convert the percentages above to probabilities:
+#   - Assign the probability of flying with a Boeing to p_boeing (to better understand what this probability means,
+#     imagine a passenger having bought a ticket with this airline — what's the probability that this passenger will be
+#     assigned to fly to her destination with a Boeing?).
+#   - Assign the probability of flying with an Airbus to p_airbus.
+#   - Assign the probability of arriving at the destination with a delay given that the passenger flies with a Boeing
+#     to p_delay_given_boeing.
+#   - Assign the probability of arriving at the destination with a delay given that the passenger flies with an Airbus
+#     to p_delay_given_airbus.
 # - Calculate:
-#   - P(SpamC). Assign the result to p_non_spam.
-#   - P(Spam ∩ "secret"). Assign the result to p_spam_and_secret.
-#   - P(SpamC ∩ "secret"). Assign the result to p_non_spam_and_secret. P("secret"). Assign the result to p_secret.
+#   - The probability that a passenger will arrive at her destination with a delay. Assign your answer to p_delay. Check
+#     the hint if you get stuck.
 def main():
-    p_spam = 0.2388  # p(spam)
-    p_secret_given_spam = 0.4802  # p(secret | spam)
-    p_secret_given_non_spam = 0.1284  # p('secret' | not spam)
+    p_boeing = 0.73
+    p_airbus = 0.27
+    p_delay_given_boeing = 0.03
+    p_delay_given_airbus = 0.08
 
-    p_non_spam = 1 - p_spam
-    p_spam_and_secret = p_spam * p_secret_given_spam
-    p_non_spam_and_secret = p_non_spam * p_secret_given_non_spam
-    p_secret = p_spam * p_secret_given_spam + p_non_spam * p_secret_given_non_spam
+    p_delay = p_boeing * p_delay_given_boeing + p_airbus * p_delay_given_airbus
 
 
 if __name__ == '__main__':
