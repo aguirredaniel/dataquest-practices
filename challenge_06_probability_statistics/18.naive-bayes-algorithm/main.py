@@ -2,7 +2,6 @@
 #   probabilities are known:
 #   - P(Spam)=0.5
 #   - P(SpamC)=0.5
-#   - P(New message)=0.5417
 #   - P(NewMessage|Spam)=0.75
 #   - P(NewMessage|SpamC)=0.3334
 # - Classify this new message as spam or non-spam:
@@ -13,13 +12,12 @@
 def main():
     p_spam = 0.5
     p_non_spam = 0.5
-    p_new_message = 0.5417
     p_new_message_given_spam = 0.75
     p_new_message_given_non_spam = 0.3334
 
-    p_spam_given_new_message = p_spam * p_new_message_given_spam / p_new_message
+    p_spam_given_new_message = p_spam * p_new_message_given_spam
 
-    p_non_spam_given_new_message = p_non_spam * p_new_message_given_non_spam / p_new_message
+    p_non_spam_given_new_message = p_non_spam * p_new_message_given_non_spam
 
     classification = 'spam' if p_spam_given_new_message > p_non_spam_given_new_message else 'non-spam'
 
