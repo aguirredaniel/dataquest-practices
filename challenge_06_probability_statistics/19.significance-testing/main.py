@@ -14,7 +14,7 @@ def main():
 
     all_values = data.flatten()
     mean_differences = []
-
+    np.random.seed(1)
     for _ in range(1000):
         group_a = []
         group_b = []
@@ -28,8 +28,12 @@ def main():
         iteration_mean_difference = np.mean(group_b) - np.mean(group_a)
         mean_differences.append(iteration_mean_difference)
 
-    plt.hist(mean_differences)
-    plt.show()
+    sampling_distribution = {}
+    for md in mean_differences:
+        val = sampling_distribution.get(md, 0)
+        sampling_distribution[md] = val + 1
+
+    print(sampling_distribution)
 
 
 if __name__ == '__main__':
