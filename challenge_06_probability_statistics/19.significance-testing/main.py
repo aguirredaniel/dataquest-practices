@@ -15,7 +15,8 @@ def main():
     all_values = data.flatten()
     mean_differences = []
     np.random.seed(1)
-    for _ in range(1000):
+    sampling_size = 1000
+    for _ in range(sampling_size):
         group_a = []
         group_b = []
         for weight_lost in all_values:
@@ -33,7 +34,11 @@ def main():
         val = sampling_distribution.get(md, 0)
         sampling_distribution[md] = val + 1
 
-    print(sampling_distribution)
+    frequencies = [sampling for sampling in sampling_distribution if sampling >= mean_difference]
+
+    p_value = np.sum(frequencies) / sampling_size
+
+    print(p_value)
 
 
 if __name__ == '__main__':
