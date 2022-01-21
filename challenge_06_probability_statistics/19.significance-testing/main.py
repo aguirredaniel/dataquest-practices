@@ -10,7 +10,9 @@ def main():
     mean_group_a = np.mean(weight_lost_a)
     mean_group_b = np.mean(weight_lost_b)
 
-    print(mean_group_a, mean_group_b, sep='\n')
+    mean_difference = mean_group_b - mean_group_a
+
+    print(mean_difference, sep='\n')
 
 
 if __name__ == '__main__':
