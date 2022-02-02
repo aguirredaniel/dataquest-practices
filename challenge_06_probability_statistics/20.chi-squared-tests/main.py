@@ -17,27 +17,12 @@ import matplotlib.pyplot as plt
 # - Create a histogram with chi_squared_values using the plt.hist method.
 # - For answer checking purposes, do not use plt.show() here.
 def main():
-    female_diff = (10771 - 16280.5) ** 2 / 16280.5
-    male_diff = (21790 - 16280.5) ** 2 / 16280.5
+    expected_value = 162.805
+    female_diff = (107.71 - expected_value) ** 2 / expected_value
+    male_diff = (217.90 - expected_value) ** 2 / expected_value
     gender_chisq = female_diff + male_diff
 
-    chi_squared_values = []
-    np.random.seed(1)
-    for _ in range(1000):
-        frequency = {0: 0, 1: 0}
-        for v in np.random.random(32561, ):
-            if v < 0.5:
-                frequency[0] += 1
-            else:
-                frequency[1] += 1
-
-        female_diff = (frequency[0] - 16280.5) ** 2 / 16280.5
-        male_diff = (frequency[1] - 16280.5) ** 2 / 16280.5
-        gender_chisq = female_diff + male_diff
-        chi_squared_values.append(gender_chisq)
-
-    plt.hist(chi_squared_values)
-    plt.show()
+    print(female_diff, male_diff, gender_chisq, sep='\n')
 
 
 if __name__ == '__main__':
