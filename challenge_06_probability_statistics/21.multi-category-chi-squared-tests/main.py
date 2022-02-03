@@ -1,16 +1,22 @@
-# - Using the expected proportions in the table above, calculate the expected values for each of the 4 cells in the
-#   table.
-# - Calculate the expected value for Males who earn >50k, and assign to males_over50k.
-# - Calculate the expected value for Males who earn <=50k, and assign to males_under50k.
-# - Calculate the expected value for Females who earn >50k, and assign to females_over50k.
-# - Calculate the expected value for Females who earn <=50k, and assign to females_under50k.
+def chi_squared(observed, expected):
+    return (observed - expected) ** 2 / expected
+
+
+# - Compute the chi-squared value for the observed values and the expected values.
+# - Assign the result to chisq_gender_income.
 def main():
     males_over50k = .241 * .67 * 32561
     males_under50k = 0.759 * .67 * 32561
     females_over50k = 0.241 * .33 * 32561
     females_under50k = 0.759 * .33 * 32561
 
-    print(males_over50k, males_under50k, females_over50k, females_under50k, sep='\n')
+    observed_values = [6662, 15128, 1179, 9592]
+    expected_values = [males_over50k, males_under50k, females_over50k, females_under50k]
+
+    chi_squareds = [chi_squared(observed, expected) for observed, expected in zip(observed_values, expected_values)]
+    chisq_gender_income = sum(chi_squareds)
+
+    print(chisq_gender_income)
 
 
 if __name__ == '__main__':
